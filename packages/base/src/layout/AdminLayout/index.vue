@@ -27,6 +27,9 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { useAppStore } from '../../store';
+
 defineProps({
   noHeader: {
     type: Boolean,
@@ -40,11 +43,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
-  collapsed: {
-    type: Boolean,
-    default: false,
-  },
 });
+
+const appStore = useAppStore();
+const { collapsed } = storeToRefs(appStore);
 </script>
 
 <style lang="scss" scoped>

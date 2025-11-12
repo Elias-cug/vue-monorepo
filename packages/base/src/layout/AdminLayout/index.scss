@@ -15,7 +15,7 @@ $sider-width-collapse: 50px;
     width: 100%;
     height: $header-height;
     flex-shrink: 0;
-    background: #000;
+    background:   green;
     z-index: 99;
   }
   .layout-tabs {
@@ -40,6 +40,7 @@ $sider-width-collapse: 50px;
     height: 100%;
     width: $sider-width;
     flex-shrink: 0;
+    padding-top: calc(#{$header-height});
     background: blue;
     z-index: 10;
   }

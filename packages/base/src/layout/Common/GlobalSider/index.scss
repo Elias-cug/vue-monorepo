@@ -1,0 +1,18 @@
+.global-sider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  .global-sider-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+  .global-sider-collapse {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+  }
+}
