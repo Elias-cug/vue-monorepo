@@ -1,0 +1,29 @@
+/* 现代CSS Reset的常见规则 */
+*, *::before, *::after {
+  box-sizing: border-box; /* 现代布局的基石 */
+}
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
+  margin: 0; /* 移除特定元素的默认margin */
+}
+ul[role='list'], ol[role='list'] {
+  list-style: none; /* 为无障碍角色列表移除样式 */
+}
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+}
+img, picture {
+  max-width: 100%; /* 实现图片响应式 */
+  display: block;
+}
+input, button, textarea, select {
+  font: inherit; /* 使表单元素继承字体样式 */
+}
+/* 为偏好减少动画的用户设置 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

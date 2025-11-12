@@ -1,0 +1,86 @@
+$header-height: 50px;
+$tabs-height: 30px;
+$sider-width: 200px;
+$sider-width-collapse: 50px;
+
+
+.admin-layout {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  .layout-header {
+    width: 100%;
+    height: $header-height;
+    flex-shrink: 0;
+    background: #000;
+    z-index: 99;
+  }
+  .layout-tabs {
+    width: 100%;
+    height: $tabs-height;
+    flex-shrink: 0;
+    padding-left: $sider-width;
+    background: red;
+  }
+  .layout-content {
+    width: 100%;
+    padding-left: $sider-width;
+    height: calc(100% - #{$header-height} - #{$tabs-height});
+    flex-grow: 1;
+    overflow: auto;
+    background: grey;
+  }
+  .layout-sider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: $sider-width;
+    flex-shrink: 0;
+    background: blue;
+    z-index: 10;
+  }
+}
+
+.admin-layout.collapsed {
+  .layout-sider {
+    width: $sider-width-collapse;
+  }
+  .layout-tabs {
+    padding-left: $sider-width-collapse;
+  }
+  .layout-content {
+    padding-left: $sider-width-collapse;
+  }
+}
+
+.admin-layout.no-header {
+  .layout-content {
+    height: calc(100% - #{$tabs-height});
+  }
+}
+
+.admin-layout.no-tabs {
+  .layout-content {
+    height: calc(100% - #{$header-height});
+  }
+}
+
+.admin-layout.no-header.no-tabs {
+  .layout-content {
+    height: 100%;
+  }
+}
+
+.admin-layout.no-sider {
+  .layout-tabs {
+    padding-left: 0;
+  }
+  .layout-content {
+    padding-left: 0;
+  }
+}
+
