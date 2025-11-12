@@ -1,0 +1,87 @@
+# 自动检测文本文件并标准化换行符
+* text=auto eol=lf
+
+# 明确指定文本文件
+*.js text eol=lf
+*.jsx text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.vue text eol=lf
+*.json text eol=lf
+*.jsonc text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.sass text eol=lf
+*.less text eol=lf
+*.html text eol=lf
+*.htm text eol=lf
+*.xml text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.ini text eol=lf
+*.conf text eol=lf
+*.config text eol=lf
+*.sh text eol=lf
+*.bash text eol=lf
+*.zsh text eol=lf
+*.fish text eol=lf
+*.ps1 text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# 二进制文件
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.otf binary
+*.mp4 binary
+*.mp3 binary
+*.flv binary
+*.fla binary
+*.swf binary
+*.gz binary
+*.zip binary
+*.7z binary
+*.ttf binary
+*.eot binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary
+
+# 特定文件类型
+*.lock text eol=lf
+*.log text eol=lf
+*.patch text eol=lf
+*.diff text eol=lf
+
+# 配置文件
+.editorconfig text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.eslintrc* text eol=lf
+.eslintignore text eol=lf
+.prettierrc* text eol=lf
+.prettierignore text eol=lf
+*.config.js text eol=lf
+*.config.ts text eol=lf
+vite.config.* text eol=lf
+tsconfig*.json text eol=lf
+package.json text eol=lf
+package-lock.json text eol=lf
+pnpm-lock.yaml text eol=lf
+yarn.lock text eol=lf
+

@@ -1,19 +1,18 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
+import { defineConfig } from 'vite';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { baseViteConfig } from '../../vite.config.base';
 
-// tree-shaking-->naive-ui
-import Components from "unplugin-vue-components/vite";
-import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-import Unocss from "unocss/vite";
-
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    Components({
-      resolvers: [NaiveUiResolver()],
-    }),
-    Unocss(),
-  ],
+  ...baseViteConfig,
+  // 项目特定配置可以在这里覆盖
+  resolve: {
+    ...baseViteConfig.resolve,
+    alias: {
+      ...baseViteConfig.resolve?.alias,
+      '@': resolve(__dirname, './src'),
+    },
+  },
 });
