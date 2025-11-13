@@ -2,7 +2,7 @@ $header-height: 50px;
 $tabs-height: 30px;
 $sider-width: 200px;
 $sider-width-collapse: 50px;
-
+$bg-layout: #e5e5e5;
 
 .admin-layout {
   position: relative;
@@ -11,11 +11,11 @@ $sider-width-collapse: 50px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: $bg-layout;
   .layout-header {
     width: 100%;
     height: $header-height;
     flex-shrink: 0;
-    background:   green;
     z-index: 99;
   }
   .layout-tabs {
@@ -23,7 +23,6 @@ $sider-width-collapse: 50px;
     height: $tabs-height;
     flex-shrink: 0;
     padding-left: $sider-width;
-    background: red;
   }
   .layout-content {
     width: 100%;
@@ -31,7 +30,6 @@ $sider-width-collapse: 50px;
     height: calc(100% - #{$header-height} - #{$tabs-height});
     flex-grow: 1;
     overflow: auto;
-    background: grey;
   }
   .layout-sider {
     position: absolute;
@@ -41,7 +39,6 @@ $sider-width-collapse: 50px;
     width: $sider-width;
     flex-shrink: 0;
     padding-top: calc(#{$header-height});
-    background: blue;
     z-index: 10;
   }
 }
@@ -84,4 +81,3 @@ $sider-width-collapse: 50px;
     padding-left: 0;
   }
 }
-
