@@ -11,11 +11,11 @@
       <n-icon-wrapper
         class="tab-close"
         :color="activeTab.key === tab.key ? '#b5bdc7' : '#8c939c'"
-        border-radius="0"
-        size="16"
+        :border-radius="0"
+        :size="16"
         @click.stop="onClickCloseTab(tab)"
       >
-        <n-icon size="16" :component="Close"></n-icon>
+        <n-icon :size="16" :component="Close"></n-icon>
       </n-icon-wrapper>
     </div>
   </div>

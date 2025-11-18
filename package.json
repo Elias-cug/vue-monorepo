@@ -31,6 +31,7 @@
     "@unocss/transformer-directives": "^66.5.4",
     "@unocss/vite": "^66.5.4",
     "@vicons/ionicons5": "^0.13.0",
+    "@vicons/tabler": "^0.13.0",
     "@vitejs/plugin-legacy": "^5.4.0",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/eslint-config-prettier": "^10.0.0",
