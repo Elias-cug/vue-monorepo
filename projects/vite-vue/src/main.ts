@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import naive from 'naive-ui';
 import { createPinia } from 'pinia';
 import '@lee/base/src/styles/index.scss';
-import router from './router/index.ts';
+import router from '@lee/base/src/router/index';
 import 'virtual:uno.css';
 import App from './App.vue';
 

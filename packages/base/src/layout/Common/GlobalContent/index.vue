@@ -1,5 +1,7 @@
 <template>
-  <div>global-layout</div>
+  <div>
+    <router-view />
+  </div>
 </template>
 
 <script setup></script>

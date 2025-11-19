@@ -7,6 +7,7 @@ export const useAppStore = defineStore('app', {
     collapsed: false,
     tabs: tabs,
     activeTab: tabs[0],
+    appInfo: {},
   }),
   actions: {
     switchCollapsed() {
