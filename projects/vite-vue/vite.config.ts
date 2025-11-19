@@ -13,6 +13,7 @@ export default defineConfig({
     alias: {
       ...baseViteConfig.resolve?.alias,
       '@': resolve(__dirname, './src'),
+      '@base': resolve(__dirname, '../../packages/base/src'),
     },
   },
 });

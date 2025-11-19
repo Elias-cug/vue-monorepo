@@ -6,9 +6,7 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@lee/utils": ["../../packages/utils/src"],
-      "@lee/base": ["../../packages/base/src"]
+      "@base/*": ["./src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]

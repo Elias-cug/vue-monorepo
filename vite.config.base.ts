@@ -26,7 +26,6 @@ export const baseViteConfig = {
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
-      '@utils': resolve(__dirname, './packages/utils/index.ts'),
       '@base': resolve(__dirname, './packages/base/index.ts'),
     },
   },

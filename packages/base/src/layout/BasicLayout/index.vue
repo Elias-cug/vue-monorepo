@@ -19,8 +19,8 @@
 import { AdminLayout } from '..';
 import GlobalSider from '../Common/GlobalSider/index.vue';
 import GlobalHeader from '../Common/GlobalHeader/index.vue';
-import GlobalTabs from '../Common/GlobalTabs/index.vue';
 import GlobalContent from '../Common/GlobalContent/index.vue';
+import GlobalTabs from '../Common/GlobalTabs/index.vue';
 </script>
 
 <style lang="scss" scoped></style>
