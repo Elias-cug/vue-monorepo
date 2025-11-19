@@ -6,7 +6,7 @@ export const useAppStore = defineStore('app', {
     // 菜单是否折叠：true 折叠 false 展开
     collapsed: false,
     tabs: tabs,
-    activeTab: tabs[0],
+    activeTab: { key: '' },
     appInfo: {},
   }),
   actions: {
