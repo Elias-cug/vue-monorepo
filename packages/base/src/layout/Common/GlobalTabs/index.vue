@@ -4,14 +4,14 @@
       v-for="tab in tabs"
       :key="tab.key"
       class="global-tabs-item"
-      :class="{ active: activeTab.key === tab.key }"
+      :class="{ active: activeTab?.key === tab.key }"
       @click="onClickTab(tab)"
       @contextmenu.prevent.stop="onContextmenuTab($event, tab)"
     >
-      <span class="tab-label">{{ tab.label }}</span>
+      <span class="tab-label">{{ tab.title }}</span>
       <n-icon-wrapper
         class="tab-close"
-        :color="activeTab.key === tab.key ? '#b5bdc7' : '#8c939c'"
+        :color="activeTab?.key === tab.key ? '#b5bdc7' : '#8c939c'"
         :border-radius="0"
         :size="16"
         @click.stop="onClickCloseTab(tab)"

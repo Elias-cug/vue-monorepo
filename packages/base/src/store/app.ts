@@ -1,24 +1,32 @@
 import { defineStore } from 'pinia';
-import type { TabItem } from '@base/types/tab.ts';
+import type { TabItem, AppInfo, AppState } from '@base/types/app.ts';
 import { tabs } from '../mock/tabs';
 
 export const useAppStore = defineStore('app', {
-  state: () => ({
-    // 菜单是否折叠：true 折叠 false 展开
-    collapsed: false,
-    tabs: tabs,
-    activeTab: { key: '' },
-    appInfo: {},
-  }),
+  state: () =>
+    ({
+      collapsed: false,
+      tabs: tabs,
+      activeTab: null,
+      appInfo: null,
+    }) as AppState,
+  getters: {},
   actions: {
     switchCollapsed() {
       this.collapsed = !this.collapsed;
     },
-    setTabs(payload: any) {
+    setAppInfo(payload: AppInfo) {},
+    setTabs(payload: TabItem[]) {
       this.tabs = payload;
     },
     setActiveTab(payload: TabItem) {
       this.activeTab = payload;
     },
+    addTab(payload: TabItem) {},
+    updateTab(payload: TabItem) {},
+    updateTabTitle(payload: { key: string; title: string }) {},
+    removeTab(payload: TabItem) {},
+    removeAllTabs() {},
+    removeOtherTabs(payload: TabItem) {},
   },
 });

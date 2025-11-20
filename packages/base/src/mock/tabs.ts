@@ -1,10 +1,12 @@
 export const tabs = [
   {
-    label: '首页',
-    key: 'tab1',
+    key: '/main',
+    title: '首页',
+    path: '/main',
   },
   {
-    label: '组件',
-    key: 'tab2',
+    key: '/component',
+    title: '组件',
+    path: '/component',
   },
 ];
