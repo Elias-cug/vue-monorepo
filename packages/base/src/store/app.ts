@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import type { TabItem } from '@base/types/tab.ts';
 import { tabs } from '../mock/tabs';
 
 export const useAppStore = defineStore('app', {
@@ -16,7 +17,7 @@ export const useAppStore = defineStore('app', {
     setTabs(payload: any) {
       this.tabs = payload;
     },
-    setActiveTab(payload: any) {
+    setActiveTab(payload: TabItem) {
       this.activeTab = payload;
     },
   },

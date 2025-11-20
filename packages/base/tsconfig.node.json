@@ -8,7 +8,7 @@
     "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "@base": ["./base/src"]
+      "@base/*": ["./src/*"]
     }
   },
   "include": ["../../vite.config.base.ts"]

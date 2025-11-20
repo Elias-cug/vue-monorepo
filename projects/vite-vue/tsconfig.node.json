@@ -9,8 +9,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@lee/utils": ["../../packages/utils/src"],
-      "@lee/base": ["../../packages/base/src"]
+      "@base/*": ["../../packages/base/src/*"]
     }
   },
   "include": ["vite.config.ts", "../../vite.config.base.ts"]
