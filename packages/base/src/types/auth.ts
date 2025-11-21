@@ -22,7 +22,10 @@ export interface Params {}
 export interface AuthState {
   userInfo: UserInfo | null;
   menus: Menu[];
+  flatMenus: Menu[];
   btns: Menu[];
   dics: Dics;
   params: Params;
+  /** 是否已加载用户信息和菜单 */
+  isLoaded: boolean;
 }
