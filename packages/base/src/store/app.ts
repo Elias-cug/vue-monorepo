@@ -8,7 +8,7 @@ export const useAppStore = defineStore('app', {
       collapsed: false,
       tabs: tabs,
       activeTab: null,
-      appInfo: null,
+      appInfo: { appId: 'app1', appName: '应用1', appIcon: '' },
     }) as AppState,
   getters: {},
   actions: {

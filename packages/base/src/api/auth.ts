@@ -3,17 +3,23 @@
  */
 
 import type { UserInfo, Menu } from '@base/types/auth';
+import { menusMock } from '@base/mock/menus.ts';
 
 /**
  * 获取用户信息
  * @param token 用户 token
  * @returns 用户信息
  */
-export async function fetchUserInfo(_token: string): Promise<UserInfo> {
+export async function fetchUserInfo(_token: string): Promise<any> {
   // TODO: 实现真实的 API 调用
   return new Promise(resolve => {
     setTimeout(() => {
-      resolve({} as UserInfo);
+      resolve({
+        code: 200,
+        data: {
+          ...menusMock,
+        },
+      } as any);
     }, 500);
   });
 }
@@ -23,11 +29,14 @@ export async function fetchUserInfo(_token: string): Promise<UserInfo> {
  * @param token 用户 token
  * @returns 菜单列表
  */
-export async function fetchMenus(_token: string): Promise<Menu[]> {
+export async function fetchMenus(_token: string): Promise<any> {
   // TODO: 实现真实的 API 调用
   return new Promise(resolve => {
     setTimeout(() => {
-      resolve([]);
+      resolve({
+        code: 200,
+        data: [...menusMock],
+      } as any);
     }, 500);
   });
 }

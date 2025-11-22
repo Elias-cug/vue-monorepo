@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { setGuard } from './guard';
-import { constantRoutes } from '../views';
+import { constantRoutes } from './constant';
+import { dynamicRoutes } from './dynamic';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -8,5 +9,9 @@ const router = createRouter({
 });
 
 setGuard(router);
+
+export function dynamicRegisterRouter(menus: any[]) {
+  dynamicRoutes(router, menus);
+}
 
 export default router;

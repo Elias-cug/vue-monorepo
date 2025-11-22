@@ -19,8 +19,3 @@ export const constantRoutes = [
     component: NoPermission,
   },
 ];
-
-export const setupRoutes = (routes: any[]) => {
-  Object.assign(constantRoutes, routes);
-  console.log(constantRoutes);
-};

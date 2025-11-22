@@ -1,13 +1,14 @@
 import { defineStore } from 'pinia';
+import { dynamicRegisterRouter } from '@base/router';
 import type { AuthState, UserInfo, Menu } from '@base/types/auth';
-import { menusMock } from '../mock/menus';
-import { fetchUserInfo, fetchMenus } from '../api/auth';
+import { formatMenus, formatFlatMenus } from '@base/helper/authHelper';
+import { fetchUserInfo, fetchMenus } from '@base/api/auth';
 
 export const useAuthStore = defineStore('auth', {
   state: () =>
     ({
       userInfo: null,
-      menus: menusMock,
+      menus: [],
       flatMenus: [],
       btns: [],
       // 字典项
@@ -30,19 +31,7 @@ export const useAuthStore = defineStore('auth', {
      * @param payload 菜单列表
      */
     setFlatMenus(payload: Menu[]) {
-      const flatMenus: Menu[] = [];
-      const flatten = (menus: Menu[]) => {
-        menus.forEach(menu => {
-          if (menu.path) {
-            flatMenus.push(menu);
-          }
-          if (menu.children && menu.children.length > 0) {
-            flatten(menu.children);
-          }
-        });
-      };
-      flatten(payload);
-      this.flatMenus = flatMenus;
+      this.flatMenus = payload;
     },
     setBtns(payload: any) {
       this.btns = payload;
@@ -56,14 +45,12 @@ export const useAuthStore = defineStore('auth', {
     setLoaded(loaded: boolean) {
       this.isLoaded = loaded;
     },
-    getAndSetMenus(_payload: any) {},
     /**
      * 获取用户信息并存储
      * @param token 用户 token
      */
     async getUserInfo(token: string) {
       const userInfo = await fetchUserInfo(token);
-      this.setUserInfo(userInfo);
       return userInfo;
     },
     /**
@@ -72,7 +59,6 @@ export const useAuthStore = defineStore('auth', {
      */
     async getMenus(token: string) {
       const menus = await fetchMenus(token);
-      this.setMenus(menus);
       return menus;
     },
     async getBtns() {
@@ -107,13 +93,15 @@ export const useAuthStore = defineStore('auth', {
       ]);
 
       this.setUserInfo(userInfo);
-      this.setMenus(menus);
-      this.setFlatMenus(menus);
+      this.setMenus(formatMenus(menus.data));
+      this.setFlatMenus(formatFlatMenus(menus.data));
+
+      dynamicRegisterRouter(this.flatMenus);
+
       this.setBtns(btns);
       this.setDics(dics);
       this.setParams(params);
       this.setLoaded(true);
-      return { userInfo, menus, btns, dics, params };
     },
   },
 });

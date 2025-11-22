@@ -22,6 +22,7 @@ function handleRoute(
   const authStore = useAuthStore();
 
   // 检查路由是否存在（通过路由名称或路径匹配）
+  console.log(router.getRoutes());
   const routeExists = router.getRoutes().some(route => {
     // 如果是动态路由，需要匹配模式
     if (route.path.includes(':')) {
@@ -65,6 +66,7 @@ function handleRoute(
 
 export function setGuard(router: Router) {
   router.beforeEach(async (to, _from, next) => {
+    console.log('to', to);
     const appStore = useAppStore();
     const authStore = useAuthStore();
 
@@ -84,7 +86,6 @@ export function setGuard(router: Router) {
 
     const tokenFromQuery = (to.query.token as string) || undefined;
     const tokenFromStorage = ls.get<string>(TOKEN_KEY, { ignorePrefix: true });
-
     // 1. 携带了 token
     if (tokenFromQuery || tokenFromStorage) {
       const token = tokenFromQuery || tokenFromStorage!;
@@ -96,6 +97,8 @@ export function setGuard(router: Router) {
         try {
           // 使用携带的 token 获取用户信息存储到 auth Store
           await authStore.getAllAuthInfo(token);
+
+          console.log('authStore', authStore);
 
           // 移除 URL 中的 token
           const newQuery = { ...to.query };
@@ -111,6 +114,7 @@ export function setGuard(router: Router) {
           handleRoute(to, next, router, targetRoute);
           return;
         } catch (error) {
+          console.error('获取用户信息或菜单失败 1', error);
           // 获取用户信息或菜单失败，清除 token 和加载状态，并跳转到登录页
           ls.remove(TOKEN_KEY, true);
           authStore.setLoaded(false);
@@ -127,9 +131,15 @@ export function setGuard(router: Router) {
           // 未加载，需要获取用户信息
           try {
             await authStore.getAllAuthInfo(token);
-            handleRoute(to, next, router);
+
+            // TODO: 不知道为啥刷新后必须设置 targetRoute
+            const targetRoute: RouteLocationNormalized = {
+              ...to,
+            };
+            handleRoute(to, next, router, targetRoute);
             return;
           } catch (error) {
+            console.error('获取用户信息或菜单失败 2', error);
             // 获取用户信息或菜单失败，清除 token 和加载状态，并跳转到登录页
             ls.remove(TOKEN_KEY, true);
             authStore.setLoaded(false);

@@ -8,18 +8,26 @@ function renderIcon(icon: any) {
 
 export const menusMock = [
   {
-    title: '首页',
     key: 'main',
+    title: '首页',
     icon: renderIcon(FishIcon),
   },
   {
-    title: '组件',
-    key: 'component',
+    key: 'auth',
+    title: '权限管理',
     icon: renderIcon(FishIcon),
     children: [
       {
-        label: '列表',
-        key: 'table',
+        key: 'rules',
+        label: '角色管理',
+      },
+      {
+        key: 'menus',
+        label: '菜单管理',
+      },
+      {
+        key: 'users',
+        label: '用户管理',
       },
     ],
   },

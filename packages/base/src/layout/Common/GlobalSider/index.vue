@@ -7,6 +7,7 @@
           :collapsed-width="64"
           :collapsed-icon-size="22"
           :options="menus"
+          @update:value="handleMenuClick"
         />
       </n-config-provider>
     </div>
@@ -27,12 +28,16 @@
 import { storeToRefs } from 'pinia';
 import { LayoutSidebarLeftCollapse, LayoutSidebarRightCollapse } from '@vicons/tabler';
 import { useAppStore, useAuthStore } from '../../../store';
+import { useRouter } from 'vue-router';
 
 const appStore = useAppStore();
 const authStore = useAuthStore();
 
+const router = useRouter();
+
 const { collapsed } = storeToRefs(appStore);
 const { menus } = storeToRefs(authStore);
+console.log('menus', menus.value);
 
 const themeOverrides = {
   Menu: {
@@ -61,6 +66,12 @@ const themeOverrides = {
 const changeCollapsed = () => {
   appStore.switchCollapsed();
 };
+
+function handleMenuClick(key: string, item: any) {
+  console.log('key', key);
+  console.log('item', item);
+  router.push(item.path);
+}
 </script>
 
 <style lang="scss" scoped>

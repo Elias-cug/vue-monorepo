@@ -3,8 +3,11 @@ import naive from 'naive-ui';
 import { createPinia } from 'pinia';
 import '@lee/base/src/styles/index.scss';
 import router from '@lee/base/src/router/index';
+import { setupRoutes } from './pages';
 import 'virtual:uno.css';
 import App from './App.vue';
+
+setupRoutes();
 
 const pinia = createPinia();
 const app = createApp(App);
