@@ -22,5 +22,4 @@ export const constantRoutes = [
 
 export const setupRoutes = (routes: any[]) => {
   Object.assign(constantRoutes, routes);
-  console.log(constantRoutes);
 };

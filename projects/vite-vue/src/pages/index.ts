@@ -1,3 +1,7 @@
+/**
+ * @description 提供可被动态注册的路由页面并与固定路由合并
+ */
+
 import { setupRoutesBase } from '@lee/base/src/router/setupRoutes';
 const appOnePrefix = '/app1';
 

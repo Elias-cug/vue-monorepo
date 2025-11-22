@@ -19,7 +19,6 @@ export function formatMenus(menus: any) {
 }
 
 export function formatFlatMenus(menus: any) {
-  // 将菜单转换为一维数组
   const flatMenus: any[] = [];
   const dfs = (menus: any) => {
     menus.forEach((menu: any) => {

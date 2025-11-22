@@ -13,6 +13,7 @@ const BLANK_PATH_LIST = ['/login', '/404', '/403'];
  * @param router 路由实例
  * @param targetRoute 可选的目标路由对象（用于替换当前路由）
  */
+// TODO: 需要改一下
 function handleRoute(
   to: RouteLocationNormalized,
   next: NavigationGuardNext,
@@ -22,7 +23,6 @@ function handleRoute(
   const authStore = useAuthStore();
 
   // 检查路由是否存在（通过路由名称或路径匹配）
-  console.log(router.getRoutes());
   const routeExists = router.getRoutes().some(route => {
     // 如果是动态路由，需要匹配模式
     if (route.path.includes(':')) {
@@ -66,7 +66,6 @@ function handleRoute(
 
 export function setGuard(router: Router) {
   router.beforeEach(async (to, _from, next) => {
-    console.log('to', to);
     const appStore = useAppStore();
     const authStore = useAuthStore();
 
@@ -98,8 +97,6 @@ export function setGuard(router: Router) {
           // 使用携带的 token 获取用户信息存储到 auth Store
           await authStore.getAllAuthInfo(token);
 
-          console.log('authStore', authStore);
-
           // 移除 URL 中的 token
           const newQuery = { ...to.query };
           delete newQuery.token;
@@ -114,7 +111,6 @@ export function setGuard(router: Router) {
           handleRoute(to, next, router, targetRoute);
           return;
         } catch (error) {
-          console.error('获取用户信息或菜单失败 1', error);
           // 获取用户信息或菜单失败，清除 token 和加载状态，并跳转到登录页
           ls.remove(TOKEN_KEY, true);
           authStore.setLoaded(false);
@@ -139,7 +135,6 @@ export function setGuard(router: Router) {
             handleRoute(to, next, router, targetRoute);
             return;
           } catch (error) {
-            console.error('获取用户信息或菜单失败 2', error);
             // 获取用户信息或菜单失败，清除 token 和加载状态，并跳转到登录页
             ls.remove(TOKEN_KEY, true);
             authStore.setLoaded(false);

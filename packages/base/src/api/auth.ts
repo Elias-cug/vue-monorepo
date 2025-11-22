@@ -11,7 +11,6 @@ import { menusMock } from '@base/mock/menus.ts';
  * @returns 用户信息
  */
 export async function fetchUserInfo(_token: string): Promise<any> {
-  // TODO: 实现真实的 API 调用
   return new Promise(resolve => {
     setTimeout(() => {
       resolve({
@@ -30,7 +29,6 @@ export async function fetchUserInfo(_token: string): Promise<any> {
  * @returns 菜单列表
  */
 export async function fetchMenus(_token: string): Promise<any> {
-  // TODO: 实现真实的 API 调用
   return new Promise(resolve => {
     setTimeout(() => {
       resolve({

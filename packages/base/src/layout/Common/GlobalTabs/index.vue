@@ -60,15 +60,12 @@ const contextmenuList = ref([
 ]);
 
 function onClose(tab: any) {
-  console.log(tab);
   closeMenu();
 }
 function onCloseOthers(tab: any) {
-  console.log(tab);
   closeMenu();
 }
 function onCloseAll(tab: any) {
-  console.log(tab);
   closeMenu();
 }
 

@@ -20,6 +20,7 @@ export const routeMap: any = {
   },
 };
 
+// 将项目的路由信息和固定路由信息合并
 export function setupRoutesBase(routes: any) {
   Object.assign(routeMap, routes);
 }

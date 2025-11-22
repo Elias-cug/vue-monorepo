@@ -37,7 +37,6 @@ const router = useRouter();
 
 const { collapsed } = storeToRefs(appStore);
 const { menus } = storeToRefs(authStore);
-console.log('menus', menus.value);
 
 const themeOverrides = {
   Menu: {
@@ -68,8 +67,6 @@ const changeCollapsed = () => {
 };
 
 function handleMenuClick(key: string, item: any) {
-  console.log('key', key);
-  console.log('item', item);
   router.push(item.path);
 }
 </script>
