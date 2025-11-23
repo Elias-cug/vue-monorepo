@@ -1,5 +1,6 @@
 import type { NavigationGuardNext, RouteLocationNormalized, Router } from 'vue-router';
 import { useAppStore, useAuthStore } from '@base/store';
+import { routeMap } from '@base/router/setupRoutes';
 import { ls, ss } from '@base/storage';
 
 const TOKEN_KEY = 'token';
@@ -7,56 +8,64 @@ const TOKEN_KEY = 'token';
 const BLANK_PATH_LIST = ['/login', '/404', '/403'];
 
 /**
- * 检查路由权限和存在性
- * @param to 目标路由
- * @param next 导航守卫的 next 函数
- * @param router 路由实例
- * @param targetRoute 可选的目标路由对象（用于替换当前路由）
+ * 路径匹配工具函数
+ * 支持将类似 /user/:id 这样的动态路径转换为正则，与实际访问路径做匹配
+ *
+ * @param pattern 路由配置中的 path（可能包含动态参数）
+ * @param actualPath 实际访问的路径（to.path）
  */
-// TODO: 需要改一下
+function pathMatch(pattern: string | undefined, actualPath: string): boolean {
+  if (!pattern) return false;
+  if (pattern.includes(':')) {
+    const regexp = new RegExp('^' + pattern.replace(/:[^/]+/g, '[^/]+') + '$');
+    return regexp.test(actualPath);
+  }
+  return pattern === actualPath;
+}
+
+/**
+ * 检查路由是否存在以及当前用户是否有访问权限
+ *
+ * 规则：
+ * 1. 在 setupRoutes 合并后的 routeMap 中找不到匹配路由，直接跳转 404
+ * 2. 找得到匹配路由，但不在 authStore.flatMenus 中，且 matchedRoute.meta.auth 为 false/未设置，跳转 403
+ * 3. 其他情况放行（可选使用 targetRoute 替换当前路由，常用于去掉 token 等场景）
+ *
+ * @param to 目标路由对象
+ * @param next vue-router 的 next 函数
+ * @param _router 路由实例（当前实现未使用，仅保留签名）
+ * @param targetRoute 可选的替换路由对象（如移除 query 中的 token 后的新路由）
+ */
 function handleRoute(
   to: RouteLocationNormalized,
   next: NavigationGuardNext,
-  router: Router,
+  _router: Router,
   targetRoute?: RouteLocationNormalized
 ) {
   const authStore = useAuthStore();
 
-  // 检查路由是否存在（通过路由名称或路径匹配）
-  const routeExists = router.getRoutes().some(route => {
-    // 如果是动态路由，需要匹配模式
-    if (route.path.includes(':')) {
-      const pattern = new RegExp('^' + route.path.replace(/:[^/]+/g, '[^/]+') + '$');
-      return pattern.test(to.path);
-    }
-    return route.path === to.path || route.name === to.name;
-  });
+  const allRoutes = Object.values(routeMap) as any[];
 
-  // 如果路由不存在，跳转到 404
-  if (!routeExists) {
+  // 先在 setupRoutes 合并后的 routeMap 中查找匹配的路由定义
+  const matchedRoute = allRoutes.find(route => pathMatch(route.path, to.path));
+
+  // 1. setupRoutes routeMap 中没有的直接 404
+  if (!matchedRoute) {
     next({ path: '/404', replace: true });
     return;
   }
 
-  // 检查是否有权限（菜单中是否包含该路径）
-  const hasPermission = authStore.flatMenus.some(menu => {
-    if (!menu.path) return false;
-    // 如果是动态路由，需要匹配模式
-    if (menu.path.includes(':')) {
-      const pattern = new RegExp('^' + menu.path.replace(/:[^/]+/g, '[^/]+') + '$');
-      return pattern.test(to.path);
-    }
-    return menu.path === to.path;
-  });
+  // 当前用户是否在菜单（flatMenus）中拥有该路由
+  const hasPermission = authStore.flatMenus.some(menu => pathMatch(menu.path, to.path));
 
-  // 如果路由存在但没有权限，跳转到 403
-  if (!hasPermission) {
+  // 2. setupRoutes routeMap 中有的，但是 authStore flatMenus 中没有
+  //    且 meta.auth 为 false/未设置（默认为需要鉴权）时跳转 403
+  if (!hasPermission && matchedRoute.meta?.auth !== false) {
     next({ path: '/403', replace: true });
     return;
   }
 
-  // 有权限，继续导航
-  // 如果提供了 targetRoute，使用它替换当前路由
+  // 其他情况放行
   if (targetRoute) {
     next({ ...targetRoute, replace: true });
   } else {

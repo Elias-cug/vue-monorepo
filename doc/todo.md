@@ -6,7 +6,7 @@
 
 如果不在 setupRouteMap 中，404
 
-2. keepalive 逻辑
+✅ 2. keepalive 逻辑
 
 支持 keepalive
 支持清除 keepalive
