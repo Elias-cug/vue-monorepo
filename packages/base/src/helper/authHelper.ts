@@ -43,3 +43,7 @@ export function formatDic(dics: any) {
 export function formatParam(params: any) {
   return params;
 }
+
+export function genCachedRoutes(menus: any[]) {
+  return menus.filter((menu: any) => menu.meta?.keepAlive === true).map((menu: any) => menu.name);
+}

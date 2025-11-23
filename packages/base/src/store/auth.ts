@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { useAppStore } from '@base/store/app';
 import { dynamicRegisterRouter } from '@base/router';
 import type { AuthState, UserInfo, Menu } from '@base/types/auth';
-import { formatMenus, formatFlatMenus } from '@base/helper/authHelper';
+import { formatMenus, formatFlatMenus, genCachedRoutes } from '@base/helper/authHelper';
 import { fetchUserInfo, fetchMenus } from '@base/api/auth';
 
 export const useAuthStore = defineStore('auth', {
@@ -102,7 +102,7 @@ export const useAuthStore = defineStore('auth', {
       this.setLoaded(true);
 
       const appStore = useAppStore();
-      appStore.setCachedRoutes(this.flatMenus.map((menu: any) => menu.name));
+      appStore.setCachedRoutes(genCachedRoutes(this.flatMenus));
       dynamicRegisterRouter(this.flatMenus);
     },
   },

@@ -13,6 +13,7 @@ const app1Map = {
     meta: {
       menuKey: 'main',
       title: '首页',
+      keepAlive: true,
     },
   },
   auth: {
