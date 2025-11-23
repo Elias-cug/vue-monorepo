@@ -8,6 +8,7 @@ export const useAppStore = defineStore('app', {
       collapsed: false,
       tabs: tabs,
       activeTab: null,
+      cachedRoutes: [],
       appInfo: { appId: 'app1', appName: '应用1', appIcon: '' },
     }) as AppState,
   getters: {},
@@ -16,6 +17,8 @@ export const useAppStore = defineStore('app', {
       this.collapsed = !this.collapsed;
     },
     setAppInfo(payload: AppInfo) {},
+
+    // tabs 维护
     setTabs(payload: TabItem[]) {
       this.tabs = payload;
     },
@@ -28,5 +31,20 @@ export const useAppStore = defineStore('app', {
     removeTab(payload: TabItem) {},
     removeAllTabs() {},
     removeOtherTabs(payload: TabItem) {},
+
+    // cachedRoutes 维护
+    setCachedRoutes(payload: string[]) {
+      this.cachedRoutes = payload;
+    },
+    addCachedRoute(payload: string) {
+      if (this.cachedRoutes.includes(payload)) return;
+      this.cachedRoutes.push(payload);
+    },
+    removeCachedRoute(payload: string) {
+      this.cachedRoutes = this.cachedRoutes.filter(route => route !== payload);
+    },
+    clearCachedRoutes() {
+      this.cachedRoutes = [];
+    },
   },
 });
