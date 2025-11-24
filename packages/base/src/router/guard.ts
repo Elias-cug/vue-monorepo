@@ -3,8 +3,7 @@ import { useAppStore, useAuthStore } from '@base/store';
 import { routeMap } from '@base/router/setupRoutes';
 import { ls, ss } from '@base/storage';
 import type { TabItem } from '@base/types/app';
-
-const TOKEN_KEY = 'token';
+import { TOKEN_KEY } from '@base/constants';
 
 const BLANK_PATH_LIST = ['/login', '/404', '/403'];
 
