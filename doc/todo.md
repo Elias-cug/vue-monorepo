@@ -7,10 +7,11 @@
 1. ✅ 路由体系
 2. ✅ tab 体系
 3. ✅ 使用不同的 layout
-4. review 并添加文档
-5. 完善类型
-6. svg 图标处理
-7. service 体系
+4. 抽离 appId 获取/设置 appId 逻辑
+5. review 并添加文档
+6. 完善类型
+7. svg 图标处理
+8. service 体系
 
 ## 11.24
 

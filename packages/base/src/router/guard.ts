@@ -79,7 +79,7 @@ export function setGuard(router: Router) {
     const appStore = useAppStore();
     const authStore = useAuthStore();
 
-    // 从路由 params 或 app store 中获取 appId
+    // TODO: 从路由 params 或 app store 中获取 appId
     const appId = (to.params.appid as string) || appStore.appInfo?.appId;
 
     // 设置 storage 的 appId
