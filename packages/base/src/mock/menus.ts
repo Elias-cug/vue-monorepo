@@ -17,10 +17,10 @@ export const menusMock = [
     title: '权限管理',
     icon: renderIcon(FishIcon),
     children: [
-      // {
-      //   key: 'rules',
-      //   label: '角色管理',
-      // },
+      {
+        key: 'rules',
+        label: '角色管理',
+      },
       {
         key: 'menus',
         label: '菜单管理',

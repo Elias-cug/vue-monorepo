@@ -1,10 +1,9 @@
 <template>
-  <BasicLayout></BasicLayout>
+  <router-view />
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { BasicLayout } from '@lee/base';
 
 onMounted(() => {});
 </script>

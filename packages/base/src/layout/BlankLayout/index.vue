@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout no-heade no-sider no-tabs>
+  <AdminLayout no-header no-sider no-tabs>
     <template #content>
       <GlobalContent></GlobalContent>
     </template>
