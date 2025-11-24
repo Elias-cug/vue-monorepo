@@ -1,5 +1,8 @@
 <template>
-  <AdminLayout no-heade no-sider no-tabs>
+  <AdminLayout no-sider no-tabs>
+    <template #header>
+      <GlobalHeader></GlobalHeader>
+    </template>
     <template #content>
       <GlobalContent></GlobalContent>
     </template>
@@ -8,15 +11,15 @@
 
 <script setup lang="ts">
 import { AdminLayout } from '..';
+import GlobalHeader from '../Common/GlobalHeader/index.vue';
 import GlobalContent from '../Common/GlobalContent/index.vue';
 import { useAppPersist } from '../../composables/useAppPersist';
 
 // 启用 app 状态持久化
-// BlankLayout 可能不需要持久化所有状态，可以选择性开启
 useAppPersist({
-  tabs: false, // BlankLayout 通常不显示 tabs
+  tabs: false,
   activeTab: false,
-  collapsed: false, // BlankLayout 没有侧边栏
+  collapsed: false, // HeaderLayout 没有侧边栏，不需要持久化 collapsed
 });
 </script>
 

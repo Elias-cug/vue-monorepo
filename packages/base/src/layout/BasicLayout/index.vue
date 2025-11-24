@@ -21,6 +21,10 @@ import GlobalSider from '../Common/GlobalSider/index.vue';
 import GlobalHeader from '../Common/GlobalHeader/index.vue';
 import GlobalContent from '../Common/GlobalContent/index.vue';
 import GlobalTabs from '../Common/GlobalTabs/index.vue';
+import { useAppPersist } from '../../composables/useAppPersist';
+
+// 启用 app 状态持久化
+useAppPersist();
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,16 +1,27 @@
 import { defineStore } from 'pinia';
 import type { TabItem, AppInfo, AppState } from '@base/types/app.ts';
-import { tabs } from '../mock/tabs';
+import { tabs as defaultTabs } from '../mock/tabs';
+import { restoreAppState } from '../composables/useAppPersist';
 
 export const useAppStore = defineStore('app', {
-  state: () =>
-    ({
-      collapsed: false,
-      tabs: tabs,
-      activeTab: null,
+  state: () => {
+    // 从 localStorage 恢复状态
+    const restored = restoreAppState();
+
+    return {
+      // 恢复 collapsed 状态，默认为 false
+      collapsed: restored.collapsed ?? false,
+
+      // 恢复 tabs，如果没有则使用默认值
+      tabs: restored.tabs && restored.tabs.length > 0 ? restored.tabs : defaultTabs,
+
+      // 恢复 activeTab
+      activeTab: restored.activeTab || null,
+
       cachedRoutes: [],
       appInfo: { appId: 'app1', appName: '应用1', appIcon: '' },
-    }) as AppState,
+    } as AppState;
+  },
   getters: {},
   actions: {
     switchCollapsed() {

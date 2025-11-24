@@ -30,3 +30,4 @@
 
 1. tab 增删改，删除其他，删除右侧
 2. tab 同步到 storage
+3. 不同的 layout
