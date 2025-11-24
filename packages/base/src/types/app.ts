@@ -9,6 +9,8 @@ export interface TabItem {
   query?: Record<string, any>;
   /** Tab 是否可关闭 */
   closable?: boolean;
+  /** 是否支持多标签页（同一路由不同参数可以打开多个 tab） */
+  multiTab?: boolean;
   /** Tab 的元信息 */
   meta?: Record<string, any>;
 }

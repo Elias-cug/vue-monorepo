@@ -2,6 +2,7 @@ import type { NavigationGuardNext, RouteLocationNormalized, Router } from 'vue-r
 import { useAppStore, useAuthStore } from '@base/store';
 import { routeMap } from '@base/router/setupRoutes';
 import { ls, ss } from '@base/storage';
+import type { TabItem } from '@base/types/app';
 
 const TOKEN_KEY = 'token';
 
@@ -159,5 +160,26 @@ export function setGuard(router: Router) {
     }
   });
 
-  router.afterEach(() => {});
+  router.afterEach(to => {
+    const appStore = useAppStore();
+
+    // 不需要添加到 tabs 的路径
+    if (BLANK_PATH_LIST.includes(to.path)) {
+      return;
+    }
+
+    // 从路由信息中创建 TabItem
+    const tabItem: TabItem = {
+      key: to.fullPath,
+      title: (to.meta?.title as string) || '未命名',
+      path: to.path,
+      query: to.query as Record<string, any>,
+      closable: to.meta?.closable !== false, // 默认可关闭
+      multiTab: to.meta?.multiTab as boolean | undefined, // 是否支持多标签页
+      meta: to.meta as Record<string, any>,
+    };
+
+    // 添加 tab
+    appStore.addTab(tabItem);
+  });
 }

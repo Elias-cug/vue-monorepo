@@ -42,43 +42,75 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
 import { Close } from '@vicons/ionicons5';
 import { useAppStore } from '../../../store/app';
+import type { TabItem } from '../../../types/app';
 
 const appStore = useAppStore();
+const router = useRouter();
 
 const { tabs, activeTab } = storeToRefs(appStore);
 
-const menu = ref({ visible: false, x: 0, y: 0, tab: {} });
+// 监听 activeTab 变化，自动跳转路由
+watch(
+  () => activeTab.value,
+  newTab => {
+    if (newTab && router.currentRoute.value.fullPath !== newTab.key) {
+      router.push(newTab.key);
+    }
+  }
+);
+
+const menu = ref<{ visible: boolean; x: number; y: number; tab: TabItem | null }>({
+  visible: false,
+  x: 0,
+  y: 0,
+  tab: null,
+});
 
 const contextmenuList = ref([
-  { label: '关闭当前', key: 'close-current', fn: onClose },
-  { label: '关闭其他', key: 'close-other', fn: onCloseOthers },
-  { label: '关闭所有', key: 'close-all', fn: onCloseAll },
+  {
+    label: '关闭当前',
+    key: 'close-current',
+    fn: (tab: TabItem | null) => tab && onClose(tab),
+  },
+  {
+    label: '关闭其他',
+    key: 'close-other',
+    fn: (tab: TabItem | null) => tab && onCloseOthers(tab),
+  },
+  { label: '关闭所有', key: 'close-all', fn: () => onCloseAll() },
 ]);
 
-function onClose(tab: any) {
+function onClose(tab: TabItem) {
+  appStore.removeTab(tab);
   closeMenu();
 }
-function onCloseOthers(tab: any) {
+function onCloseOthers(tab: TabItem) {
+  appStore.removeOtherTabs(tab);
   closeMenu();
 }
-function onCloseAll(tab: any) {
+function onCloseAll() {
+  appStore.removeAllTabs();
   closeMenu();
 }
 
-function onClickTab(tab: any) {
+function onClickTab(tab: TabItem) {
   appStore.setActiveTab(tab);
+  router.push(tab.key);
 }
 
-function onClickCloseTab(tab: any) {}
+function onClickCloseTab(tab: TabItem) {
+  appStore.removeTab(tab);
+}
 function onContextmenuTab(e: MouseEvent, tab: any) {
   openMenuAt(e.clientX, e.clientY, tab);
 }
 
-function openMenuAt(x: number, y: number, tab: any) {
+function openMenuAt(x: number, y: number, tab: TabItem) {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   const menuW = 160;
@@ -98,7 +130,7 @@ function openMenuAt(x: number, y: number, tab: any) {
 
 function closeMenu() {
   menu.value.visible = false;
-  menu.value.tab = {};
+  menu.value.tab = null;
 }
 </script>
 
