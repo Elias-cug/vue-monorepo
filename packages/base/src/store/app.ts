@@ -1,29 +1,41 @@
 import { defineStore } from 'pinia';
 import type { TabItem, AppInfo, AppState } from '@base/types/app.ts';
-import { tabs as defaultTabs } from '../mock/tabs';
 import { restoreAppState } from '../composables/useAppPersist';
 
 export const useAppStore = defineStore('app', {
-  state: () => {
-    // 从 localStorage 恢复状态
-    const restored = restoreAppState();
-
-    return {
-      // 恢复 collapsed 状态，默认为 false
-      collapsed: restored.collapsed ?? false,
-
-      // 恢复 tabs，如果没有则使用默认值
-      tabs: restored.tabs && restored.tabs.length > 0 ? restored.tabs : defaultTabs,
-
-      // 恢复 activeTab
-      activeTab: restored.activeTab || null,
-
-      cachedRoutes: [],
-      appInfo: { appId: 'app1', appName: '应用1', appIcon: '' },
-    } as AppState;
-  },
+  state: (): AppState => ({
+    // 初始状态使用默认值，等待 Layout 初始化后恢复
+    collapsed: false,
+    tabs: [],
+    activeTab: null,
+    cachedRoutes: [],
+    appInfo: { appId: 'app1', appName: '应用1', appIcon: '' },
+  }),
   getters: {},
   actions: {
+    /**
+     * 从 localStorage 恢复状态
+     * 在 Layout 初始化时调用（此时 appId 已设置）
+     */
+    restoreState() {
+      const restored = restoreAppState();
+
+      // 恢复 collapsed 状态
+      if (restored.collapsed !== undefined) {
+        this.collapsed = restored.collapsed;
+      }
+
+      // 恢复 tabs
+      if (restored.tabs && restored.tabs.length > 0) {
+        this.tabs = restored.tabs;
+      }
+
+      // 恢复 activeTab
+      if (restored.activeTab) {
+        this.activeTab = restored.activeTab;
+      }
+    },
+
     switchCollapsed() {
       this.collapsed = !this.collapsed;
     },

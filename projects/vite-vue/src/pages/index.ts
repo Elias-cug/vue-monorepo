@@ -41,7 +41,6 @@ const app1Map = {
     name: 'Menus',
     component: () => import('@/pages/Auth/Menus/index.vue'),
     meta: {
-      layout: 'header',
       menuKey: 'menus',
       title: '菜单管理',
     },
@@ -51,7 +50,6 @@ const app1Map = {
     name: 'Rules',
     component: () => import('@/pages/Auth/Rules/index.vue'),
     meta: {
-      layout: 'blank',
       menuKey: 'rules',
       title: '角色管理',
     },

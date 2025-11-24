@@ -91,6 +91,7 @@ export function useAppPersist(options: PersistOptions = {}) {
 /**
  * 从 localStorage 恢复 app 状态
  * 这个函数应该在 store 的 state 初始化时调用
+ * 注意：需要在调用此函数之前先设置 ls.setAppId()
  */
 export function restoreAppState() {
   return {
@@ -112,4 +113,3 @@ export function clearAppPersist() {
 
 // 导出常量供其他地方使用
 export { STORAGE_KEYS };
-
