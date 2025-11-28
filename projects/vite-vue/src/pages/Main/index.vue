@@ -4,7 +4,7 @@
     <n-card class="welcome-card" size="large">
       <div class="welcome-content">
         <div class="welcome-text">
-          <h1>欢迎回来，{{ userInfo?.username || '用户' }}！</h1>
+          <h1>欢迎回来，{{ userInfo?.name || '用户' }}！</h1>
           <p>这是你的工作台，可以查看系统信息和快速访问功能</p>
         </div>
         <n-icon size="100" color="#1890ff">
