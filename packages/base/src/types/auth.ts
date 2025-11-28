@@ -19,7 +19,24 @@ export interface Menu {
   children?: Menu[];
 }
 
-export interface UserInfo {}
+export interface UserInfo {
+  /** 用户 ID */
+  id?: string | number;
+  /** 用户名 */
+  username?: string;
+  /** 姓名 */
+  name?: string;
+  /** 邮箱 */
+  email?: string;
+  /** 电话 */
+  phone?: string;
+  /** 头像 */
+  avatar?: string;
+  /** 角色 */
+  roles?: string[];
+  /** 其他信息 */
+  [key: string]: any;
+}
 
 export interface Dics {}
 
