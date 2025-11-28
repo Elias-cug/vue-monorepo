@@ -3,6 +3,21 @@
  */
 
 import { setupRoutesBase } from '@lee/base/src/router/setupRoutes';
+import { NIcon } from 'naive-ui';
+import { h } from 'vue';
+import {
+  FishOutline as FishIcon,
+  FlaskOutline as FlaskIcon,
+  TabletPortraitOutline as TabIcon,
+  GitNetworkOutline as RouterIcon,
+  LayersOutline as CacheIcon,
+  DocumentOutline as DetailIcon,
+  LockClosedOutline as FixedIcon,
+} from '@vicons/ionicons5';
+
+function renderIcon(icon: any) {
+  return () => h(NIcon, null, { default: () => h(icon) });
+}
 const appOnePrefix = '/app1';
 
 const app1Map = {
@@ -15,6 +30,7 @@ const app1Map = {
       menuKey: 'main',
       title: '首页',
       keepAlive: true,
+      icon: renderIcon(FishIcon),
     },
   },
   auth: {
@@ -25,6 +41,7 @@ const app1Map = {
     meta: {
       menuKey: 'auth',
       title: '权限管理',
+      icon: renderIcon(FishIcon),
     },
   },
   users: {
@@ -64,6 +81,7 @@ const app1Map = {
     meta: {
       menuKey: 'test',
       title: '功能测试',
+      icon: renderIcon(FlaskIcon),
     },
   },
   tabTest: {

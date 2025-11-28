@@ -24,8 +24,9 @@ export const menusMock = [
     key: 'main',
     title: '首页',
     icon: renderIcon(FishIcon),
-    meta: {
-      pinned: true,
+    pinned: true,
+    extraProps: {
+      params1: '123',
     },
   },
   {

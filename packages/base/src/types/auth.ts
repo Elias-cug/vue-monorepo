@@ -3,12 +3,18 @@ export interface Menu {
   key: string;
   /** 菜单名称 */
   title: string;
-  /** 菜单路径 */
-  path?: string;
-  /** 菜单图标 */
-  icon?: string | any;
-  /** 其他属性 */
+  /** 是否固定 */
+  pinned?: boolean;
+  /** 是否隐藏，默认 false */
+  hidden?: boolean;
+  /** query */
+  query?: Record<string, any>;
+  /** 其他属性，存放一些业务属性 */
   extraProps?: Record<string, any>;
+  /** 前端路径不建议在后端返回 */
+  path?: string;
+  /** 菜单图标，不建议在后端返回 */
+  icon?: string | any;
   /** 子菜单 */
   children?: Menu[];
 }
@@ -25,6 +31,7 @@ export interface AuthState {
   flatMenus: Menu[];
   btns: Menu[];
   dics: Dics;
+  /** 系统配置的参数 */
   params: Params;
   /** 是否已加载用户信息和菜单 */
   isLoaded: boolean;
