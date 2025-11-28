@@ -8,6 +8,49 @@ import { TOKEN_KEY } from '@base/constants';
 const BLANK_PATH_LIST = ['/login', '/404', '/403'];
 
 /**
+ * 检查是否为首页访问
+ */
+function isHomePage(path: string): boolean {
+  return path === '/' || path === '';
+}
+
+/**
+ * 处理首页重定向
+ * 如果访问的是首页，重定向到 homeMenu 或第一个菜单项
+ * @returns true 表示已处理重定向，false 表示不需要重定向
+ */
+function handleHomeRedirect(
+  to: RouteLocationNormalized,
+  next: NavigationGuardNext,
+  authStore: ReturnType<typeof useAuthStore>
+): boolean {
+  if (!isHomePage(to.path)) {
+    return false;
+  }
+
+  if (authStore.homeMenu) {
+    next({ path: authStore.homeMenu.path, replace: true });
+    return true;
+  }
+
+  if (authStore.flatMenus.length > 0 && authStore.flatMenus[0]?.path) {
+    next({ path: authStore.flatMenus[0].path, replace: true });
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * 处理认证失败，清除 token 并跳转到登录页
+ */
+function handleAuthError(next: NavigationGuardNext, authStore: ReturnType<typeof useAuthStore>) {
+  ls.remove(TOKEN_KEY, true);
+  authStore.setLoaded(false);
+  next({ path: '/login', replace: true });
+}
+
+/**
  * 路径匹配工具函数
  * 支持将类似 /user/:id 这样的动态路径转换为正则，与实际访问路径做匹配
  *
@@ -92,12 +135,6 @@ export function setGuard(router: Router) {
       return;
     }
 
-    // 首页重定向到 homeMenu
-    if ((to.path === '/' || to.path === '') && authStore.isLoaded && authStore.homeMenu) {
-      next({ path: authStore.homeMenu.path, replace: true });
-      return;
-    }
-
     const tokenFromQuery = (to.query.token as string) || undefined;
     const tokenFromStorage = ls.get<string>(TOKEN_KEY, { ignorePrefix: true });
     // 1. 携带了 token
@@ -113,8 +150,7 @@ export function setGuard(router: Router) {
           await authStore.getAllAuthInfo(token);
 
           // 如果访问的是首页，重定向到 homeMenu
-          if ((to.path === '/' || to.path === '') && authStore.homeMenu) {
-            next({ path: authStore.homeMenu.path, replace: true });
+          if (handleHomeRedirect(to, next, authStore)) {
             return;
           }
 
@@ -132,15 +168,18 @@ export function setGuard(router: Router) {
           handleRoute(to, next, router, targetRoute);
           return;
         } catch (error) {
-          // 获取用户信息或菜单失败，清除 token 和加载状态，并跳转到登录页
-          ls.remove(TOKEN_KEY, true);
-          authStore.setLoaded(false);
-          next({ path: '/login', replace: true });
+          // 获取用户信息或菜单失败
+          handleAuthError(next, authStore);
           return;
         }
       } else if (tokenFromStorage) {
         // 从 storage 中获取 token
         if (authStore.isLoaded) {
+          // 如果访问的是首页，重定向到 homeMenu
+          if (handleHomeRedirect(to, next, authStore)) {
+            return;
+          }
+
           // 已经加载过，直接检查权限
           handleRoute(to, next, router);
           return;
@@ -150,8 +189,7 @@ export function setGuard(router: Router) {
             await authStore.getAllAuthInfo(token);
 
             // 如果访问的是首页，重定向到 homeMenu
-            if ((to.path === '/' || to.path === '') && authStore.homeMenu) {
-              next({ path: authStore.homeMenu.path, replace: true });
+            if (handleHomeRedirect(to, next, authStore)) {
               return;
             }
 
@@ -162,10 +200,8 @@ export function setGuard(router: Router) {
             handleRoute(to, next, router, targetRoute);
             return;
           } catch (error) {
-            // 获取用户信息或菜单失败，清除 token 和加载状态，并跳转到登录页
-            ls.remove(TOKEN_KEY, true);
-            authStore.setLoaded(false);
-            next({ path: '/login', replace: true });
+            // 获取用户信息或菜单失败
+            handleAuthError(next, authStore);
             return;
           }
         }
