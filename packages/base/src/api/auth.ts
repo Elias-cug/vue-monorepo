@@ -2,8 +2,7 @@
  * 认证相关 API
  */
 
-import { menusMock } from '@base/mock/menus.ts';
-import { userMock } from '@base/mock/user.ts';
+import { menusMock, userMock } from '@base/mock/auth';
 
 /**
  * 获取用户信息

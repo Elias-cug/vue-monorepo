@@ -12,6 +12,7 @@ export function mergeMenuNode(menuNode: any, routeInfo: any) {
   return {
     ...menuNode,
     ...routeInfo,
+    icon: routeInfo.meta.icon,
     meta: {
       ...routeInfo.meta,
       title: menuNode.title || routeInfo.meta?.title,
