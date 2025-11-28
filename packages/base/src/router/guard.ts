@@ -185,7 +185,6 @@ export function setGuard(router: Router) {
               return;
             }
 
-            // TODO: 不知道为啥刷新后必须设置 targetRoute
             const targetRoute: RouteLocationNormalized = {
               ...to,
             };
@@ -214,6 +213,7 @@ export function setGuard(router: Router) {
     }
 
     // 添加 tab
+    console.log('---to', to);
     appStore.addTab(formatTabItem(to));
   });
 }

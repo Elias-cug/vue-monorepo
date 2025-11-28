@@ -8,16 +8,18 @@ export function formatUserInfo(userInfo: any) {
  * 合并单个菜单节点的字段
  * 可以在这里统一维护字段合并逻辑
  */
-export function mergeMenuNode(menuNode: any, routeInfo: any) {
+export function mergeMenuNode(menuInfo: any, routeInfo: any) {
   return {
-    ...menuNode,
+    ...menuInfo,
     ...routeInfo,
     icon: routeInfo.meta.icon,
     meta: {
       ...routeInfo.meta,
-      title: menuNode.title || routeInfo.meta?.title,
-      hidden: menuNode.hidden ?? routeInfo.meta?.hidden,
-      pinned: menuNode.pinned ?? routeInfo.meta?.pinned,
+      title: menuInfo.title || routeInfo.meta?.title,
+      hidden: menuInfo.hidden ?? routeInfo.meta?.hidden,
+      pinned: menuInfo.pinned ?? routeInfo.meta?.pinned,
+      extraProps: menuInfo?.extraProps || {},
+      menuKey: menuInfo.key || routeInfo.name,
     },
   };
 }
@@ -76,6 +78,7 @@ export function formatTabItem(route: any) {
     title: route.meta?.title,
     path: route.path,
     query: route.query,
+    params: route.params,
     meta: route.meta,
   };
 }
