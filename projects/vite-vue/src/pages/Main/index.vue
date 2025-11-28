@@ -22,7 +22,7 @@
           <n-card title="用户信息" hoverable>
             <n-descriptions :column="1" label-placement="left">
               <n-descriptions-item label="用户名">
-                {{ userInfo?.username || '-' }}
+                {{ userInfo?.name || '-' }}
               </n-descriptions-item>
               <n-descriptions-item label="邮箱">
                 {{ userInfo?.email || '-' }}

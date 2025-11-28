@@ -2,8 +2,8 @@
  * 认证相关 API
  */
 
-import type { UserInfo, Menu } from '@base/types/auth';
 import { menusMock } from '@base/mock/menus.ts';
+import { userMock } from '@base/mock/user.ts';
 
 /**
  * 获取用户信息
@@ -16,7 +16,7 @@ export async function fetchUserInfo(_token: string): Promise<any> {
       resolve({
         code: 200,
         data: {
-          ...menusMock,
+          ...userMock,
         },
       } as any);
     }, 500);

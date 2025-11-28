@@ -123,7 +123,7 @@ function handleLogin() {
           path: '/',
           query: { token: tempToken },
         });
-      }, 1500);
+      }, 600);
     }
   });
 }

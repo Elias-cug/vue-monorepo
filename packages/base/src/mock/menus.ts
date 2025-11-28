@@ -22,25 +22,6 @@ export const menusMock = [
     },
   },
   {
-    key: 'auth',
-    title: '权限管理',
-    icon: renderIcon(FishIcon),
-    children: [
-      {
-        key: 'rules',
-        label: '角色管理',
-      },
-      {
-        key: 'menus',
-        label: '菜单管理',
-      },
-      {
-        key: 'users',
-        label: '用户管理',
-      },
-    ],
-  },
-  {
     key: 'test',
     title: '功能测试',
     icon: renderIcon(FlaskIcon),

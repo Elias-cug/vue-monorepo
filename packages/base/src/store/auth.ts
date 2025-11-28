@@ -106,7 +106,7 @@ export const useAuthStore = defineStore('auth', {
         this.getParams(),
       ]);
 
-      this.setUserInfo(userInfo);
+      this.setUserInfo(userInfo.data);
       this.setMenus(formatMenus(menus.data));
       this.setFlatMenus(formatFlatMenus(menus.data));
       this.setHomeMenu(formatHomeMenu(this.flatMenus));

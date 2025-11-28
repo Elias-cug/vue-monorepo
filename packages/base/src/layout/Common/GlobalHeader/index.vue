@@ -13,7 +13,7 @@
       >
         <div class="global-header-user">
           <img class="user-avatar" src="../../../assets/avatar/lufei.png" alt="" />
-          <span class="user-name">路飞</span>
+          <span class="user-name">{{ userInfo?.name }}</span>
           <n-icon
             size="18"
             :style="{
@@ -35,7 +35,11 @@ import { NIcon } from 'naive-ui';
 import type { Component } from 'vue';
 import { ChevronDownOutline, PersonCircleOutline, LogOutOutline } from '@vicons/ionicons5';
 import { useRouterHelper } from '../../../composables';
+import { useAuthStore } from '../../../store/auth';
+import { storeToRefs } from 'pinia';
 
+const authStore = useAuthStore();
+const { userInfo } = storeToRefs(authStore);
 const { logout } = useRouterHelper();
 
 // 下拉菜单展开状态
