@@ -20,7 +20,8 @@ export const userMock = {
 };
 
 export const appInfoMock = {
-  name: 'Vue Admin',
+  appId: '1',
+  name: 'VUE-MOBOREPO总览',
   version: '1.0.0',
   description: 'A Vue.js admin template',
 };

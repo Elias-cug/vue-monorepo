@@ -31,12 +31,6 @@ export function shouldShowInSidebar(menu: any) {
   if (menu.hidden === true || menu.meta?.hidden === true) {
     return false;
   }
-
-  // 可以添加更多判断逻辑，例如：
-  // - 权限判断
-  // - 路由类型判断
-  // - 其他业务逻辑
-
   return true;
 }
 
@@ -108,3 +102,5 @@ export function genMenuInfo(menuInfo: any, routeInfo: any) {
     ...routeInfo,
   };
 }
+
+export function getAppInfo(appKey?: string) {}
