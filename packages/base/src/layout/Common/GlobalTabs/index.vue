@@ -1,25 +1,27 @@
 <template>
   <div class="global-tabs">
-    <div
-      v-for="tab in tabs"
-      :key="tab.key"
-      class="global-tabs-item"
-      :class="{ active: activeTab?.key === tab.key }"
-      @click="onClickTab(tab)"
-      @contextmenu.prevent.stop="onContextmenuTab($event, tab)"
-    >
-      <span class="tab-label">{{ tab.title }}</span>
-      <n-icon-wrapper
-        v-if="tab.meta?.pinned !== true"
-        class="tab-close"
-        :color="activeTab?.key === tab.key ? '#b5bdc7' : '#8c939c'"
-        :border-radius="0"
-        :size="16"
-        @click.stop="onClickCloseTab(tab)"
+    <ScrollableContainer ref="scrollContainer" :item-count="tabs.length">
+      <div
+        v-for="tab in tabs"
+        :key="tab.key"
+        class="global-tabs-item"
+        :class="{ active: activeTab?.key === tab.key }"
+        @click="onClickTab(tab)"
+        @contextmenu.prevent.stop="onContextmenuTab($event, tab)"
       >
-        <n-icon :size="16" :component="Close"></n-icon>
-      </n-icon-wrapper>
-    </div>
+        <span class="tab-label">{{ tab.title }}</span>
+        <n-icon-wrapper
+          v-if="tab.meta?.pinned !== true"
+          class="tab-close"
+          :color="activeTab?.key === tab.key ? '#b5bdc7' : '#8c939c'"
+          :border-radius="0"
+          :size="16"
+          @click.stop="onClickCloseTab(tab)"
+        >
+          <n-icon :size="16" :component="Close"></n-icon>
+        </n-icon-wrapper>
+      </div>
+    </ScrollableContainer>
 
     <teleport to="body">
       <ul
@@ -49,19 +51,23 @@ import { useRouter } from 'vue-router';
 import { Close } from '@vicons/ionicons5';
 import { useAppStore } from '../../../store/app';
 import type { TabItem } from '../../../types/app';
+import ScrollableContainer from './ScrollableContainer.vue';
 
 const appStore = useAppStore();
 const router = useRouter();
 
 const { tabs, activeTab } = storeToRefs(appStore);
+const scrollContainer = ref<InstanceType<typeof ScrollableContainer> | null>(null);
 
-// 监听 activeTab 变化，自动跳转路由
+// 监听 activeTab 变化，自动跳转路由并滚动到对应位置
 watch(
   () => activeTab.value,
   newTab => {
     if (newTab && router.currentRoute.value.fullPath !== newTab.key) {
       router.push(newTab.key);
     }
+    // 滚动到激活的 tab
+    scrollToActiveTab();
   }
 );
 
@@ -132,6 +138,16 @@ function openMenuAt(x: number, y: number, tab: TabItem) {
 function closeMenu() {
   menu.value.visible = false;
   menu.value.tab = null;
+}
+
+// 滚动到激活的 tab
+function scrollToActiveTab() {
+  if (!scrollContainer.value || !activeTab.value) return;
+
+  const activeIndex = tabs.value.findIndex(tab => tab.key === activeTab.value?.key);
+  if (activeIndex !== -1) {
+    scrollContainer.value.scrollToIndex(activeIndex);
+  }
 }
 </script>
 
