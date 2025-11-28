@@ -29,7 +29,7 @@ $bg-layout: #e5e5e5;
     padding-left: $sider-width;
     height: calc(100% - #{$header-height} - #{$tabs-height});
     flex-grow: 1;
-    overflow: auto;
+    overflow: hidden;
   }
   .layout-sider {
     position: absolute;

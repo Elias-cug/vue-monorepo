@@ -47,6 +47,16 @@ const app1Map: Record<string, Route> = {
       keepAlive: true,
     },
   },
+  'container-card': {
+    path: `${appOnePrefix}/container-card`,
+    name: 'ContainerCard',
+    component: () => import('@/pages/ComponnetShow/ContainerCard/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '容器卡片',
+      keepAlive: true,
+    },
+  },
 };
 
 const apps = { ...app1Map };

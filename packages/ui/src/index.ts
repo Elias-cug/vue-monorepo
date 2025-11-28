@@ -5,12 +5,16 @@
 
 // 导出组件
 export * from './components/code-viewer';
+export * from './components/container';
+export * from './components/card';
 
 // 组件列表（用于整体注册）
 import { CodeViewer } from './components/code-viewer';
+import { Container } from './components/container';
+import { Card } from './components/card';
 import type { App } from 'vue';
 
-const components = [CodeViewer];
+const components = [CodeViewer, Container, Card];
 
 /**
  * 整体注册所有组件

@@ -1,5 +1,5 @@
 <template>
-  <div class="component-show">
+  <LeContainer>
     <n-space vertical :size="24">
       <n-card title="LeCodeViewer 组件示例">
         <n-space vertical :size="16">
@@ -47,7 +47,7 @@
         </n-space>
       </n-card>
     </n-space>
-  </div>
+  </LeContainer>
 </template>
 
 <script setup lang="ts">
@@ -137,22 +137,16 @@ const count = ref(0);
 </script>
 
 <style lang="scss" scoped>
-.component-show {
-  padding: 24px;
-
-  h3 {
-    margin: 0 0 12px 0;
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
-  }
+h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
 }
 
 :global(.dark) {
-  .component-show {
-    h3 {
-      color: #fff;
-    }
+  h3 {
+    color: #fff;
   }
 }
 </style>

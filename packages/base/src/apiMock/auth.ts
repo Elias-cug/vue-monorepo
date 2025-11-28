@@ -15,6 +15,10 @@ export const menusMock = [
         key: 'code-viewer',
         title: '代码查看器',
       },
+      {
+        key: 'container-card',
+        title: '容器卡片',
+      },
     ],
     extraProps: {},
   },
