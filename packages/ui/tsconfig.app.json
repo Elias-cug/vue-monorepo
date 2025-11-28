@@ -7,7 +7,12 @@
     "baseUrl": ".",
     "paths": {
       "@ui/*": ["./src/*"]
-    }
+    },
+    "noEmit": false,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }

@@ -1,0 +1,39 @@
+/**
+ * LeCodeViewer 组件样式
+ */
+
+.le-code-viewer {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #0d1117;
+
+  &__container {
+    display: flex;
+    font-size: 14px;
+    line-height: 1.6;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  &__line-numbers {
+    padding: 16px 0;
+    padding-right: 16px;
+    padding-left: 16px;
+    text-align: right;
+    color: #6e7681;
+    user-select: none;
+    border-right: 1px solid #30363d;
+    background-color: #161b22;
+  }
+
+  &__content {
+    flex: 1;
+    overflow: auto;
+    padding: 16px;
+  }
+
+  &__pre {
+    margin: 0;
+    color: #c9d1d9;
+  }
+}

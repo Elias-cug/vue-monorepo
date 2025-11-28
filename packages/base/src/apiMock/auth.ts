@@ -7,6 +7,17 @@ export const menusMock = [
       params1: '123',
     },
   },
+  {
+    key: 'component-show',
+    title: '组件展示',
+    children: [
+      {
+        key: 'code-viewer',
+        title: '代码查看器',
+      },
+    ],
+    extraProps: {},
+  },
 ];
 
 export const userMock = {

@@ -11,5 +11,9 @@
       "@ui/*": ["../../packages/ui/src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "references": [
+    { "path": "../../packages/base/tsconfig.app.json" },
+    { "path": "../../packages/ui/tsconfig.app.json" }
+  ]
 }

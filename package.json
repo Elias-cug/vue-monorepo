@@ -19,6 +19,7 @@
     "@lee/base": "workspace:^",
     "@lee/ui": "workspace:^",
     "dayjs": "^1.11.19",
+    "highlight.js": "^11.11.1",
     "lodash-es": "^4.17.21",
     "pinia": "^3.0.4",
     "vue": "^3.5.22",
