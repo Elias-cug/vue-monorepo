@@ -29,6 +29,7 @@ export interface AuthState {
   userInfo: UserInfo | null;
   menus: Menu[];
   flatMenus: Menu[];
+  homeMenu: Menu | null;
   btns: Menu[];
   dics: Dics;
   /** 系统配置的参数 */

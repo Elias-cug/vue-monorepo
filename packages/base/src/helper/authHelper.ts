@@ -69,6 +69,12 @@ export function formatFlatMenus(menus: any) {
   return flatMenus;
 }
 
+export function formatHomeMenu(menus: any) {
+  const homeMenu = menus.find((menu: any) => menu.meta?.pinned === true);
+  if (homeMenu) return homeMenu;
+  return menus[0];
+}
+
 export function formatTabItem(route: any) {
   return {
     key: route.fullPath,

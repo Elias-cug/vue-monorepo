@@ -2,7 +2,12 @@ import { defineStore } from 'pinia';
 import { useAppStore } from '@base/store/app';
 import { dynamicRegisterRouter } from '@base/router';
 import type { AuthState, UserInfo, Menu } from '@base/types/auth';
-import { formatMenus, formatFlatMenus, genCachedRoutes } from '@base/helper/authHelper';
+import {
+  formatMenus,
+  formatFlatMenus,
+  formatHomeMenu,
+  genCachedRoutes,
+} from '@base/helper/authHelper';
 import { fetchUserInfo, fetchMenus } from '@base/api/auth';
 
 export const useAuthStore = defineStore('auth', {
@@ -10,6 +15,7 @@ export const useAuthStore = defineStore('auth', {
     ({
       userInfo: null,
       menus: [],
+      homeMenu: null,
       flatMenus: [],
       btns: [],
       // 字典项
@@ -26,6 +32,13 @@ export const useAuthStore = defineStore('auth', {
     },
     setMenus(payload: Menu[]) {
       this.menus = payload;
+    },
+    /**
+     * 设置首页菜单
+     * @param payload 菜单列表
+     */
+    setHomeMenu(payload: Menu | null) {
+      this.homeMenu = payload;
     },
     /**
      * 扁平化菜单并存储
@@ -96,6 +109,7 @@ export const useAuthStore = defineStore('auth', {
       this.setUserInfo(userInfo);
       this.setMenus(formatMenus(menus.data));
       this.setFlatMenus(formatFlatMenus(menus.data));
+      this.setHomeMenu(formatHomeMenu(this.flatMenus));
       this.setBtns(btns);
       this.setDics(dics);
       this.setParams(params);
