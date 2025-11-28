@@ -44,6 +44,11 @@ export const baseViteConfig = {
       // 但建议使用 @vitejs/plugin-legacy 来处理旧浏览器支持
     },
   },
+  server: {
+    fs: {
+      strict: true,
+    },
+  },
 };
 
 export default defineConfig(baseViteConfig);
