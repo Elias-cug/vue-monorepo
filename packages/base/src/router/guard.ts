@@ -92,6 +92,12 @@ export function setGuard(router: Router) {
       return;
     }
 
+    // 首页重定向到 homeMenu
+    if ((to.path === '/' || to.path === '') && authStore.isLoaded && authStore.homeMenu) {
+      next({ path: authStore.homeMenu.path, replace: true });
+      return;
+    }
+
     const tokenFromQuery = (to.query.token as string) || undefined;
     const tokenFromStorage = ls.get<string>(TOKEN_KEY, { ignorePrefix: true });
     // 1. 携带了 token
@@ -105,6 +111,12 @@ export function setGuard(router: Router) {
         try {
           // 使用携带的 token 获取用户信息存储到 auth Store
           await authStore.getAllAuthInfo(token);
+
+          // 如果访问的是首页，重定向到 homeMenu
+          if ((to.path === '/' || to.path === '') && authStore.homeMenu) {
+            next({ path: authStore.homeMenu.path, replace: true });
+            return;
+          }
 
           // 移除 URL 中的 token
           const newQuery = { ...to.query };
@@ -136,6 +148,12 @@ export function setGuard(router: Router) {
           // 未加载，需要获取用户信息
           try {
             await authStore.getAllAuthInfo(token);
+
+            // 如果访问的是首页，重定向到 homeMenu
+            if ((to.path === '/' || to.path === '') && authStore.homeMenu) {
+              next({ path: authStore.homeMenu.path, replace: true });
+              return;
+            }
 
             // TODO: 不知道为啥刷新后必须设置 targetRoute
             const targetRoute: RouteLocationNormalized = {

@@ -7,7 +7,6 @@ export const useAppStore = defineStore('app', {
     // 初始状态使用默认值，等待 Layout 初始化后恢复
     collapsed: false,
     tabs: [],
-    activeTab: null,
     cachedRoutes: [],
     appInfo: { appId: 'app1', appName: '应用1', appIcon: '' },
   }),
@@ -29,11 +28,6 @@ export const useAppStore = defineStore('app', {
       if (restored.tabs && restored.tabs.length > 0) {
         this.tabs = restored.tabs;
       }
-
-      // 恢复 activeTab
-      if (restored.activeTab) {
-        this.activeTab = restored.activeTab;
-      }
     },
 
     switchCollapsed() {
@@ -44,9 +38,6 @@ export const useAppStore = defineStore('app', {
     // tabs 维护
     setTabs(payload: TabItem[]) {
       this.tabs = payload;
-    },
-    setActiveTab(payload: TabItem) {
-      this.activeTab = payload;
     },
     addTab(payload: TabItem) {
       // 检查 tab 是否已存在
@@ -60,13 +51,11 @@ export const useAppStore = defineStore('app', {
       });
 
       if (existingTab) {
-        // 已存在则更新 activeTab
-        this.activeTab = existingTab;
+        // 已存在，无需添加
         return;
       }
       // 不存在则添加新 tab
       this.tabs.push(payload);
-      this.activeTab = payload;
     },
     updateTab(payload: TabItem) {
       const index = this.tabs.findIndex(tab => tab.key === payload.key);
@@ -78,11 +67,6 @@ export const useAppStore = defineStore('app', {
       // 更新 tab 信息
       const updatedTab = { ...currentTab, ...payload };
       this.tabs[index] = updatedTab;
-
-      // 如果更新的是当前激活的 tab，同步更新 activeTab
-      if (this.activeTab?.key === payload.key) {
-        this.activeTab = updatedTab;
-      }
     },
     updateTabTitle(payload: { key: string; title: string }) {
       const index = this.tabs.findIndex(tab => tab.key === payload.key);
@@ -93,13 +77,8 @@ export const useAppStore = defineStore('app', {
 
       // 只更新 title
       currentTab.title = payload.title;
-
-      // 如果更新的是当前激活的 tab，同步更新 activeTab
-      if (this.activeTab?.key === payload.key) {
-        this.activeTab = { ...this.activeTab, title: payload.title };
-      }
     },
-    removeTab(payload: TabItem) {
+    removeTab(payload: TabItem, currentRouteKey?: string) {
       // 如果 tab 已固定，直接返回
       if (payload.meta?.pinned === true) {
         return;
@@ -108,35 +87,28 @@ export const useAppStore = defineStore('app', {
       const index = this.tabs.findIndex(tab => tab.key === payload.key);
       if (index === -1) return;
 
+      // 如果删除的是当前激活的 tab，需要先记录要跳转的 tab
+      const isCurrentTab = currentRouteKey === payload.key;
+      let nextTab: TabItem | null = null;
+
+      if (isCurrentTab) {
+        // 优先切换到右边的 tab，如果没有则切换到左边的
+        nextTab = this.tabs[index + 1] || this.tabs[index - 1] || null;
+      }
+
       // 删除 tab
       this.tabs.splice(index, 1);
 
-      // 如果删除的是当前激活的 tab，需要切换到其他 tab
-      if (this.activeTab?.key === payload.key) {
-        // 优先切换到右边的 tab，如果没有则切换到左边的
-        const nextTab = this.tabs[index] || this.tabs[index - 1];
-        if (nextTab) {
-          this.activeTab = nextTab;
-        } else {
-          this.activeTab = null;
-        }
-      }
+      // 返回需要跳转的 tab
+      return nextTab;
     },
     removeAllTabs() {
       // 只保留已固定的 tab
       this.tabs = this.tabs.filter(tab => tab.meta?.pinned === true);
-
-      // 如果当前激活的 tab 被删除了，切换到第一个 tab
-      if (this.activeTab && this.activeTab.meta?.pinned !== true) {
-        this.activeTab = this.tabs[0] || null;
-      }
     },
     removeOtherTabs(payload: TabItem) {
       // 保留当前 tab 和已固定的 tab
       this.tabs = this.tabs.filter(tab => tab.key === payload.key || tab.meta?.pinned === true);
-
-      // 设置当前 tab 为激活状态
-      this.activeTab = payload;
     },
 
     // cachedRoutes 维护

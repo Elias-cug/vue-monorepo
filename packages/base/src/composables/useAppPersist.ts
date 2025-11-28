@@ -2,12 +2,14 @@
  * App 状态持久化 composable
  *
  * 功能：
- * 1. 持久化 tabs 和 activeTab
+ * 1. 持久化 tabs
  * 2. 持久化 collapsed（侧边栏折叠状态）
  * 3. 可扩展：未来可以轻松添加更多需要持久化的状态
  *
  * 使用场景：
  * - 在各个 Layout 组件中引入，确保刷新后状态保持
+ *
+ * 注意：activeTab 不再持久化，而是根据当前路由自动计算
  */
 
 import { watch } from 'vue';
@@ -18,7 +20,6 @@ import { ls } from '../storage';
 // 存储键常量
 const STORAGE_KEYS = {
   TABS: 'app-tabs',
-  ACTIVE_TAB: 'app-active-tab',
   COLLAPSED: 'app-collapsed',
   // 未来可以轻松扩展：
   // THEME: 'app-theme',
@@ -31,8 +32,6 @@ const STORAGE_KEYS = {
 interface PersistOptions {
   /** 是否持久化 tabs，默认 true */
   tabs?: boolean;
-  /** 是否持久化 activeTab，默认 true */
-  activeTab?: boolean;
   /** 是否持久化 collapsed，默认 true */
   collapsed?: boolean;
   /** 防抖延迟（毫秒），默认不防抖 */
@@ -46,13 +45,12 @@ interface PersistOptions {
 export function useAppPersist(options: PersistOptions = {}) {
   const {
     tabs: persistTabs = true,
-    activeTab: persistActiveTab = true,
     collapsed: persistCollapsed = true,
     debounce: debounceTime = 0,
   } = options;
 
   const appStore = useAppStore();
-  const { tabs, activeTab, collapsed } = storeToRefs(appStore);
+  const { tabs, collapsed } = storeToRefs(appStore);
 
   // 创建保存函数（可选防抖）
   const createSaver = (key: string, getValue: () => any) => {
@@ -75,12 +73,6 @@ export function useAppPersist(options: PersistOptions = {}) {
     watch(() => tabs.value, saveTabs, { deep: true });
   }
 
-  // 持久化 activeTab
-  if (persistActiveTab) {
-    const saveActiveTab = createSaver(STORAGE_KEYS.ACTIVE_TAB, () => activeTab.value);
-    watch(() => activeTab.value, saveActiveTab);
-  }
-
   // 持久化 collapsed
   if (persistCollapsed) {
     const saveCollapsed = createSaver(STORAGE_KEYS.COLLAPSED, () => collapsed.value);
@@ -96,7 +88,6 @@ export function useAppPersist(options: PersistOptions = {}) {
 export function restoreAppState() {
   return {
     tabs: ls.get(STORAGE_KEYS.TABS),
-    activeTab: ls.get(STORAGE_KEYS.ACTIVE_TAB),
     collapsed: ls.get(STORAGE_KEYS.COLLAPSED),
   };
 }

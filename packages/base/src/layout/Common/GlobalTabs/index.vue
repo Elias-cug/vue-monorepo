@@ -45,9 +45,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { Close } from '@vicons/ionicons5';
 import { useAppStore } from '../../../store/app';
 import type { TabItem } from '../../../types/app';
@@ -55,18 +55,28 @@ import ScrollableContainer from './ScrollableContainer.vue';
 
 const appStore = useAppStore();
 const router = useRouter();
+const route = useRoute();
 
-const { tabs, activeTab } = storeToRefs(appStore);
+const { tabs } = storeToRefs(appStore);
 const scrollContainer = ref<InstanceType<typeof ScrollableContainer> | null>(null);
 
-// 监听 activeTab 变化，自动跳转路由并滚动到对应位置
+// 根据当前路由计算 activeTab
+const activeTab = computed(() => {
+  const currentPath = route.fullPath;
+  const currentRoutePath = route.path;
+
+  // 优先匹配完整路径（fullPath）
+  const matchedTab = tabs.value.find(tab => tab.key === currentPath);
+  if (matchedTab) return matchedTab;
+
+  // 如果没有匹配到，尝试匹配 path（不含 query）
+  return tabs.value.find(tab => tab.path === currentRoutePath) || null;
+});
+
+// 监听路由变化，滚动到对应的 tab
 watch(
-  () => activeTab.value,
-  newTab => {
-    if (newTab && router.currentRoute.value.fullPath !== newTab.key) {
-      router.push(newTab.key);
-    }
-    // 滚动到激活的 tab
+  () => route.fullPath,
+  () => {
     scrollToActiveTab();
   }
 );
@@ -93,25 +103,42 @@ const contextmenuList = ref([
 ]);
 
 function onClose(tab: TabItem) {
-  appStore.removeTab(tab);
+  const nextTab = appStore.removeTab(tab, route.fullPath);
   closeMenu();
+  // 如果删除的是当前激活的 tab，跳转到下一个 tab
+  if (nextTab) {
+    router.push(nextTab.key);
+  }
 }
 function onCloseOthers(tab: TabItem) {
   appStore.removeOtherTabs(tab);
   closeMenu();
+  // 确保跳转到当前 tab
+  if (route.fullPath !== tab.key) {
+    router.push(tab.key);
+  }
 }
 function onCloseAll() {
   appStore.removeAllTabs();
   closeMenu();
+  // 关闭所有 tab 后，跳转到第一个固定的 tab 或 homeMenu
+  const firstTab = appStore.tabs[0];
+  if (firstTab && route.fullPath !== firstTab.key) {
+    router.push(firstTab.key);
+  }
 }
 
 function onClickTab(tab: TabItem) {
-  appStore.setActiveTab(tab);
+  // 直接跳转路由，activeTab 会自动根据路由计算
   router.push(tab.key);
 }
 
 function onClickCloseTab(tab: TabItem) {
-  appStore.removeTab(tab);
+  const nextTab = appStore.removeTab(tab, route.fullPath);
+  // 如果删除的是当前激活的 tab，跳转到下一个 tab
+  if (nextTab) {
+    router.push(nextTab.key);
+  }
 }
 function onContextmenuTab(e: MouseEvent, tab: any) {
   openMenuAt(e.clientX, e.clientY, tab);

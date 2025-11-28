@@ -23,7 +23,6 @@ export interface AppInfo {
 export interface AppState {
   collapsed: boolean;
   tabs: TabItem[];
-  activeTab: TabItem | null;
   cachedRoutes: string[];
   appInfo: AppInfo | null;
 }
