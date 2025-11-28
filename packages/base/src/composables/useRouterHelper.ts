@@ -17,7 +17,7 @@ export function useRouterHelper() {
   /**
    * 退出登录
    * 1. 清除 token
-   * 2. 清除持久化状态（tabs、activeTab、collapsed）
+   * 2. 清除持久化状态（tabs、collapsed）
    * 3. 清除缓存路由
    * 4. 跳转到登录页
    * @param redirect 是否保留当前路由作为重定向参数，默认 true
@@ -31,7 +31,6 @@ export function useRouterHelper() {
 
     // 清除 store 中的状态
     appStore.setTabs([]);
-    appStore.activeTab = null;
     appStore.clearCachedRoutes();
 
     // 跳转登录页
@@ -51,8 +50,9 @@ export function useRouterHelper() {
    * @param replace 是否使用 replace 模式，默认 false
    */
   function clearCurrentTabAndGo(to: RouteLocationRaw, replace = false) {
-    // 获取当前激活的 tab
-    const currentTab = appStore.activeTab;
+    // 根据当前路由查找对应的 tab
+    const currentPath = route.fullPath;
+    const currentTab = appStore.tabs.find(tab => tab.key === currentPath);
 
     // 先跳转到目标路由
     const navigation = replace ? router.replace(to) : router.push(to);
@@ -60,7 +60,7 @@ export function useRouterHelper() {
     // 跳转成功后，删除当前 tab
     navigation.then(() => {
       if (currentTab) {
-        appStore.removeTab(currentTab);
+        appStore.removeTab(currentTab, currentPath);
       }
     });
   }
@@ -149,9 +149,14 @@ export function useRouterHelper() {
    * 关闭当前 tab 并跳转到前一个或后一个 tab
    */
   function closeCurrentTab() {
-    const currentTab = appStore.activeTab;
+    const currentPath = route.fullPath;
+    const currentTab = appStore.tabs.find(tab => tab.key === currentPath);
     if (currentTab) {
-      appStore.removeTab(currentTab);
+      const nextTab = appStore.removeTab(currentTab, currentPath);
+      // 如果有下一个 tab，跳转过去
+      if (nextTab) {
+        router.push(nextTab.key);
+      }
     }
   }
 
@@ -159,20 +164,33 @@ export function useRouterHelper() {
    * 关闭其他 tabs（保留当前）
    */
   function closeOtherTabs() {
-    const currentTab = appStore.activeTab;
+    const currentPath = route.fullPath;
+    const currentTab = appStore.tabs.find(tab => tab.key === currentPath);
     if (currentTab) {
       appStore.removeOtherTabs(currentTab);
+      // 确保跳转到当前 tab
+      if (route.fullPath !== currentTab.key) {
+        router.push(currentTab.key);
+      }
     }
   }
 
   /**
    * 关闭所有 tabs
-   * @param to 关闭后跳转的路由（支持字符串路径、路由对象），默认不跳转
+   * @param to 关闭后跳转的路由（支持字符串路径、路由对象），默认跳转到第一个 tab
    */
   function closeAllTabs(to?: RouteLocationRaw) {
     appStore.removeAllTabs();
+
     if (to) {
+      // 如果指定了跳转路由，跳转到指定路由
       router.push(to);
+    } else {
+      // 否则跳转到第一个 tab（通常是固定的 tab）
+      const firstTab = appStore.tabs[0];
+      if (firstTab && route.fullPath !== firstTab.key) {
+        router.push(firstTab.key);
+      }
     }
   }
 
