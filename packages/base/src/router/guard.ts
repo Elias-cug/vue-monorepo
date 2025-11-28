@@ -1,7 +1,7 @@
 import type { NavigationGuardNext, RouteLocationNormalized, Router } from 'vue-router';
 import { useAppStore, useAuthStore } from '@base/store';
 import { routeMap } from '@base/router/setupRoutes';
-import { ls, ss } from '@base/storage';
+import { ls } from '@base/storage';
 import { formatTabItem } from '@base/helper/authHelper';
 import { TOKEN_KEY } from '@base/constants';
 
@@ -118,18 +118,8 @@ function handleRoute(
 
 export function setGuard(router: Router) {
   router.beforeEach(async (to, _from, next) => {
-    const appStore = useAppStore();
     const authStore = useAuthStore();
-
-    // TODO: 从路由 params 或 app store 中获取 appId
-    const appId = (to.params.appid as string) || appStore.appInfo?.appId;
-
-    // 设置 storage 的 appId
-    if (appId) {
-      ls.setAppId(appId);
-      ss.setAppId(appId);
-    }
-
+    const appStore = useAppStore();
     if (BLANK_PATH_LIST.includes(to.path)) {
       next();
       return;
@@ -147,6 +137,7 @@ export function setGuard(router: Router) {
         // 从 URL query 中获取 token，需要重新获取用户信息
         try {
           // 使用携带的 token 获取用户信息存储到 auth Store
+          appStore.getAppInfo();
           await authStore.getAllAuthInfo(token);
 
           // 如果访问的是首页，重定向到 homeMenu
@@ -186,6 +177,7 @@ export function setGuard(router: Router) {
         } else {
           // 未加载，需要获取用户信息
           try {
+            appStore.getAppInfo();
             await authStore.getAllAuthInfo(token);
 
             // 如果访问的是首页，重定向到 homeMenu

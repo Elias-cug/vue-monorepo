@@ -1,8 +1,9 @@
 window.APP_CONFIG = {
   appInfo: {
     'vite-vue': {
-      appId: '1',
-      name: 'Vite Vue',
+      id: 'vite-vue',
+      name: 'VUE-MONOREPO',
+      icon: '',
       version: '1.0.0',
       description: 'A Vue.js admin template',
     },

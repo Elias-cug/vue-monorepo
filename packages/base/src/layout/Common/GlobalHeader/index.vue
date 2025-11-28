@@ -2,7 +2,7 @@
   <div class="global-header">
     <div class="global-header-left">
       <img class="global-header-logo" src="../../../assets/logo/vite.svg" alt="" />
-      <h1 class="global-header-title">VUE单体仓库</h1>
+      <h1 class="global-header-title">{{ appInfo?.name }}</h1>
     </div>
     <div class="global-header-right">
       <n-dropdown
@@ -37,9 +37,14 @@ import { ChevronDownOutline, PersonCircleOutline, LogOutOutline } from '@vicons/
 import { useRouterHelper } from '../../../composables';
 import { useAuthStore } from '../../../store/auth';
 import { storeToRefs } from 'pinia';
+import { useAppStore } from '../../../store/app';
 
 const authStore = useAuthStore();
 const { userInfo } = storeToRefs(authStore);
+
+const appStore = useAppStore();
+const { appInfo } = storeToRefs(appStore);
+
 const { logout } = useRouterHelper();
 
 // 下拉菜单展开状态

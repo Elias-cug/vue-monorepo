@@ -14,9 +14,9 @@ export interface TabItem {
 }
 
 export interface AppInfo {
-  appId: string;
-  appName: string;
-  appIcon: string;
+  id: string;
+  name: string;
+  icon: string;
   theme?: string;
 }
 

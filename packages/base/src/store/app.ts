@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import type { TabItem, AppInfo, AppState } from '@base/types/app.ts';
 import { restoreAppState } from '../composables/useAppPersist';
+import { getAppInfoFromConfig } from '@base/helper/authHelper';
 
 export const useAppStore = defineStore('app', {
   state: (): AppState => ({
@@ -8,7 +9,7 @@ export const useAppStore = defineStore('app', {
     collapsed: false,
     tabs: [],
     cachedRoutes: [],
-    appInfo: { appId: 'app1', appName: '应用1', appIcon: '' },
+    appInfo: null,
   }),
   getters: {},
   actions: {
@@ -33,8 +34,13 @@ export const useAppStore = defineStore('app', {
     switchCollapsed() {
       this.collapsed = !this.collapsed;
     },
-    setAppInfo(_payload: AppInfo) {},
-
+    setAppInfo(payload: AppInfo) {
+      this.appInfo = payload;
+    },
+    getAppInfo() {
+      const appInfo = getAppInfoFromConfig();
+      this.setAppInfo(appInfo);
+    },
     // tabs 维护
     setTabs(payload: TabItem[]) {
       this.tabs = payload;
@@ -110,7 +116,6 @@ export const useAppStore = defineStore('app', {
       // 保留当前 tab 和已固定的 tab
       this.tabs = this.tabs.filter(tab => tab.key === payload.key || tab.meta?.pinned === true);
     },
-
     // cachedRoutes 维护
     setCachedRoutes(payload: string[]) {
       this.cachedRoutes = payload;

@@ -103,4 +103,44 @@ export function genMenuInfo(menuInfo: any, routeInfo: any) {
   };
 }
 
-export function getAppInfo(appKey?: string) {}
+/**
+ * 获取应用信息
+ * @param appKey 可选的应用key，如果不传则根据hash路由自动获取
+ * @returns 应用配置信息
+ */
+export function getAppInfoFromConfig(appKey?: string) {
+  // 获取全局配置
+  const appConfig = (window as any).APP_CONFIG?.appInfo || {};
+  const appKeys = Object.keys(appConfig);
+
+  // 没有配置，返回null
+  if (appKeys.length === 0) {
+    return null;
+  }
+
+  // 场景1: 如果配置中只有一个app，直接返回
+  if (appKeys.length === 1) {
+    return appConfig[appKeys[0]!];
+  }
+
+  // 场景2: 有多个app时
+  let targetAppKey = appKey;
+
+  // 如果没有传入appKey，则从hash路由中获取
+  if (!targetAppKey) {
+    // hash模式：从 #/appId/xxx 中提取 appId
+    const hash = window.location.hash;
+    // 移除开头的 # 和 /，然后获取第一层路径
+    const hashPath = hash.replace(/^#\/?/, '');
+    const firstSegment = hashPath.split('/')[0];
+    targetAppKey = firstSegment;
+  }
+
+  // 尝试匹配配置中的app
+  if (targetAppKey && appConfig[targetAppKey]) {
+    return appConfig[targetAppKey];
+  }
+
+  // 匹配不到，返回配置中的第一项
+  return appConfig[appKeys[0]!];
+}
