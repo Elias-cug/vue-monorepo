@@ -10,7 +10,7 @@
     >
       <span class="tab-label">{{ tab.title }}</span>
       <n-icon-wrapper
-        v-if="tab.pinned !== true"
+        v-if="tab.meta?.pinned !== true"
         class="tab-close"
         :color="activeTab?.key === tab.key ? '#b5bdc7' : '#8c939c'"
         :border-radius="0"

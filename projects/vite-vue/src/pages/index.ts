@@ -2,32 +2,24 @@
  * @description 提供可被动态注册的路由页面并与固定路由合并
  */
 
+import type { Route } from '@lee/base/src/types/route';
 import { setupRoutesBase } from '@lee/base/src/router/setupRoutes';
 import { NIcon } from 'naive-ui';
 import { h } from 'vue';
-import {
-  FishOutline as FishIcon,
-  FlaskOutline as FlaskIcon,
-  TabletPortraitOutline as TabIcon,
-  GitNetworkOutline as RouterIcon,
-  LayersOutline as CacheIcon,
-  DocumentOutline as DetailIcon,
-  LockClosedOutline as FixedIcon,
-} from '@vicons/ionicons5';
+import { FishOutline as FishIcon, FlaskOutline as FlaskIcon } from '@vicons/ionicons5';
 
 function renderIcon(icon: any) {
   return () => h(NIcon, null, { default: () => h(icon) });
 }
 const appOnePrefix = '/app1';
 
-const app1Map = {
+const app1Map: Record<string, Route> = {
   main: {
     path: `${appOnePrefix}/main`,
     name: 'Main',
     component: () => import('@/pages/Main/index.vue'),
     meta: {
       layout: 'basic',
-      menuKey: 'main',
       title: '首页',
       keepAlive: true,
       icon: renderIcon(FishIcon),
@@ -39,7 +31,6 @@ const app1Map = {
     redirect: `${appOnePrefix}/auth/users`,
     component: () => import('@/pages/Auth/index.vue'),
     meta: {
-      menuKey: 'auth',
       title: '权限管理',
       icon: renderIcon(FishIcon),
     },
@@ -49,7 +40,6 @@ const app1Map = {
     name: 'Users',
     component: () => import('@/pages/Auth/Users/index.vue'),
     meta: {
-      menuKey: 'users',
       title: '用户管理',
     },
   },
@@ -58,7 +48,6 @@ const app1Map = {
     name: 'Menus',
     component: () => import('@/pages/Auth/Menus/index.vue'),
     meta: {
-      menuKey: 'menus',
       title: '菜单管理',
     },
   },
@@ -67,7 +56,6 @@ const app1Map = {
     name: 'Rules',
     component: () => import('@/pages/Auth/Rules/index.vue'),
     meta: {
-      menuKey: 'rules',
       title: '角色管理',
     },
   },
@@ -79,7 +67,6 @@ const app1Map = {
     redirect: `${appOnePrefix}/test/tab`,
     component: () => import('@/pages/Test/index.vue'),
     meta: {
-      menuKey: 'test',
       title: '功能测试',
       icon: renderIcon(FlaskIcon),
     },
@@ -89,7 +76,6 @@ const app1Map = {
     name: 'TabTest',
     component: () => import('@/pages/Test/TabTest/index.vue'),
     meta: {
-      menuKey: 'tabTest',
       title: 'Tab 测试',
       keepAlive: true,
     },
@@ -99,7 +85,6 @@ const app1Map = {
     name: 'RouterTest',
     component: () => import('@/pages/Test/RouterTest/index.vue'),
     meta: {
-      menuKey: 'routerTest',
       title: 'RouterHelper 测试',
       keepAlive: true,
     },
@@ -109,7 +94,6 @@ const app1Map = {
     name: 'CacheTest',
     component: () => import('@/pages/Test/CacheTest/index.vue'),
     meta: {
-      menuKey: 'cacheTest',
       title: '缓存测试',
       keepAlive: true,
     },
@@ -119,7 +103,6 @@ const app1Map = {
     name: 'NoCacheTest',
     component: () => import('@/pages/Test/NoCacheTest/index.vue'),
     meta: {
-      menuKey: 'noCacheTest',
       title: '无缓存测试',
       keepAlive: false,
     },
@@ -129,7 +112,6 @@ const app1Map = {
     name: 'DetailTest',
     component: () => import('@/pages/Test/DetailTest/index.vue'),
     meta: {
-      menuKey: 'detailTest',
       title: '详情测试',
       keepAlive: true,
       multiTab: true, // 多实例 Tab，同一路由不同参数可打开多个 Tab
@@ -140,7 +122,6 @@ const app1Map = {
     name: 'FixedTest',
     component: () => import('@/pages/Test/FixedTest/index.vue'),
     meta: {
-      menuKey: 'fixedTest',
       title: '固定 Tab 测试',
     },
   },

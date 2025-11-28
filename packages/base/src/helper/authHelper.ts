@@ -12,6 +12,12 @@ export function mergeMenuNode(menuNode: any, routeInfo: any) {
   return {
     ...menuNode,
     ...routeInfo,
+    meta: {
+      ...routeInfo.meta,
+      title: menuNode.title || routeInfo.meta?.title,
+      hidden: menuNode.hidden ?? routeInfo.meta?.hidden,
+      pinned: menuNode.pinned ?? routeInfo.meta?.pinned,
+    },
   };
 }
 
@@ -53,7 +59,7 @@ export function formatFlatMenus(menus: any) {
   const flatMenus: any[] = [];
   const dfs = (menus: any) => {
     menus.forEach((menu: any) => {
-      flatMenus.push({ ...routeMap[menu.key], ...menu });
+      flatMenus.push({ ...mergeMenuNode(menu, routeMap[menu.key]) });
       if (menu.children) {
         dfs(menu.children);
       }
@@ -61,6 +67,16 @@ export function formatFlatMenus(menus: any) {
   };
   dfs(menus);
   return flatMenus;
+}
+
+export function formatTabItem(route: any) {
+  return {
+    key: route.fullPath,
+    title: route.meta?.title,
+    path: route.path,
+    query: route.query,
+    meta: route.meta,
+  };
 }
 
 export function formatBtns(btns: any) {
