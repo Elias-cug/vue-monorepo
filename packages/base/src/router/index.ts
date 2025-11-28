@@ -1,10 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import { setGuard } from './guard';
 import { constantRoutes } from './constant';
 import { dynamicRoutes } from './dynamic';
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [...constantRoutes],
 });
 
