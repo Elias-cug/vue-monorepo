@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import Components from 'unplugin-vue-components/vite';
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
 import Unocss from 'unocss/vite';
@@ -12,6 +13,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export const baseViteConfig = {
   plugins: [
     vue(),
+    vueJsx(),
     Components({
       resolvers: [NaiveUiResolver()],
     }),
@@ -27,6 +29,7 @@ export const baseViteConfig = {
     alias: {
       '@': resolve(__dirname, './src'),
       '@base': resolve(__dirname, './packages/base/src'),
+      '@ui': resolve(__dirname, './packages/ui/src'),
     },
   },
   build: {

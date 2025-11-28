@@ -17,6 +17,8 @@ export interface AppInfo {
   id: string;
   name: string;
   icon: string;
+  version?: string;
+  description?: string;
   theme?: string;
 }
 

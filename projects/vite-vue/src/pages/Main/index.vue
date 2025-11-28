@@ -16,57 +16,81 @@
     <!-- Store 信息展示 -->
     <div class="info-section">
       <h2 class="section-title">Store 信息</h2>
-      <n-grid :cols="3" :x-gap="16" :y-gap="16">
+      <n-grid :cols="4" :x-gap="16" :y-gap="16">
+        <!-- 应用信息 -->
+        <n-grid-item>
+          <n-card title="应用信息" hoverable class="store-info-card">
+            <div class="card-content">
+              <n-descriptions :column="1" label-placement="left">
+                <n-descriptions-item label="应用 ID">
+                  {{ appStore.appInfo?.id || '-' }}
+                </n-descriptions-item>
+                <n-descriptions-item label="应用名称">
+                  {{ appStore.appInfo?.name || '-' }}
+                </n-descriptions-item>
+                <n-descriptions-item label="版本">
+                  {{ appStore.appInfo?.version || '-' }}
+                </n-descriptions-item>
+              </n-descriptions>
+            </div>
+          </n-card>
+        </n-grid-item>
         <!-- 用户信息 -->
         <n-grid-item>
-          <n-card title="用户信息" hoverable>
-            <n-descriptions :column="1" label-placement="left">
-              <n-descriptions-item label="用户名">
-                {{ userInfo?.name || '-' }}
-              </n-descriptions-item>
-              <n-descriptions-item label="邮箱">
-                {{ userInfo?.email || '-' }}
-              </n-descriptions-item>
-              <n-descriptions-item label="登录状态">
-                <n-tag :type="authStore.isLoaded ? 'success' : 'error'">
-                  {{ authStore.isLoaded ? '已登录' : '未登录' }}
-                </n-tag>
-              </n-descriptions-item>
-            </n-descriptions>
+          <n-card title="用户信息" hoverable class="store-info-card">
+            <div class="card-content">
+              <n-descriptions :column="1" label-placement="left">
+                <n-descriptions-item label="用户名">
+                  {{ userInfo?.name || '-' }}
+                </n-descriptions-item>
+                <n-descriptions-item label="邮箱">
+                  {{ userInfo?.email || '-' }}
+                </n-descriptions-item>
+                <n-descriptions-item label="登录状态">
+                  <n-tag :type="authStore.isLoaded ? 'success' : 'error'">
+                    {{ authStore.isLoaded ? '已登录' : '未登录' }}
+                  </n-tag>
+                </n-descriptions-item>
+              </n-descriptions>
+            </div>
           </n-card>
         </n-grid-item>
 
         <!-- 菜单信息 -->
         <n-grid-item>
-          <n-card title="菜单信息" hoverable>
-            <n-descriptions :column="1" label-placement="left">
-              <n-descriptions-item label="菜单总数">
-                {{ authStore.flatMenus.length }}
-              </n-descriptions-item>
-              <n-descriptions-item label="首页菜单">
-                {{ authStore.homeMenu?.title || '-' }}
-              </n-descriptions-item>
-              <n-descriptions-item label="根菜单">
-                {{ authStore.menus.length }}
-              </n-descriptions-item>
-            </n-descriptions>
+          <n-card title="菜单信息" hoverable class="store-info-card">
+            <div class="card-content">
+              <n-descriptions :column="1" label-placement="left">
+                <n-descriptions-item label="菜单总数">
+                  {{ authStore.flatMenus.length }}
+                </n-descriptions-item>
+                <n-descriptions-item label="首页菜单">
+                  {{ authStore.homeMenu?.title || '-' }}
+                </n-descriptions-item>
+                <n-descriptions-item label="根菜单">
+                  {{ authStore.menus.length }}
+                </n-descriptions-item>
+              </n-descriptions>
+            </div>
           </n-card>
         </n-grid-item>
 
         <!-- Tab 信息 -->
         <n-grid-item>
-          <n-card title="Tab 信息" hoverable>
-            <n-descriptions :column="1" label-placement="left">
-              <n-descriptions-item label="打开的 Tab">
-                {{ appStore.tabs.length }}
-              </n-descriptions-item>
-              <n-descriptions-item label="当前 Tab">
-                {{ activeTab?.title || '-' }}
-              </n-descriptions-item>
-              <n-descriptions-item label="缓存页面">
-                {{ appStore.cachedRoutes.length }}
-              </n-descriptions-item>
-            </n-descriptions>
+          <n-card title="Tab 信息" hoverable class="store-info-card">
+            <div class="card-content">
+              <n-descriptions :column="1" label-placement="left">
+                <n-descriptions-item label="打开的 Tab">
+                  {{ appStore.tabs.length }}
+                </n-descriptions-item>
+                <n-descriptions-item label="当前 Tab">
+                  {{ activeTab?.title || '-' }}
+                </n-descriptions-item>
+                <n-descriptions-item label="缓存页面">
+                  {{ appStore.cachedRoutes.length }}
+                </n-descriptions-item>
+              </n-descriptions>
+            </div>
           </n-card>
         </n-grid-item>
       </n-grid>
@@ -143,6 +167,43 @@ const activeTab = computed(() => {
 
   .info-section {
     margin-bottom: 32px;
+
+    .store-info-card {
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+
+      :deep(.n-card__content) {
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-content {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: #888;
+          border-radius: 3px;
+
+          &:hover {
+            background: #555;
+          }
+        }
+      }
+    }
   }
 
   .capabilities-section {
