@@ -77,8 +77,11 @@
  * 包含登录表单的 UI 展示和基础交互逻辑
  */
 import { ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 import type { FormInst, FormRules } from 'naive-ui';
 import { PersonOutline, LockClosedOutline } from '@vicons/ionicons5';
+
+const router = useRouter();
 
 // 表单引用
 const formRef = ref<FormInst | null>(null);
@@ -101,13 +104,25 @@ const rules: FormRules = {
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
 };
 
-// 登录处理（仅 UI 逻辑，不包含实际业务）
+// 登录处理（携带临时 token 跳转到 homeMenu）
 function handleLogin() {
   formRef.value?.validate(errors => {
     if (!errors) {
       loading.value = true;
+
+      // 模拟登录成功，生成临时 token
       setTimeout(() => {
         loading.value = false;
+
+        // 这里应该从登录接口获取真实的 token
+        // 现在使用临时 token 进行演示
+        const tempToken = 'temp_token_' + Date.now();
+
+        // 携带 token 跳转，guard.ts 会处理并跳转到 homeMenu
+        router.push({
+          path: '/',
+          query: { token: tempToken },
+        });
       }, 1500);
     }
   });

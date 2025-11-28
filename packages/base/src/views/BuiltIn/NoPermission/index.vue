@@ -22,9 +22,7 @@
           </template>
           返回首页
         </n-button>
-        <n-button size="large" class="secondary-btn" @click="handleGoBack">
-          返回上页
-        </n-button>
+        <n-button size="large" class="secondary-btn" @click="handleGoBack">返回上页</n-button>
       </div>
     </div>
   </div>
@@ -37,11 +35,18 @@
  */
 import { useRouter } from 'vue-router';
 import { ArrowBackOutline } from '@vicons/ionicons5';
+import { useAuthStore } from '@base/store';
 
 const router = useRouter();
+const authStore = useAuthStore();
 
 function handleBack() {
-  router.push('/');
+  // 跳转到 homeMenu
+  if (authStore.homeMenu && authStore.homeMenu.path) {
+    router.push(authStore.homeMenu.path);
+  } else {
+    router.push('/');
+  }
 }
 
 function handleGoBack() {
