@@ -100,8 +100,8 @@ export const useAppStore = defineStore('app', {
       }
     },
     removeTab(payload: TabItem) {
-      // 如果 tab 不可关闭，直接返回
-      if (payload.closable === false) {
+      // 如果 tab 已固定，直接返回
+      if (payload.pinned === true) {
         return;
       }
 
@@ -123,17 +123,17 @@ export const useAppStore = defineStore('app', {
       }
     },
     removeAllTabs() {
-      // 只保留不可关闭的 tab
-      this.tabs = this.tabs.filter(tab => tab.closable === false);
+      // 只保留已固定的 tab
+      this.tabs = this.tabs.filter(tab => tab.pinned === true);
 
       // 如果当前激活的 tab 被删除了，切换到第一个 tab
-      if (this.activeTab && this.activeTab.closable !== false) {
+      if (this.activeTab && this.activeTab.pinned !== true) {
         this.activeTab = this.tabs[0] || null;
       }
     },
     removeOtherTabs(payload: TabItem) {
-      // 保留当前 tab 和不可关闭的 tab
-      this.tabs = this.tabs.filter(tab => tab.key === payload.key || tab.closable === false);
+      // 保留当前 tab 和已固定的 tab
+      this.tabs = this.tabs.filter(tab => tab.key === payload.key || tab.pinned === true);
 
       // 设置当前 tab 为激活状态
       this.activeTab = payload;

@@ -1,15 +1,13 @@
 <!--
   固定 Tab 测试页面
-  用于测试 closable: false 功能
+  用于测试 pinned: true 功能
 -->
 <template>
   <div class="fixed-test">
     <n-card title="固定 Tab 测试" class="mb-4">
       <n-alert type="warning" class="mb-4">
-        <template #header>
-          🔒 这是一个不可关闭的固定 Tab
-        </template>
-        本页面配置了 closable: false，无法通过点击关闭按钮关闭
+        <template #header>🔒 这是一个不可关闭的固定 Tab</template>
+        本页面配置了 pinned: true，无法通过点击关闭按钮关闭
       </n-alert>
 
       <n-space vertical>
@@ -24,15 +22,9 @@
 
         <n-card title="操作" size="small">
           <n-space>
-            <n-button type="primary" @click="goToTabTest">
-              返回 Tab 测试页
-            </n-button>
-            <n-button type="warning" @click="closeOtherTabs">
-              关闭其他 Tabs
-            </n-button>
-            <n-button type="error" @click="closeAllTabs">
-              关闭所有 Tabs (我应该保留)
-            </n-button>
+            <n-button type="primary" @click="goToTabTest">返回 Tab 测试页</n-button>
+            <n-button type="warning" @click="closeOtherTabs">关闭其他 Tabs</n-button>
+            <n-button type="error" @click="closeAllTabs">关闭所有 Tabs (我应该保留)</n-button>
           </n-space>
         </n-card>
       </n-space>
@@ -43,7 +35,7 @@
 <script setup lang="ts">
 /**
  * 固定 Tab 测试页面组件
- * 配置 closable: false，Tab 不可关闭
+ * 配置 pinned: true，Tab 不可关闭
  */
 import { useRouterHelper } from '@lee/base';
 
@@ -64,4 +56,3 @@ function goToTabTest() {
   @apply p-4;
 }
 </style>
-

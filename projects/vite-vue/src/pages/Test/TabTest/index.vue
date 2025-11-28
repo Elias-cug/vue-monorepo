@@ -13,15 +13,9 @@
         <!-- Tab 基本操作 -->
         <n-card title="基本操作" size="small">
           <n-space>
-            <n-button type="primary" @click="closeCurrentTab">
-              关闭当前 Tab
-            </n-button>
-            <n-button type="warning" @click="closeOtherTabs">
-              关闭其他 Tabs
-            </n-button>
-            <n-button type="error" @click="closeAllTabs">
-              关闭所有 Tabs
-            </n-button>
+            <n-button type="primary" @click="closeCurrentTab">关闭当前 Tab</n-button>
+            <n-button type="warning" @click="closeOtherTabs">关闭其他 Tabs</n-button>
+            <n-button type="error" @click="closeAllTabs">关闭所有 Tabs</n-button>
           </n-space>
         </n-card>
 
@@ -29,9 +23,7 @@
         <n-card title="更新 Tab 标题" size="small">
           <n-space>
             <n-input v-model:value="newTitle" placeholder="输入新标题" style="width: 200px" />
-            <n-button type="info" @click="updateCurrentTabTitle">
-              更新当前 Tab 标题
-            </n-button>
+            <n-button type="info" @click="updateCurrentTabTitle">更新当前 Tab 标题</n-button>
           </n-space>
         </n-card>
 
@@ -41,27 +33,17 @@
             multiTab 为 true 时，同一页面不同参数会打开多个 Tab
           </n-alert>
           <n-space>
-            <n-button @click="openMultiTabDetail(1)">
-              打开详情 #1
-            </n-button>
-            <n-button @click="openMultiTabDetail(2)">
-              打开详情 #2
-            </n-button>
-            <n-button @click="openMultiTabDetail(3)">
-              打开详情 #3
-            </n-button>
+            <n-button @click="openMultiTabDetail(1)">打开详情 #1</n-button>
+            <n-button @click="openMultiTabDetail(2)">打开详情 #2</n-button>
+            <n-button @click="openMultiTabDetail(3)">打开详情 #3</n-button>
           </n-space>
         </n-card>
 
-        <!-- 不可关闭 Tab 测试 -->
-        <n-card title="固定 Tab (closable: false) 测试" size="small">
-          <n-alert type="warning" class="mb-2">
-            closable 为 false 时，Tab 不能被关闭
-          </n-alert>
+        <!-- 固定 Tab 测试 -->
+        <n-card title="固定 Tab (pinned: true) 测试" size="small">
+          <n-alert type="warning" class="mb-2">pinned 为 true 时，Tab 不能被关闭</n-alert>
           <n-space>
-            <n-button type="primary" @click="openFixedTab">
-              打开固定 Tab 页面
-            </n-button>
+            <n-button type="primary" @click="openFixedTab">打开固定 Tab 页面</n-button>
           </n-space>
         </n-card>
 
@@ -78,11 +60,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="tab in tabs" :key="tab.key" :class="{ 'active-row': tab.key === activeTab?.key }">
+              <tr
+                v-for="tab in tabs"
+                :key="tab.key"
+                :class="{ 'active-row': tab.key === activeTab?.key }"
+              >
                 <td>{{ tab.key }}</td>
                 <td>{{ tab.title }}</td>
                 <td>{{ tab.path }}</td>
-                <td>{{ tab.closable === false ? '否' : '是' }}</td>
+                <td>{{ tab.pinned === true ? '否' : '是' }}</td>
                 <td>{{ tab.multiTab ? '是' : '否' }}</td>
               </tr>
             </tbody>
@@ -143,4 +129,3 @@ function openFixedTab() {
   }
 }
 </style>
-

@@ -173,7 +173,7 @@ export function setGuard(router: Router) {
       title: (to.meta?.title as string) || '未命名',
       path: to.path,
       query: to.query as Record<string, any>,
-      closable: to.meta?.closable !== false, // 默认可关闭
+      pinned: to.meta?.pinned === true, // 默认不固定
       multiTab: to.meta?.multiTab as boolean | undefined, // 是否支持多标签页
       meta: to.meta as Record<string, any>,
     };

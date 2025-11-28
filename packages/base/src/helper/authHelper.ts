@@ -47,3 +47,14 @@ export function formatParam(params: any) {
 export function genCachedRoutes(menus: any[]) {
   return menus.filter((menu: any) => menu.meta?.keepAlive === true).map((menu: any) => menu.name);
 }
+
+export function genMenuInfo(menuInfo: any, routeInfo: any) {
+  return {
+    ...menuInfo,
+    ...routeInfo,
+    meta: {
+      ...menuInfo.meta,
+      ...routeInfo.meta,
+    },
+  };
+}

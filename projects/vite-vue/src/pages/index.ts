@@ -124,7 +124,6 @@ const app1Map = {
     meta: {
       menuKey: 'fixedTest',
       title: '固定 Tab 测试',
-      closable: false, // 不可关闭的 Tab
     },
   },
 };

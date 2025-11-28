@@ -15,9 +15,11 @@ import { useRouterHelper } from '@lee/base';
 退出登录，清除所有状态并跳转到登录页。
 
 **参数：**
+
 - `redirect?: boolean` - 是否保留当前路由作为重定向参数，默认 `true`
 
 **功能：**
+
 - ✅ 清除 token
 - ✅ 清除持久化状态（tabs、activeTab、collapsed）
 - ✅ 清除缓存路由
@@ -54,6 +56,7 @@ function handleLogoutNoRedirect() {
 关闭当前 tab 并跳转到指定路由。
 
 **参数：**
+
 - `to: RouteLocationRaw` - 要跳转的路由（支持字符串路径、路由对象）
 - `replace?: boolean` - 是否使用 replace 模式，默认 `false`
 
@@ -77,17 +80,17 @@ function goToHome() {
 
 // 路径对象 + 查询参数
 function goToDetail() {
-  clearCurrentTabAndGo({ 
+  clearCurrentTabAndGo({
     path: '/detail/123',
-    query: { tab: 'info' }
+    query: { tab: 'info' },
   });
 }
 
 // 命名路由 + params
 function goToUser() {
-  clearCurrentTabAndGo({ 
+  clearCurrentTabAndGo({
     name: 'UserDetail',
-    params: { id: '123' }
+    params: { id: '123' },
   });
 }
 
@@ -105,6 +108,7 @@ function goToHomeReplace() {
 清除指定路由的 keepalive 缓存并跳转，用于强制刷新页面。
 
 **参数：**
+
 - `to: RouteLocationRaw` - 要跳转的路由（支持字符串路径、路由对象）
 - `componentName?: string` - 要清除缓存的组件名称，默认使用路由的 name
 - `replace?: boolean` - 是否使用 replace 模式，默认 `false`
@@ -128,17 +132,17 @@ function reloadDetail() {
 
 // 带查询参数
 function reloadDetailWithQuery() {
-  clearCacheAndGo({ 
+  clearCacheAndGo({
     path: '/detail/123',
-    query: { refresh: Date.now() }
+    query: { refresh: Date.now() },
   });
 }
 
 // 命名路由 + params
 function reloadUserProfile() {
-  clearCacheAndGo({ 
+  clearCacheAndGo({
     name: 'UserProfile',
-    params: { userId: '456' }
+    params: { userId: '456' },
   });
 }
 
@@ -161,6 +165,7 @@ function reloadDetailWithName() {
 清除所有 keepalive 缓存并跳转。
 
 **参数：**
+
 - `to: RouteLocationRaw` - 要跳转的路由（支持字符串路径、路由对象）
 - `replace?: boolean` - 是否使用 replace 模式，默认 `false`
 
@@ -179,9 +184,9 @@ function resetAndGoHome() {
 
 // 带查询参数
 function resetAndGoHomeWithQuery() {
-  clearAllCacheAndGo({ 
+  clearAllCacheAndGo({
     path: '/home',
-    query: { reset: 'true' }
+    query: { reset: 'true' },
   });
 }
 
@@ -271,6 +276,7 @@ function closeOthers() {
 关闭所有 tabs（保留不可关闭的 tabs），可选择性跳转到指定路由。
 
 **参数：**
+
 - `to?: RouteLocationRaw` - 关闭后跳转的路由（支持字符串路径、路由对象），默认不跳转
 
 **示例：**
@@ -299,9 +305,9 @@ function closeAllAndGoHome() {
 
 // 带查询参数
 function closeAllAndGoDetail() {
-  closeAllTabs({ 
+  closeAllTabs({
     path: '/detail/123',
-    query: { from: 'reset' }
+    query: { from: 'reset' },
   });
 }
 
@@ -360,13 +366,13 @@ console.log(route.params);
 import { useRouterHelper } from '@lee/base';
 import { useDialog } from 'naive-ui';
 
-const { 
-  logout, 
-  refreshCurrentPage, 
-  closeCurrentTab, 
-  closeOtherTabs, 
+const {
+  logout,
+  refreshCurrentPage,
+  closeCurrentTab,
+  closeOtherTabs,
   closeAllTabs,
-  clearCacheAndGo 
+  clearCacheAndGo,
 } = useRouterHelper();
 
 const dialog = useDialog();
@@ -390,7 +396,7 @@ function handleCloseOtherTabs() {
     negativeText: '取消',
     onPositiveClick: () => {
       closeOtherTabs();
-    }
+    },
   });
 }
 
@@ -403,7 +409,7 @@ function handleCloseAllTabs() {
     negativeText: '取消',
     onPositiveClick: () => {
       closeAllTabs('/home');
-    }
+    },
   });
 }
 
@@ -416,7 +422,7 @@ function handleLogout() {
     negativeText: '取消',
     onPositiveClick: () => {
       logout();
-    }
+    },
   });
 }
 
@@ -424,7 +430,7 @@ function handleLogout() {
 async function handleSave() {
   // 保存逻辑
   await saveData();
-  
+
   // 清除缓存并重新加载当前页
   clearCacheAndGo(route.fullPath);
 }
@@ -445,12 +451,7 @@ async function handleSave() {
 <script setup lang="ts">
 import { useRouterHelper } from '@lee/base';
 
-const { 
-  refreshCurrentPage, 
-  closeCurrentTab, 
-  closeOtherTabs, 
-  closeAllTabs 
-} = useRouterHelper();
+const { refreshCurrentPage, closeCurrentTab, closeOtherTabs, closeAllTabs } = useRouterHelper();
 
 const contextMenuOptions = [
   { label: '刷新', key: 'refresh' },
@@ -527,7 +528,6 @@ if (!hasPermission) {
 
 1. **logout** 会清除所有持久化状态，包括 tabs、collapsed 等
 2. **closeCurrentTab** 会自动跳转到邻近的 tab
-3. **不可关闭的 tab**（`closable: false`）在关闭操作中会被保留
+3. **固定的 tab**（`pinned: true`）在关闭操作中会被保留
 4. **刷新页面** 通过清除 keepalive 缓存实现，不是浏览器刷新
 5. **clearCacheAndGo** 适合在数据更新后强制重新加载页面
-

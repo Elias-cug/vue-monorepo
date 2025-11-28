@@ -7,8 +7,8 @@ export interface TabItem {
   path: string;
   /** Tab 的 query */
   query?: Record<string, any>;
-  /** Tab 是否可关闭 */
-  closable?: boolean;
+  /** Tab 是否固定（固定的 Tab 不可关闭） */
+  pinned?: boolean;
   /** 是否支持多标签页（同一路由不同参数可以打开多个 tab） */
   multiTab?: boolean;
   /** Tab 的元信息 */
