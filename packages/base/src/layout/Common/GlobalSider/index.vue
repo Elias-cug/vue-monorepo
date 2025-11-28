@@ -7,6 +7,7 @@
           :collapsed-width="64"
           :collapsed-icon-size="22"
           :options="menus"
+          :indent="28"
           @update:value="handleMenuClick"
         />
       </n-config-provider>
@@ -59,6 +60,12 @@ const themeOverrides = {
     itemColorActive: '#1890ff',
     // 禁用背景
     itemColorDisabled: '#1890ff',
+
+    // 下拉箭头颜色
+    arrowColor: '#fff',
+    arrowColorHover: '#fff',
+    arrowColorActive: '#fff',
+    arrowColorActiveHover: '#fff',
   },
 };
 
