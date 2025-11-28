@@ -4,6 +4,12 @@ import NoPermission from '@base/views/BuiltIn/NoPermission/index.vue';
 
 export const constantRoutes = [
   {
+    path: '/',
+    name: 'Root',
+    // 空组件，实际导航由 guard.ts 处理
+    component: { template: '<div></div>' },
+  },
+  {
     path: '/login',
     name: 'Login',
     component: Login,
