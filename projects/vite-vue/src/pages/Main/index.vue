@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard">
+  <LeContainer class="dashboard">
     <!-- 欢迎卡片 -->
     <n-card class="welcome-card" size="large">
       <div class="welcome-content">
@@ -14,88 +14,79 @@
     </n-card>
 
     <!-- Store 信息展示 -->
-    <div class="info-section">
-      <h2 class="section-title">Store 信息</h2>
+    <LeCard title="Store 信息" class="info-section">
       <n-grid :cols="4" :x-gap="16" :y-gap="16">
         <!-- 应用信息 -->
         <n-grid-item>
-          <n-card title="应用信息" hoverable class="store-info-card">
-            <div class="card-content">
-              <n-descriptions :column="1" label-placement="left">
-                <n-descriptions-item label="应用 ID">
-                  {{ appStore.appInfo?.id || '-' }}
-                </n-descriptions-item>
-                <n-descriptions-item label="应用名称">
-                  {{ appStore.appInfo?.name || '-' }}
-                </n-descriptions-item>
-                <n-descriptions-item label="版本">
-                  {{ appStore.appInfo?.version || '-' }}
-                </n-descriptions-item>
-              </n-descriptions>
-            </div>
-          </n-card>
+          <LeCard title="应用信息" class="store-info-card app-info">
+            <n-descriptions :column="1" label-placement="left">
+              <n-descriptions-item label="应用 ID">
+                {{ appStore.appInfo?.id || '-' }}
+              </n-descriptions-item>
+              <n-descriptions-item label="应用名称">
+                {{ appStore.appInfo?.name || '-' }}
+              </n-descriptions-item>
+              <n-descriptions-item label="版本">
+                {{ appStore.appInfo?.version || '-' }}
+              </n-descriptions-item>
+            </n-descriptions>
+          </LeCard>
         </n-grid-item>
         <!-- 用户信息 -->
         <n-grid-item>
-          <n-card title="用户信息" hoverable class="store-info-card">
-            <div class="card-content">
-              <n-descriptions :column="1" label-placement="left">
-                <n-descriptions-item label="用户名">
-                  {{ userInfo?.name || '-' }}
-                </n-descriptions-item>
-                <n-descriptions-item label="邮箱">
-                  {{ userInfo?.email || '-' }}
-                </n-descriptions-item>
-                <n-descriptions-item label="登录状态">
-                  <n-tag :type="authStore.isLoaded ? 'success' : 'error'">
-                    {{ authStore.isLoaded ? '已登录' : '未登录' }}
-                  </n-tag>
-                </n-descriptions-item>
-              </n-descriptions>
-            </div>
-          </n-card>
+          <LeCard title="用户信息" class="store-info-card user-info">
+            <n-descriptions :column="1" label-placement="left">
+              <n-descriptions-item label="用户名">
+                {{ userInfo?.name || '-' }}
+              </n-descriptions-item>
+              <n-descriptions-item label="邮箱">
+                {{ userInfo?.email || '-' }}
+              </n-descriptions-item>
+              <n-descriptions-item label="登录状态">
+                <n-tag :type="authStore.isLoaded ? 'success' : 'error'">
+                  {{ authStore.isLoaded ? '已登录' : '未登录' }}
+                </n-tag>
+              </n-descriptions-item>
+            </n-descriptions>
+          </LeCard>
         </n-grid-item>
 
         <!-- 菜单信息 -->
         <n-grid-item>
-          <n-card title="菜单信息" hoverable class="store-info-card">
-            <div class="card-content">
-              <n-descriptions :column="1" label-placement="left">
-                <n-descriptions-item label="菜单总数">
-                  {{ authStore.flatMenus.length }}
-                </n-descriptions-item>
-                <n-descriptions-item label="首页菜单">
-                  {{ authStore.homeMenu?.title || '-' }}
-                </n-descriptions-item>
-                <n-descriptions-item label="根菜单">
-                  {{ authStore.menus.length }}
-                </n-descriptions-item>
-              </n-descriptions>
-            </div>
-          </n-card>
+          <LeCard title="菜单信息" class="store-info-card menu-info">
+            <n-descriptions :column="1" label-placement="left">
+              <n-descriptions-item label="菜单总数">
+                {{ authStore.flatMenus.length }}
+              </n-descriptions-item>
+              <n-descriptions-item label="首页菜单">
+                {{ authStore.homeMenu?.title || '-' }}
+              </n-descriptions-item>
+              <n-descriptions-item label="根菜单">
+                {{ authStore.menus.length }}
+              </n-descriptions-item>
+            </n-descriptions>
+          </LeCard>
         </n-grid-item>
 
         <!-- Tab 信息 -->
         <n-grid-item>
-          <n-card title="Tab 信息" hoverable class="store-info-card">
-            <div class="card-content">
-              <n-descriptions :column="1" label-placement="left">
-                <n-descriptions-item label="打开的 Tab">
-                  {{ appStore.tabs.length }}
-                </n-descriptions-item>
-                <n-descriptions-item label="当前 Tab">
-                  {{ activeTab?.title || '-' }}
-                </n-descriptions-item>
-                <n-descriptions-item label="缓存页面">
-                  {{ appStore.cachedRoutes.length }}
-                </n-descriptions-item>
-              </n-descriptions>
-            </div>
-          </n-card>
+          <LeCard title="Tab 信息" class="store-info-card tab-info">
+            <n-descriptions :column="1" label-placement="left">
+              <n-descriptions-item label="打开的 Tab">
+                {{ appStore.tabs.length }}
+              </n-descriptions-item>
+              <n-descriptions-item label="当前 Tab">
+                {{ activeTab?.title || '-' }}
+              </n-descriptions-item>
+              <n-descriptions-item label="缓存页面">
+                {{ appStore.cachedRoutes.length }}
+              </n-descriptions-item>
+            </n-descriptions>
+          </LeCard>
         </n-grid-item>
       </n-grid>
-    </div>
-  </div>
+    </LeCard>
+  </LeContainer>
 </template>
 
 <script setup lang="ts">
@@ -104,6 +95,7 @@ import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useAppStore, useAuthStore } from '@lee/base/src/store';
 import { SpeedometerOutline } from '@vicons/ionicons5';
+import { Container as LeContainer, Card as LeCard } from '@lee/ui';
 
 defineOptions({
   name: 'Main',
@@ -126,8 +118,7 @@ const activeTab = computed(() => {
 
 <style lang="scss" scoped>
 .dashboard {
-  padding: 24px;
-
+  height: 100%;
   .welcome-card {
     margin-bottom: 24px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -158,50 +149,37 @@ const activeTab = computed(() => {
     }
   }
 
-  .section-title {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0 0 16px 0;
-    color: #333;
-  }
-
   .info-section {
-    margin-bottom: 32px;
-
     .store-info-card {
       height: 200px;
-      display: flex;
-      flex-direction: column;
 
-      :deep(.n-card__content) {
-        flex: 1;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
+      :deep(.le-card__header) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       }
 
-      .card-content {
-        flex: 1;
-        overflow-y: auto;
-        overflow-x: hidden;
+      :deep(.le-card__title) {
+        color: white;
+      }
 
-        &::-webkit-scrollbar {
-          width: 6px;
-        }
+      :deep(.n-descriptions-item__label),
+      :deep(.n-descriptions-item__content) {
+        color: white;
+      }
 
-        &::-webkit-scrollbar-track {
-          background: #f1f1f1;
-          border-radius: 3px;
-        }
+      &.app-info {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
 
-        &::-webkit-scrollbar-thumb {
-          background: #888;
-          border-radius: 3px;
+      &.user-info {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      }
 
-          &:hover {
-            background: #555;
-          }
-        }
+      &.menu-info {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      }
+
+      &.tab-info {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
       }
     }
   }

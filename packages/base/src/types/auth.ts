@@ -11,6 +11,7 @@ export interface Menu {
   query?: Record<string, any>;
   /** 其他属性，存放一些业务属性 */
   extraProps?: Record<string, any>;
+  meta: Record<string, any>;
   /** 前端路径不建议在后端返回 */
   path?: string;
   /** 菜单图标，不建议在后端返回 */
@@ -47,7 +48,7 @@ export interface AuthState {
   menus: Menu[];
   flatMenus: Menu[];
   homeMenu: Menu | null;
-  btns: Menu[];
+  btns: any;
   dics: Dics;
   /** 系统配置的参数 */
   params: Params;
