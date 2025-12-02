@@ -1,4 +1,6 @@
-import type { RouteMeta } from './route';
+import type { menuMeta } from './auth';
+
+export interface TabMeta extends menuMeta {}
 
 export interface TabItem {
   /** Tab 的唯一 key，绑定 fullPath */
@@ -9,8 +11,10 @@ export interface TabItem {
   path: string;
   /** Tab 的 query */
   query?: Record<string, any>;
+  /** Tab 的参数 */
+  params?: Record<string, any>;
   /** Tab 的元信息 */
-  meta?: RouteMeta;
+  meta?: TabMeta;
 }
 
 export interface AppInfo {

@@ -1,3 +1,10 @@
+import type { RouteMeta } from './route';
+
+export interface menuMeta extends RouteMeta {
+  menuKey?: string;
+  extraProps?: Record<string, any>;
+}
+
 export interface Menu {
   /** 唯一值 */
   key: string;
@@ -7,11 +14,11 @@ export interface Menu {
   pinned?: boolean;
   /** 是否隐藏，默认 false */
   hidden?: boolean;
-  /** query */
+  /** 后端配置的query */
   query?: Record<string, any>;
   /** 其他属性，存放一些业务属性 */
   extraProps?: Record<string, any>;
-  meta: Record<string, any>;
+  meta: menuMeta;
   /** 前端路径不建议在后端返回 */
   path?: string;
   /** 菜单图标，不建议在后端返回 */
