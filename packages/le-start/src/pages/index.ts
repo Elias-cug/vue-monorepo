@@ -11,7 +11,7 @@ import { FishOutline as FishIcon, CodeSlashOutline as CodeIcon } from '@vicons/i
 function renderIcon(icon: any) {
   return () => h(NIcon, null, { default: () => h(icon) });
 }
-const appOnePrefix = '/vite-vue';
+const appOnePrefix = '/le-start';
 
 const app1Map: Record<string, Route> = {
   main: {
