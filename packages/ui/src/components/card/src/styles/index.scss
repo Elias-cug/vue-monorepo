@@ -30,9 +30,101 @@
   &__header-extra {
     margin-left: 16px;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   &__content {
     padding: var(--le-card-padding, 16px);
+  }
+
+  // 可折叠卡片样式
+  &--collapsible {
+    .le-card__header {
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+      }
+
+      &:active {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    }
+  }
+
+  // 折叠图标
+  &__collapse-icon {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #666 !important;
+  }
+
+  // 折叠状态下的图标旋转
+  &--collapsed {
+    .le-card__collapse-icon {
+      transform: rotate(-90deg);
+    }
+  }
+}
+
+// 折叠动画
+.le-card-collapse-enter-active {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.le-card-collapse-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 1, 1);
+  overflow: hidden;
+}
+
+.le-card-collapse-enter-from,
+.le-card-collapse-leave-to {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  transform: translateY(-8px);
+}
+
+.le-card-collapse-enter-to,
+.le-card-collapse-leave-from {
+  max-height: 3000px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+// 暗色模式适配
+:global(.dark) {
+  .le-card {
+    background-color: #18181c;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    &__title {
+      color: #fff;
+    }
+
+    &--collapsible {
+      .le-card__header {
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.06);
+        }
+
+        &:active {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+
+    &__collapse-icon {
+      color: #ccc !important;
+    }
   }
 }

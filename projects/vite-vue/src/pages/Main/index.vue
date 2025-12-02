@@ -14,7 +14,7 @@
     </n-card>
 
     <!-- Store 信息展示 -->
-    <LeCard title="Store 信息" class="info-section">
+    <LeCard title="Store 信息" class="info-section" collapsible>
       <n-grid :cols="4" :x-gap="16" :y-gap="16">
         <!-- 应用信息 -->
         <n-grid-item>
@@ -88,7 +88,7 @@
     </LeCard>
 
     <!-- 类型信息展示 -->
-    <LeCard title="类型定义信息" class="type-info-section">
+    <LeCard title="类型定义信息" class="type-info-section" collapsible>
       <n-tabs type="line" animated>
         <n-tab-pane name="appInfo" tab="AppInfo">
           <TypeDisplay :type-info="appInfoType" />
@@ -109,7 +109,7 @@
     </LeCard>
 
     <!-- useRouterHelper 能力展示 -->
-    <LeCard title="useRouterHelper 路由辅助功能" class="router-helper-section">
+    <LeCard title="useRouterHelper 路由辅助功能" class="router-helper-section" collapsible>
       <RouterHelperDemo />
     </LeCard>
   </LeContainer>
