@@ -15,6 +15,7 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
       '@base': resolve(__dirname, '../../packages/base/src'),
       '@ui': resolve(__dirname, '../../packages/ui/src'),
+      '@theme': resolve(__dirname, '../../packages/theme/src'),
     },
   },
 });

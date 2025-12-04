@@ -19,6 +19,7 @@
     "@lee/base": "workspace:^",
     "@lee/ui": "workspace:^",
     "@lee/utils": "workspace:^",
+    "@lee/theme": "workspace:^",
     "dayjs": "^1.11.19",
     "highlight.js": "^11.11.1",
     "lodash-es": "^4.17.21",

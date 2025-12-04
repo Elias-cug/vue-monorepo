@@ -8,11 +8,8 @@
     "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@base/*": ["../../packages/base/src/*"],
-      "@ui/*": ["../../packages/ui/src/*"],
-      "@theme/*": ["../../packages/theme/src/*"]
+      "@theme/*": ["./src/*"]
     }
   },
-  "include": ["vite.config.ts", "../../vite.config.base.ts"]
+  "include": ["../../vite.config.base.ts"]
 }
