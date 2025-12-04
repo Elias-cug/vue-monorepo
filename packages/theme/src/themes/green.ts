@@ -2,7 +2,7 @@ import { createTheme } from '../core/createTheme';
 
 export const green = createTheme(
   'green',
-  '清新绿主题',
+  '绿色',
   false,
   {
     // 背景颜色 - 自然的绿色调
@@ -36,3 +36,6 @@ export const green = createTheme(
   },
   '清新自然的绿色主题，给人舒适、环保、健康的感觉'
 );
+
+// 导出主题的展示颜色
+export const greenDisplayColor = '#22c55e';

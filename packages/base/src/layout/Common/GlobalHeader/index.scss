@@ -29,6 +29,13 @@
     display: flex;
     align-items: center;
     flex-shrink: 0;
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     .global-header-user {
       display: flex;
       align-items: center;

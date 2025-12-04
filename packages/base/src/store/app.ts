@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { markRaw } from 'vue';
 import type { TabItem, AppInfo, AppState } from '@base/types/app.ts';
 import { restoreAppState } from '../composables/useAppPersist';
 import { getAppInfoFromConfig } from '@base/helper/authHelper';
@@ -132,7 +133,8 @@ export const useAppStore = defineStore('app', {
       this.cachedRoutes = [];
     },
     setCustomHeader(payload: any) {
-      this.CustomHeader = payload;
+      // 使用 markRaw 防止组件被转换为响应式对象
+      this.CustomHeader = payload ? markRaw(payload) : null;
     },
   },
 });

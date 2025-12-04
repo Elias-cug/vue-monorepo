@@ -3,7 +3,7 @@ import { palette } from '../palette';
 
 export const blue = createTheme(
   'blue',
-  '蓝色主题',
+  '蓝色',
   false,
   {
     // 背景颜色
@@ -34,3 +34,6 @@ export const blue = createTheme(
   },
   '清新的蓝色主题，给人专业、可信的感觉'
 );
+
+// 导出主题的展示颜色
+export const blueDisplayColor = '#4098fc';

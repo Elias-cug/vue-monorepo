@@ -6,7 +6,8 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@base/*": ["./src/*"]
+      "@base/*": ["./src/*"],
+      "@theme/*": ["../../packages/theme/src/*"]
     },
     "noEmit": false,
     "declaration": true,

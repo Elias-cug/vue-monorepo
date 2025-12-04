@@ -2,7 +2,7 @@ import { createTheme } from '../core/createTheme';
 
 export const red = createTheme(
   'red',
-  '红色系主题',
+  '红色',
   false,
   {
     // 背景颜色 - 温暖的红色调
@@ -41,3 +41,6 @@ export const red = createTheme(
   },
   '充满活力的红色主题，适合需要强调和吸引注意力的场景'
 );
+
+// 导出主题的展示颜色
+export const redDisplayColor = '#ef4444';

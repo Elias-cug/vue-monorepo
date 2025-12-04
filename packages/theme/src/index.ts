@@ -4,6 +4,9 @@ export * from './themes';
 export * from './core/ThemeManager';
 export * from './core/createTheme';
 
+// 配置
+export * from './config';
+
 // 工具函数
 export * from './utils';
 export * from './css-vars/generateCssVars';
