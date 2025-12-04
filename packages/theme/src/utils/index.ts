@@ -46,5 +46,26 @@ export function onThemeChange(callback: (theme: ThemeDefinition) => void) {
   return themeManager.on('change', callback);
 }
 
+/**
+ * 获取实际的 CSS 变量名（带 --le 前缀）
+ */
+export function getCssVarName(varName: string): string {
+  return varName.startsWith('--le-') ? varName : varName.replace('--', '--le-');
+}
+
+/**
+ * 获取所有 CSS 变量名映射
+ */
+export function getCssVarMapping(): Record<string, string> {
+  const theme = getCurrentTheme();
+  const mapping: Record<string, string> = {};
+
+  Object.keys(theme.vars).forEach(key => {
+    mapping[key] = getCssVarName(key);
+  });
+
+  return mapping;
+}
+
 // 导出颜色工具
 export * from './color';

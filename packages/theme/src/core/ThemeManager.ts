@@ -94,10 +94,12 @@ export class ThemeManager {
     const theme = this.getEffectiveTheme();
     this._currentTheme.value = theme;
 
-    // 应用 CSS 变量
+    // 应用 CSS 变量（自动添加 --le 前缀）
     const root = document.documentElement;
     Object.entries(theme.vars).forEach(([key, value]) => {
-      root.style.setProperty(key, value as string);
+      // 如果变量名没有 --le 前缀，自动添加
+      const varName = key.startsWith('--le-') ? key : key.replace('--', '--le-');
+      root.style.setProperty(varName, value as string);
     });
 
     // 设置 HTML 属性
