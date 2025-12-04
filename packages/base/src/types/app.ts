@@ -31,4 +31,6 @@ export interface AppState {
   tabs: TabItem[];
   cachedRoutes: string[];
   appInfo: AppInfo | null;
+  /** 项目自定义 header */
+  CustomHeader: any | null;
 }

@@ -10,6 +10,7 @@ export const useAppStore = defineStore('app', {
     tabs: [],
     cachedRoutes: [],
     appInfo: null,
+    CustomHeader: null,
   }),
   getters: {},
   actions: {
@@ -129,6 +130,9 @@ export const useAppStore = defineStore('app', {
     },
     clearCachedRoutes() {
       this.cachedRoutes = [];
+    },
+    setCustomHeader(payload: any) {
+      this.CustomHeader = payload;
     },
   },
 });

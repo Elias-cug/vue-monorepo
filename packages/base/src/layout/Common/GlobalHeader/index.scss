@@ -9,6 +9,8 @@
   box-shadow: 0px 2px 4px 0px rgba(53, 63, 94, 0.1);
   .global-header-left {
     display: flex;
+    align-items: center;
+    flex-shrink: 0;
     .global-header-logo {
       margin-right: 12px;
     }
@@ -17,7 +19,16 @@
       font-weight: 500;
     }
   }
+  .global-header-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .global-header-right {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
     .global-header-user {
       display: flex;
       align-items: center;
