@@ -57,6 +57,8 @@ ui 目录下的组件样式使用单独文件
 ui 目录下的组件有一样的前缀le- / Le，样式前缀 le-
 ui 目录下的样式不要用 unocss
 
+theme 包下的设计遵循 antdesign 设计规范和思想，网址： https://ant.design/docs/spec/colors-cn
+
 ## 其他
 
 - 所有新文件必须包含包级注释解释用途。

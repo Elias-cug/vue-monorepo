@@ -9,16 +9,18 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { onMounted } from 'vue';
 import { NConfigProvider } from 'naive-ui';
-import { useTheme, createNaiveOverrides } from '@lee/theme';
-
-const { currentTheme } = useTheme();
 
 // 全局主题配置 - 使用 theme 包提供的配置
-const themeOverrides = computed(() => {
-  return createNaiveOverrides(currentTheme.value);
-});
+const themeOverrides = {
+  common: {
+    primaryColor: '#007bff',
+    primaryColorHover: '#0056b3',
+    primaryColorPressed: '#004085',
+    primaryColorSuppl: '#0056b3',
+  },
+};
 
 onMounted(() => {});
 </script>

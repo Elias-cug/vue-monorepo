@@ -8,6 +8,10 @@ export const menusMock = [
     },
   },
   {
+    key: 'theme-test',
+    title: '主题测试',
+  },
+  {
     key: 'component-show',
     title: '组件展示',
     children: [
