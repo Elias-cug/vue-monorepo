@@ -92,6 +92,30 @@ export function createNaiveOverrides(theme: ThemeDefinition): GlobalThemeOverrid
     Notification: {
       borderRadius: vars['--radius-md'],
     },
+
+    Menu: {
+      itemTextColor: '#fff',
+      itemTextColorActive: '#fff',
+      itemTextColorHover: '#fff',
+      itemTextColorPressed: '#fff',
+      itemTextColorDisabled: '#fff',
+      itemIconColor: '#fff',
+      itemIconColorActive: '#fff',
+      itemIconColorHover: '#fff',
+      itemIconColorPressed: '#fff',
+      itemIconColorDisabled: '#fff',
+      itemIconColorCollapsed: '#fff',
+      // 使用主题色作为背景（带透明度）
+      itemColorHover: withOpacity(vars['--primary'], 0.9),
+      itemColorPressed: withOpacity(vars['--primary'], 0.9),
+      itemColorActive: withOpacity(vars['--primary'], 0.9),
+      itemColorDisabled: withOpacity(vars['--primary'], 0.5),
+      // 下拉箭头颜色
+      arrowColor: '#fff',
+      arrowColorHover: '#fff',
+      arrowColorActive: '#fff',
+      arrowColorActiveHover: '#fff',
+    },
   } as GlobalThemeOverrides;
 }
 

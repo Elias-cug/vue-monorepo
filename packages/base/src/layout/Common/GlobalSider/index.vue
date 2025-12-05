@@ -1,17 +1,15 @@
 <template>
   <div class="global-sider">
     <div class="global-sider-content">
-      <n-config-provider :theme-overrides="themeOverrides">
-        <n-menu
-          v-model:value="activeMenuKey"
-          :collapsed="collapsed"
-          :collapsed-width="64"
-          :collapsed-icon-size="22"
-          :options="menus"
-          :indent="28"
-          @update:value="handleMenuClick"
-        />
-      </n-config-provider>
+      <n-menu
+        v-model:value="activeMenuKey"
+        :collapsed="collapsed"
+        :collapsed-width="64"
+        :collapsed-icon-size="22"
+        :options="menus"
+        :indent="28"
+        @update:value="handleMenuClick"
+      />
     </div>
 
     <div class="global-sider-collapse" @click="changeCollapsed">
@@ -59,36 +57,6 @@ watch(
   },
   { immediate: true }
 );
-
-const themeOverrides = {
-  Menu: {
-    itemTextColor: '#fff',
-    itemTextColorActive: '#fff',
-    itemTextColorHover: '#fff',
-    itemTextColorPressed: '#fff',
-    itemTextColorDisabled: '#fff',
-    itemIconColor: '#fff',
-    itemIconColorActive: '#fff',
-    itemIconColorHover: '#fff',
-    itemIconColorPressed: '#fff',
-    itemIconColorDisabled: '#fff',
-
-    itemIconColorCollapsed: '#fff',
-    // 移入背景
-    itemColorHover: '#1890ff',
-    // 点击背景
-    itemColorPressed: '#1890ff',
-    itemColorActive: '#1890ff',
-    // 禁用背景
-    itemColorDisabled: '#1890ff',
-
-    // 下拉箭头颜色
-    arrowColor: '#fff',
-    arrowColorHover: '#fff',
-    arrowColorActive: '#fff',
-    arrowColorActiveHover: '#fff',
-  },
-};
 
 const changeCollapsed = () => {
   appStore.switchCollapsed();
