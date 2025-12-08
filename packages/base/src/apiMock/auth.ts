@@ -12,6 +12,11 @@ export const menusMock = [
     title: '主题测试',
   },
   {
+    key: 'theme-intro',
+    title: '主题系统介绍',
+    pinned: true,
+  },
+  {
     key: 'component-show',
     title: '组件展示',
     children: [

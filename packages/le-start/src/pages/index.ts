@@ -6,7 +6,11 @@ import type { Route } from '@lee/base/src/types/route';
 import { setupRoutesBase } from '@lee/base/src/router/setupRoutes';
 import { NIcon } from 'naive-ui';
 import { h } from 'vue';
-import { FishOutline as FishIcon, CodeSlashOutline as CodeIcon } from '@vicons/ionicons5';
+import {
+  FishOutline as FishIcon,
+  CodeSlashOutline as CodeIcon,
+  ColorPaletteOutline as ThemeIcon,
+} from '@vicons/ionicons5';
 
 function renderIcon(icon: any) {
   return () => h(NIcon, null, { default: () => h(icon) });
@@ -33,6 +37,17 @@ const app1Map: Record<string, Route> = {
       layout: 'basic',
       title: '主题测试',
       icon: renderIcon(FishIcon),
+    },
+  },
+  'theme-intro': {
+    path: `${appOnePrefix}/theme-intro`,
+    name: 'ThemeIntro',
+    component: () => import('@/pages/ThemeIntro/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '主题系统介绍',
+      icon: renderIcon(ThemeIcon),
+      keepAlive: true,
     },
   },
   'component-show': {
