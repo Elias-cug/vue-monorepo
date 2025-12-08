@@ -17,6 +17,12 @@ export interface CardProps {
   collapsible?: boolean;
   /** 默认是否折叠 */
   defaultCollapsed?: boolean;
+  /** 主题变体 */
+  theme?: 'default' | 'primary' | 'gradient' | 'borderless' | 'float' | 'selected';
+  /** 是否选中（简写属性） */
+  selected?: boolean;
+  /** 是否无边框（简写属性） */
+  borderless?: boolean;
 }
 
 const cardProps = {
@@ -44,6 +50,20 @@ const cardProps = {
     type: Boolean,
     default: false,
   },
+  theme: {
+    type: String as PropType<
+      'default' | 'primary' | 'gradient' | 'borderless' | 'float' | 'selected'
+    >,
+    default: 'default',
+  },
+  selected: {
+    type: Boolean,
+    default: false,
+  },
+  borderless: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export const Card = defineComponent({
@@ -64,13 +84,42 @@ export const Card = defineComponent({
     // 是否显示 header
     const showHeader = props.title || slots['header-extra'] || props.collapsible;
 
+    // 构建类名
+    const getClassNames = () => {
+      const classes = ['le-card'];
+
+      // 添加主题类名
+      if (props.theme && props.theme !== 'default') {
+        classes.push(`le-card--${props.theme}`);
+      }
+
+      // 简写属性优先级更高
+      if (props.selected) {
+        classes.push('le-card--selected');
+      }
+      if (props.borderless) {
+        classes.push('le-card--borderless');
+      }
+
+      // 功能类名
+      if (props.collapsible) {
+        classes.push('le-card--collapsible');
+      }
+      if (collapsed.value) {
+        classes.push('le-card--collapsed');
+      }
+
+      // 自定义类名
+      if (props.class) {
+        classes.push(props.class);
+      }
+
+      return classes;
+    };
+
     return () => (
       <div
-        class={[
-          'le-card',
-          props.class,
-          { 'le-card--collapsible': props.collapsible, 'le-card--collapsed': collapsed.value },
-        ]}
+        class={getClassNames()}
         style={{
           ...props.style,
           '--le-card-padding': paddingValue,

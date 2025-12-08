@@ -1,6 +1,6 @@
 # LeCard 卡片组件
 
-一个简洁美观的卡片容器组件。
+一个简洁美观的卡片容器组件，集成主题系统，提供多种主题变体。
 
 ## 特性
 
@@ -8,20 +8,24 @@
 - 支持自定义 padding
 - 支持 header 右侧插槽
 - 支持折叠/展开功能
-- 白色背景，带阴影和圆角
+- 集成主题系统，多种主题变体
 - hover 时阴影加深效果
-- 支持暗色模式
+- 支持暗色模式自动适配
+- 响应主题切换
 
 ## Props
 
-| 属性             | 类型             | 默认值 | 说明                                                            |
-| ---------------- | ---------------- | ------ | --------------------------------------------------------------- |
-| title            | string           | -      | 卡片标题                                                        |
-| padding          | string \| number | '16px' | 内边距，可以是字符串（如 '20px'）或数字（如 20，会自动转为 px） |
-| style            | CSSProperties    | -      | 自定义样式                                                      |
-| class            | string           | -      | 自定义类名                                                      |
-| collapsible      | boolean          | false  | 是否可折叠                                                      |
-| defaultCollapsed | boolean          | false  | 默认是否折叠                                                    |
+| 属性             | 类型             | 默认值    | 说明                                                                                    |
+| ---------------- | ---------------- | --------- | --------------------------------------------------------------------------------------- |
+| title            | string           | -         | 卡片标题                                                                                |
+| padding          | string \| number | '16px'    | 内边距，可以是字符串（如 '20px'）或数字（如 20，会自动转为 px）                         |
+| style            | CSSProperties    | -         | 自定义样式                                                                              |
+| class            | string           | -         | 自定义类名                                                                              |
+| collapsible      | boolean          | false     | 是否可折叠                                                                              |
+| defaultCollapsed | boolean          | false     | 默认是否折叠                                                                            |
+| theme            | string           | 'default' | 主题变体：'default' \| 'primary' \| 'gradient' \| 'borderless' \| 'float' \| 'selected' |
+| selected         | boolean          | false     | 是否选中（简写属性）                                                                    |
+| borderless       | boolean          | false     | 是否无边框（简写属性）                                                                  |
 
 ## 插槽
 
@@ -143,6 +147,55 @@ function handleAdd() {
 }
 </script>
 ```
+
+### 主题变体
+
+```vue
+<template>
+  <!-- 主题色边框和标题 -->
+  <LeCard title="主题色卡片" theme="primary">
+    <div>带主题色边框和标题的卡片</div>
+  </LeCard>
+
+  <!-- 渐变背景 -->
+  <LeCard title="渐变背景" theme="gradient">
+    <div>渐变背景卡片</div>
+  </LeCard>
+
+  <!-- 无边框卡片 -->
+  <LeCard title="无边框" borderless>
+    <div>无边框透明背景卡片</div>
+  </LeCard>
+
+  <!-- 浮动卡片 -->
+  <LeCard title="浮动效果" theme="float">
+    <div>更强的阴影效果</div>
+  </LeCard>
+
+  <!-- 选中状态 -->
+  <LeCard title="选中状态" selected>
+    <div>显示选中状态的卡片</div>
+  </LeCard>
+
+  <!-- 组合使用 -->
+  <LeCard title="组合效果" theme="primary" collapsible>
+    <div>主题色 + 可折叠</div>
+  </LeCard>
+</template>
+
+<script setup lang="ts">
+import { Card as LeCard } from '@lee/ui';
+</script>
+```
+
+## 主题变体说明
+
+- **default**: 默认样式，白色/深色背景，适配明暗模式
+- **primary**: 主题色边框，header 使用主题色淡背景，标题使用主题色
+- **gradient**: 渐变背景效果，从卡片背景渐变到主题色浅背景
+- **borderless**: 无边框透明背景，适合嵌套使用
+- **float**: 浮动效果，更强的阴影，hover 时上浮更明显
+- **selected**: 选中状态，主题色边框和光晕效果
 
 ## 样式变量
 

@@ -174,6 +174,11 @@ export function generateTokenCssVars(
     cssVars[generateCssVarName(`shadow-${key}`, prefix)] = value;
   });
 
+  // 阴影数字别名（更直观的使用方式）
+  cssVars[generateCssVarName('shadow-1', prefix)] = tokens.shadow.sm; // 轻阴影
+  cssVars[generateCssVarName('shadow-2', prefix)] = tokens.shadow.md; // 中等阴影
+  cssVars[generateCssVarName('shadow-3', prefix)] = tokens.shadow.lg; // 强阴影
+
   // 动画时长
   Object.entries(tokens.duration).forEach(([key, value]) => {
     cssVars[generateCssVarName(`duration-${key}`, prefix)] = value;

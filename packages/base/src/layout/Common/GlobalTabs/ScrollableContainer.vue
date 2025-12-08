@@ -159,28 +159,43 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #dbdde8;
+    // 使用与 tabs 整体背景一致的色阶 1
+    background-color: var(--le-primary-1);
     cursor: pointer;
     flex-shrink: 0;
     transition:
       background-color 0.2s,
-      opacity 0.2s;
+      opacity 0.2s,
+      color 0.2s;
+    // 图标颜色
+    color: var(--le-text-2);
 
     &:hover:not(.disabled) {
-      background-color: #c8cad6;
+      // hover 状态使用色阶 2
+      background-color: var(--le-primary-2);
+      // hover 时图标颜色加深
+      color: var(--le-primary);
     }
 
     &.disabled {
       cursor: not-allowed;
-      opacity: 0.5;
+      opacity: 0.4;
+      color: var(--le-text-disabled);
     }
 
     &.scroll-arrow-left {
-      border-right: 1px solid #c8cad6;
+      // 使用主题边框色
+      border-right: 1px solid var(--le-primary-3);
     }
 
     &.scroll-arrow-right {
-      border-left: 1px solid #c8cad6;
+      // 使用主题边框色
+      border-left: 1px solid var(--le-primary-3);
+    }
+
+    &:active:not(.disabled) {
+      // 按下效果
+      background-color: var(--le-primary-3);
     }
   }
 }

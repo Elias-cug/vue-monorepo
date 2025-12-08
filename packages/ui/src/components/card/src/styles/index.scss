@@ -3,14 +3,22 @@
  */
 
 .le-card {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  // 使用主题变量
+  background-color: var(--le-card);
+  border-radius: var(--le-radius-lg);
+  box-shadow: var(--le-shadow-1);
   overflow: hidden;
-  transition: box-shadow 0.3s ease;
+  // 添加边框和颜色过渡
+  border: 1px solid transparent;
+  transition:
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
 
   &:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--le-shadow-2);
+    // hover 时轻微上浮
+    transform: translateY(-2px);
   }
 
   &__header {
@@ -18,13 +26,17 @@
     align-items: center;
     justify-content: space-between;
     padding: 16px var(--le-card-padding, 16px);
+    // 添加底部边框
+    border-bottom: 1px solid var(--le-divider);
+    transition: border-color 0.3s ease;
   }
 
   &__title {
     font-size: 16px;
     font-weight: 600;
-    color: #333;
+    color: var(--le-text-1);
     flex: 1;
+    transition: color 0.3s ease;
   }
 
   &__header-extra {
@@ -47,11 +59,11 @@
       transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.03);
+        background-color: var(--le-hover);
       }
 
       &:active {
-        background-color: rgba(0, 0, 0, 0.05);
+        background-color: var(--le-pressed);
       }
     }
   }
@@ -59,13 +71,79 @@
   // 折叠图标
   &__collapse-icon {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    color: #666 !important;
+    color: var(--le-text-2) !important;
   }
 
   // 折叠状态下的图标旋转
   &--collapsed {
     .le-card__collapse-icon {
       transform: rotate(-90deg);
+    }
+  }
+
+  // 主题变体：主题色边框
+  &--primary {
+    border-color: var(--le-primary-3);
+
+    .le-card__header {
+      // 使用主题色的淡背景
+      background-color: var(--le-primary-1);
+      border-bottom-color: var(--le-primary-3);
+    }
+
+    .le-card__title {
+      // 标题使用主题色
+      color: var(--le-primary);
+    }
+
+    &:hover {
+      border-color: var(--le-primary);
+      // 使用标准的阴影 token
+      box-shadow: var(--le-shadow-2);
+    }
+  }
+
+  // 主题变体：渐变背景
+  &--gradient {
+    background: linear-gradient(135deg, var(--le-card) 0%, var(--le-primary-1) 100%);
+  }
+
+  // 主题变体：无边框
+  &--borderless {
+    box-shadow: none;
+    background-color: transparent;
+
+    .le-card__header {
+      border-bottom: none;
+      padding-bottom: 8px;
+    }
+
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  // 主题变体：浮动卡片（更强的阴影）
+  &--float {
+    box-shadow: var(--le-shadow-2);
+
+    &:hover {
+      box-shadow: var(--le-shadow-3);
+      transform: translateY(-4px);
+    }
+  }
+
+  // 主题变体：选中状态
+  &--selected {
+    border-color: var(--le-primary);
+    // 使用双重阴影实现光晕效果
+    box-shadow:
+      var(--le-shadow-1),
+      0 0 0 3px var(--le-primary-1);
+
+    .le-card__title {
+      color: var(--le-primary);
     }
   }
 }
@@ -97,34 +175,22 @@
   transform: translateY(0);
 }
 
-// 暗色模式适配
-:global(.dark) {
+// 暗色模式特殊处理（大部分样式通过 CSS 变量自动适配）
+@media (prefers-color-scheme: dark) {
   .le-card {
-    background-color: #18181c;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-
-    &:hover {
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    }
-
-    &__title {
-      color: #fff;
-    }
-
-    &--collapsible {
-      .le-card__header {
-        &:hover {
-          background-color: rgba(255, 255, 255, 0.06);
-        }
-
-        &:active {
-          background-color: rgba(255, 255, 255, 0.1);
-        }
+    // 主题变体在暗黑模式下的特殊处理
+    &--primary {
+      &:hover {
+        // 暗黑模式下使用更强的阴影
+        box-shadow: var(--le-shadow-lg);
       }
     }
 
-    &__collapse-icon {
-      color: #ccc !important;
+    &--selected {
+      // 暗黑模式下选中状态使用内阴影
+      box-shadow:
+        var(--le-shadow-inner),
+        0 0 0 2px var(--le-primary-3);
     }
   }
 }

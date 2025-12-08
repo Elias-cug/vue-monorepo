@@ -60,6 +60,46 @@ import { Container as LeContainer } from '@lee/ui';
 </script>
 ```
 
+### 主题变体
+
+```vue
+<template>
+  <!-- 带边框 -->
+  <LeContainer bordered>
+    <div>带边框的容器</div>
+  </LeContainer>
+
+  <!-- 带顶部装饰线 -->
+  <LeContainer accent>
+    <div>带主题色装饰线</div>
+  </LeContainer>
+
+  <!-- 主题色背景 -->
+  <LeContainer theme="primary">
+    <div>主题色背景</div>
+  </LeContainer>
+
+  <!-- 卡片样式 -->
+  <LeContainer theme="card">
+    <div>卡片样式容器</div>
+  </LeContainer>
+
+  <!-- 渐变背景 -->
+  <LeContainer theme="gradient">
+    <div>渐变背景容器</div>
+  </LeContainer>
+
+  <!-- 组合使用 -->
+  <LeContainer bordered accent>
+    <div>带边框和装饰线</div>
+  </LeContainer>
+</template>
+
+<script setup lang="ts">
+import { Container as LeContainer } from '@lee/ui';
+</script>
+```
+
 ### 自定义样式
 
 ```vue
