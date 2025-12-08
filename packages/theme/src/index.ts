@@ -1,24 +1,48 @@
-// 核心功能
-export * from './types';
-export * from './themes';
-export * from './core/ThemeManager';
-export * from './core/createTheme';
+/**
+ * @description: theme package exports
+ */
 
-// 配置
-export * from './config';
+// 导出类型定义
+export type {
+  ThemeMode,
+  ThemeName,
+  ColorSystem,
+  ThemeConfig,
+  ThemePreset,
+  CssVariables,
+  ThemeManagerOptions,
+  ThemeSwitchOptions,
+  UseThemeReturn,
+} from './types/theme';
 
-// 工具函数
-export * from './utils';
-export * from './css-vars/generateCssVars';
+export type { DesignTokens } from './tokens/design';
 
-// 组件库集成
-export * from './naive';
+export type { ColorPalette, ColorName, PresetPrimaryColors, PresetPalettes } from './presets/types';
 
-// Vue Composables
-export * from './composables/useTheme';
+// 导出主题管理器
+export { themeManager, ThemeManager } from './core/theme-manager';
 
-// 基础资源
-export * from './tokens';
+// 导出 CSS 变量生成器
+export {
+  generateColorCssVars,
+  generateTokenCssVars,
+  generateCssVariables,
+  applyCssVariables,
+  getCssVariables,
+  removeCssVariables,
+} from './core/css-generator';
 
-// 默认导出主题管理器
-export { themeManager as default } from './core/ThemeManager';
+// 导出 Vue 组合式 API
+export { useTheme } from './composables/useTheme';
+
+// 导出 Naive UI 适配器
+export { createNaiveTheme, createNaiveDarkTheme, createNaiveLightTheme } from './adapters/naive';
+
+// 导出预设主题
+export { themePresets } from './themes/presets';
+
+// 导出设计 tokens
+export { defaultDesignTokens } from './tokens/design';
+
+// 导出预设颜色
+export * from './presets';

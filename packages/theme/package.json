@@ -1,13 +1,24 @@
 {
   "name": "@lee/theme",
   "version": "1.0.0",
-  "description": "",
+  "description": "Vue 3 主题系统，支持多主题、明暗模式、Naive UI 集成",
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "vue",
+    "theme",
+    "naive-ui",
+    "dark-mode"
+  ],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.19.0"
+  "packageManager": "pnpm@10.19.0",
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "naive-ui": "^2.40.0"
+  }
 }
