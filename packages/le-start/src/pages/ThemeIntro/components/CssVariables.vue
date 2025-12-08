@@ -31,6 +31,19 @@
       </n-tab-pane>
 
       <n-tab-pane name="design" tab="设计变量">
+        <n-h4>间距系统</n-h4>
+        <n-grid :x-gap="12" :y-gap="12" :cols="7">
+          <n-grid-item v-for="spacing in spacingList" :key="spacing">
+            <DesignToken
+              type="spacing"
+              :name="`--le-spacing-${spacing}`"
+              :value="getCssVar(`--le-spacing-${spacing}`)"
+              :label="spacing"
+            />
+          </n-grid-item>
+        </n-grid>
+
+        <n-divider />
         <n-h4>圆角系统</n-h4>
         <n-grid :x-gap="12" :y-gap="12" :cols="7">
           <n-grid-item v-for="radius in radiusList" :key="radius">
@@ -44,54 +57,93 @@
         </n-grid>
 
         <n-divider />
+        <n-h4>字体大小</n-h4>
+        <n-grid :x-gap="12" :y-gap="12" :cols="8">
+          <n-grid-item v-for="fontSize in fontSizeList" :key="fontSize">
+            <DesignToken
+              type="fontSize"
+              :name="`--le-font-size-${fontSize}`"
+              :value="getCssVar(`--le-font-size-${fontSize}`)"
+              :label="fontSize"
+            />
+          </n-grid-item>
+        </n-grid>
+
+        <n-divider />
+        <n-h4>字体粗细</n-h4>
+        <n-grid :x-gap="12" :y-gap="12" :cols="5">
+          <n-grid-item v-for="weight in fontWeightList" :key="weight">
+            <DesignToken
+              type="fontWeight"
+              :name="`--le-font-weight-${weight}`"
+              :value="getCssVar(`--le-font-weight-${weight}`)"
+              :label="weight"
+            />
+          </n-grid-item>
+        </n-grid>
+
+        <n-divider />
+        <n-h4>行高系统</n-h4>
+        <n-grid :x-gap="12" :y-gap="12" :cols="4">
+          <n-grid-item v-for="height in lineHeightList" :key="height">
+            <DesignToken
+              type="lineHeight"
+              :name="`--le-line-height-${height}`"
+              :value="getCssVar(`--le-line-height-${height}`)"
+              :label="height"
+            />
+          </n-grid-item>
+        </n-grid>
+
+        <n-divider />
         <n-h4>阴影系统</n-h4>
         <n-space direction="vertical" size="large" style="width: 100%">
           <div v-for="shadow in shadowList" :key="shadow" class="shadow-demo">
             <div class="shadow-box" :style="{ boxShadow: getCssVar(`--le-shadow-${shadow}`) }">
-              <n-text code>--le-shadow-{{ shadow }}</n-text>
+              <n-text>{{ `shadow-${shadow}` }}</n-text>
             </div>
+            <n-text depth="3" style="font-size: 12px">
+              {{ getCssVar(`--le-shadow-${shadow}`) }}
+            </n-text>
           </div>
         </n-space>
-      </n-tab-pane>
 
-      <n-tab-pane name="all" tab="所有变量">
-        <n-input
-          v-model:value="cssVarSearch"
-          placeholder="搜索 CSS 变量..."
-          clearable
-          style="margin-bottom: 16px"
-        >
-          <template #prefix>
-            <n-icon :component="SearchOutline" />
-          </template>
-        </n-input>
-        <n-table :columns="cssVarColumns" :data="filteredCssVars" />
+        <n-divider />
+        <n-h4>动画时长</n-h4>
+        <n-grid :x-gap="12" :y-gap="12" :cols="3">
+          <n-grid-item v-for="duration in durationList" :key="duration">
+            <DesignToken
+              type="duration"
+              :name="`--le-duration-${duration}`"
+              :value="getCssVar(`--le-duration-${duration}`)"
+              :label="duration"
+            />
+          </n-grid-item>
+        </n-grid>
+
+        <n-divider />
+        <n-h4>层级系统</n-h4>
+        <n-grid :x-gap="12" :y-gap="12" :cols="7">
+          <n-grid-item v-for="zIndex in zIndexList" :key="zIndex">
+            <DesignToken
+              type="zIndex"
+              :name="`--le-z-index-${zIndex}`"
+              :value="getCssVar(`--le-z-index-${zIndex}`)"
+              :label="zIndex"
+            />
+          </n-grid-item>
+        </n-grid>
       </n-tab-pane>
     </n-tabs>
   </LeCard>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, h } from 'vue';
-import {
-  NTabs,
-  NTabPane,
-  NH4,
-  NGrid,
-  NGridItem,
-  NDivider,
-  NSpace,
-  NText,
-  NTable,
-  NInput,
-  NIcon,
-} from 'naive-ui';
-import { SearchOutline } from '@vicons/ionicons5';
+// 不需要导入 ref，已移除所有变量相关功能
+import { NTabs, NTabPane, NH4, NGrid, NGridItem, NDivider, NSpace, NText } from 'naive-ui';
 import { Card as LeCard } from '@lee/ui';
 import ColorDisplay from './ColorDisplay.vue';
 import DesignToken from './DesignToken.vue';
-
-const cssVarSearch = ref('');
 
 // 颜色配置
 const textColors = [
@@ -111,95 +163,19 @@ const bgColors = [
 ];
 
 // 设计 token 列表
+const spacingList = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'];
 const radiusList = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'round'];
+const fontSizeList = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl', 'display'];
+const fontWeightList = ['light', 'regular', 'medium', 'semibold', 'bold'];
+const lineHeightList = ['tight', 'normal', 'relaxed', 'loose'];
 const shadowList = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', '1', '2', '3'];
-
-// CSS 变量表格
-const cssVarColumns = [
-  { title: '变量名', key: 'name' },
-  {
-    title: '值',
-    key: 'value',
-    render: (row: any) => {
-      if (row.name.includes('color') || row.name.includes('primary') || row.name.includes('text')) {
-        return h(
-          'div',
-          {
-            style: {
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-            },
-          },
-          [
-            h('div', {
-              style: {
-                width: '24px',
-                height: '24px',
-                borderRadius: '4px',
-                background: row.value,
-                border: '1px solid #e0e0e0',
-              },
-            }),
-            h('span', row.value),
-          ]
-        );
-      }
-      return row.value;
-    },
-  },
-  { title: '分类', key: 'category' },
-];
+const durationList = ['fast', 'normal', 'slow'];
+const zIndexList = ['dropdown', 'sticky', 'fixed', 'modalBackdrop', 'modal', 'popover', 'tooltip'];
 
 // 获取 CSS 变量
 function getCssVar(name: string) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
-
-// 获取所有 CSS 变量
-const allCssVars = ref<any[]>([]);
-
-onMounted(() => {
-  const styles = getComputedStyle(document.documentElement);
-  const vars: any[] = [];
-
-  for (let i = 0; i < styles.length; i++) {
-    const prop = styles[i];
-    if (prop?.startsWith('--le-')) {
-      const value = styles.getPropertyValue(prop);
-      let category = '其他';
-
-      if (prop.includes('primary')) category = '主题色';
-      else if (prop.includes('text')) category = '文本色';
-      else if (prop.includes('bg') || prop.includes('background')) category = '背景色';
-      else if (prop.includes('border')) category = '边框';
-      else if (prop.includes('shadow')) category = '阴影';
-      else if (prop.includes('radius')) category = '圆角';
-      else if (prop.includes('spacing')) category = '间距';
-
-      vars.push({
-        name: prop,
-        value: value.trim(),
-        category,
-      });
-    }
-  }
-
-  allCssVars.value = vars;
-});
-
-// 过滤 CSS 变量
-const filteredCssVars = computed(() => {
-  if (!cssVarSearch.value) return allCssVars.value;
-
-  const search = cssVarSearch.value.toLowerCase();
-  return allCssVars.value.filter(
-    v =>
-      v.name.toLowerCase().includes(search) ||
-      v.value.toLowerCase().includes(search) ||
-      v.category.toLowerCase().includes(search)
-  );
-});
 </script>
 
 <style lang="scss" scoped>

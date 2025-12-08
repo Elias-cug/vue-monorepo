@@ -49,22 +49,6 @@
         </n-grid>
       </n-tab-pane>
 
-      <n-tab-pane name="tabs" tab="Tabs 示例">
-        <div class="tabs-demo">
-          <div class="global-tabs">
-            <div class="global-tabs-item active">
-              <span class="tab-label">激活标签</span>
-            </div>
-            <div class="global-tabs-item">
-              <span class="tab-label">普通标签</span>
-            </div>
-            <div class="global-tabs-item">
-              <span class="tab-label">另一个标签</span>
-            </div>
-          </div>
-        </div>
-      </n-tab-pane>
-
       <n-tab-pane name="buttons" tab="按钮示例">
         <n-space>
           <n-button type="primary">主要按钮</n-button>
@@ -84,42 +68,4 @@ import { NTabs, NTabPane, NGrid, NGridItem, NText, NSpace, NButton } from 'naive
 import { Card as LeCard, Container as LeContainer } from '@lee/ui';
 </script>
 
-<style lang="scss" scoped>
-.tabs-demo {
-  padding: 20px;
-  background: var(--le-neutral-body);
-  border-radius: var(--le-radius-lg);
-
-  .global-tabs {
-    display: flex;
-    height: 48px;
-    background-color: var(--le-primary-1);
-    border-radius: var(--le-radius-lg);
-    padding: 4px;
-    box-shadow: var(--le-shadow-1);
-
-    .global-tabs-item {
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      color: var(--le-text-2);
-      cursor: pointer;
-      border-radius: var(--le-radius-md);
-      transition: all 0.2s ease;
-      border-bottom: 2px solid transparent;
-
-      &:hover:not(.active) {
-        background-color: var(--le-primary-2);
-        color: var(--le-text-1);
-      }
-
-      &.active {
-        background-color: var(--le-card);
-        color: var(--le-primary);
-        box-shadow: var(--le-shadow-1);
-        border-bottom-color: var(--le-primary);
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

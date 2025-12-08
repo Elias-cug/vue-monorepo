@@ -29,16 +29,6 @@ const app1Map: Record<string, Route> = {
       icon: renderIcon(FishIcon),
     },
   },
-  'theme-test': {
-    path: `${appOnePrefix}/theme-test`,
-    name: 'ThemeTest',
-    component: () => import('@/pages/ThemeTest/index.vue'),
-    meta: {
-      layout: 'basic',
-      title: '主题测试',
-      icon: renderIcon(FishIcon),
-    },
-  },
   'theme-intro': {
     path: `${appOnePrefix}/theme-intro`,
     name: 'ThemeIntro',
