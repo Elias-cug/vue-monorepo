@@ -18,7 +18,6 @@ export * from './naive';
 export * from './composables/useTheme';
 
 // 基础资源
-export * from './palette';
 export * from './tokens';
 
 // 默认导出主题管理器
