@@ -19,15 +19,15 @@
 ```
 src/
 ├── types/           # 类型定义
-│   └── theme.ts     # 主题系统类型
+│   ├── theme.ts     # 主题系统类型
+│   └── presets.ts   # 色板类型定义
 ├── core/            # 核心功能
 │   ├── theme-manager.ts  # 主题管理器
 │   └── css-generator.ts  # CSS 变量生成器
 ├── themes/          # 主题配置
 │   └── presets.ts   # 预设主题（12套）
 ├── presets/         # Ant Design 色板
-│   ├── index.ts     # 颜色定义
-│   └── types.ts     # 色板类型
+│   └── index.ts     # 颜色定义和导出
 ├── tokens/          # 设计 Token
 │   └── design.ts    # 间距、圆角、字体等
 ├── adapters/        # 框架适配器

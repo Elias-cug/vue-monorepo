@@ -17,7 +17,7 @@ export type {
 
 export type { DesignTokens } from './tokens/design';
 
-export type { ColorPalette, ColorName, PresetPrimaryColors, PresetPalettes } from './presets/types';
+export type { ColorPalette, ColorName, PresetPrimaryColors, PresetPalettes } from './types/presets';
 
 // 导出主题管理器
 export { themeManager, ThemeManager } from './core/theme-manager';

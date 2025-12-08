@@ -77,40 +77,19 @@ const isDark = computed({
 // 主题选项
 const themeOptions = computed(() => {
   return Object.entries(themePresets).map(([name, preset]) => {
-    const labels: Record<string, string> = {
-      blue: '蓝色',
-      red: '红色',
-      orange: '橙色',
-      green: '绿色',
-      purple: '紫色',
-      magenta: '品红',
-      cyan: '青色',
-      geekblue: '极客蓝',
-      volcano: '火山橙',
-      gold: '金色',
-      yellow: '黄色',
-      lime: '青柠',
-    };
-
     return {
       name,
-      label: labels[name] || name,
+      label: preset.label, // 使用预设中的 label 字段
       color: preset.primaryColor,
     };
   });
 });
-
-// 主题切换事件
-const emit = defineEmits<{
-  change: [theme: ThemeName];
-}>();
 
 // 处理主题切换
 const handleThemeChange = (themeName: string) => {
   setTheme(themeName as ThemeName);
   // 保存到 localStorage
   localStorage.setItem('app-theme', themeName);
-  emit('change', themeName as ThemeName);
 };
 
 // 处理模式切换

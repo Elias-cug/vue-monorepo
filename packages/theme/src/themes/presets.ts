@@ -3,7 +3,7 @@
  * 基于 presets 中的颜色生成完整的主题配置
  */
 import type { ThemePreset, ColorSystem } from '../types/theme';
-import type { ColorPalette } from '../presets/types';
+import type { ColorPalette } from '../types/presets';
 import * as colors from '../presets';
 import { presetPrimaryColors } from '../presets';
 
@@ -101,6 +101,7 @@ export const themePresets: Record<string, ThemePreset> = {
   // 蓝色主题
   blue: {
     name: 'blue',
+    label: '蓝色',
     primaryColor: presetPrimaryColors.blue,
     light: generateColorSystem(colors.blue, false),
     dark: generateColorSystem(colors.blueDark, true),
@@ -109,6 +110,7 @@ export const themePresets: Record<string, ThemePreset> = {
   // 红色主题
   red: {
     name: 'red',
+    label: '红色',
     primaryColor: presetPrimaryColors.red,
     light: generateColorSystem(colors.red, false),
     dark: generateColorSystem(colors.redDark, true),
@@ -117,6 +119,7 @@ export const themePresets: Record<string, ThemePreset> = {
   // 橙色主题
   orange: {
     name: 'orange',
+    label: '橙色',
     primaryColor: presetPrimaryColors.orange,
     light: generateColorSystem(colors.orange, false),
     dark: generateColorSystem(colors.orangeDark, true),
@@ -125,6 +128,7 @@ export const themePresets: Record<string, ThemePreset> = {
   // 绿色主题
   green: {
     name: 'green',
+    label: '绿色',
     primaryColor: presetPrimaryColors.green,
     light: generateColorSystem(colors.green, false),
     dark: generateColorSystem(colors.greenDark, true),
@@ -133,6 +137,7 @@ export const themePresets: Record<string, ThemePreset> = {
   // 紫色主题
   purple: {
     name: 'purple',
+    label: '紫色',
     primaryColor: presetPrimaryColors.purple,
     light: generateColorSystem(colors.purple, false),
     dark: generateColorSystem(colors.purpleDark, true),
@@ -141,6 +146,7 @@ export const themePresets: Record<string, ThemePreset> = {
   // 品红主题
   magenta: {
     name: 'magenta',
+    label: '品红',
     primaryColor: presetPrimaryColors.magenta,
     light: generateColorSystem(colors.magenta, false),
     dark: generateColorSystem(colors.magentaDark, true),
@@ -149,6 +155,7 @@ export const themePresets: Record<string, ThemePreset> = {
   // 青色主题
   cyan: {
     name: 'cyan',
+    label: '青色',
     primaryColor: presetPrimaryColors.cyan,
     light: generateColorSystem(colors.cyan, false),
     dark: generateColorSystem(colors.cyanDark, true),
@@ -157,6 +164,7 @@ export const themePresets: Record<string, ThemePreset> = {
   // 极客蓝主题
   geekblue: {
     name: 'geekblue',
+    label: '极客蓝',
     primaryColor: presetPrimaryColors.geekblue,
     light: generateColorSystem(colors.geekblue, false),
     dark: generateColorSystem(colors.geekblueDark, true),
@@ -165,6 +173,7 @@ export const themePresets: Record<string, ThemePreset> = {
   // 火山橙主题
   volcano: {
     name: 'volcano',
+    label: '火山橙',
     primaryColor: presetPrimaryColors.volcano,
     light: generateColorSystem(colors.volcano, false),
     dark: generateColorSystem(colors.volcanoDark, true),
@@ -173,6 +182,7 @@ export const themePresets: Record<string, ThemePreset> = {
   // 金色主题
   gold: {
     name: 'gold',
+    label: '金色',
     primaryColor: presetPrimaryColors.gold,
     light: generateColorSystem(colors.gold, false),
     dark: generateColorSystem(colors.goldDark, true),
@@ -181,6 +191,7 @@ export const themePresets: Record<string, ThemePreset> = {
   // 黄色主题
   yellow: {
     name: 'yellow',
+    label: '黄色',
     primaryColor: presetPrimaryColors.yellow,
     light: generateColorSystem(colors.yellow, false),
     dark: generateColorSystem(colors.yellowDark, true),
@@ -189,6 +200,7 @@ export const themePresets: Record<string, ThemePreset> = {
   // 青柠主题
   lime: {
     name: 'lime',
+    label: '青柠',
     primaryColor: presetPrimaryColors.lime,
     light: generateColorSystem(colors.lime, false),
     dark: generateColorSystem(colors.limeDark, true),

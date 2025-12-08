@@ -1,7 +1,7 @@
 /**
  * 主题系统类型定义
  */
-import type { PresetPrimaryColors } from '../presets/types';
+import type { PresetPrimaryColors } from './presets';
 import type { DesignTokens } from '../tokens/design';
 
 /**
@@ -112,6 +112,7 @@ export interface ThemeConfig {
  */
 export interface ThemePreset {
   name: ThemeName;
+  label: string; // 主题的显示名称
   primaryColor: string; // 主题的主色值
   light: Partial<ColorSystem>;
   dark: Partial<ColorSystem>;
@@ -144,7 +145,7 @@ export interface ThemeManagerOptions {
 export interface ThemeSwitchOptions {
   theme?: ThemeName;
   mode?: ThemeMode;
-  persist?: boolean; // 是否持久化到 localStorage
+  persist?: boolean; // 是否持久化到 localStorage, 默认 true
 }
 
 /**

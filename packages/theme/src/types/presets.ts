@@ -23,4 +23,4 @@ export type ColorName =
   | 'grey';
 
 export type PresetPrimaryColors = Record<ColorName, string>;
-export type PresetPalettes = Record<ColorName, ColorPalette>;
+export type PresetPalettes = Record<ColorName, string[]>;

@@ -28,7 +28,7 @@ const DEFAULT_OPTIONS: ThemeManagerOptions = {
   defaultTheme: 'blue',
   defaultMode: 'light',
   prefix: 'le',
-  storageKey: 'app-theme-config',
+  storageKey: 'vue-monorepo-theme-config',
   rootElement: undefined, // 使用时再获取 document.documentElement
 };
 
