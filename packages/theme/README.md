@@ -483,6 +483,38 @@ console.log(theme.value);  // 需要 .value
 </template>
 ```
 
+### 5. 自定义组件支持明暗模式
+
+让自定义组件支持明暗模式的关键是使用 CSS 变量：
+
+```scss
+// GlobalHeader 组件示例
+.global-header {
+  // ✅ 使用主题变量
+  background-color: var(--le-neutral-card);
+  box-shadow: var(--le-shadow-1);
+  transition: all 0.3s ease; // 平滑过渡
+
+  .header-title {
+    color: var(--le-text-1); // 自适应文本颜色
+  }
+
+  .user-area {
+    &:hover {
+      background: var(--le-hover); // 悬停背景
+    }
+  }
+}
+
+// ❌ 避免硬编码
+.global-header {
+  background-color: #fff; // 深色模式下会有问题
+  color: #333; // 不会自动适配
+}
+```
+
+更多自定义组件明暗模式支持指南，请参考 [dark-mode-guide.md](./docs/dark-mode-guide.md)
+
 ## 设计 Token
 
 除了颜色系统，主题包还提供完整的设计 Token：

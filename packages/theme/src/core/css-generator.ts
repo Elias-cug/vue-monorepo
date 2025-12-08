@@ -74,10 +74,19 @@ export function generateColorCssVars(
   cssVars[generateCssVarName('text-disabled', prefix)] = colors.text.disabled;
   cssVars[generateCssVarName('text-inverse', prefix)] = colors.text.inverse;
 
+  // 文本色别名（为了兼容性和易用性）
+  cssVars[generateCssVarName('text-1', prefix)] = colors.text.base; // 主要文本
+  cssVars[generateCssVarName('text-2', prefix)] = colors.text.secondary; // 次要文本
+  cssVars[generateCssVarName('text-3', prefix)] = colors.text.tertiary; // 辅助文本
+  cssVars[generateCssVarName('text-invert', prefix)] = colors.text.inverse; // 反色文本
+
   // 边框色
   cssVars[generateCssVarName('border-base', prefix)] = colors.border.base;
   cssVars[generateCssVarName('border-light', prefix)] = colors.border.light;
   cssVars[generateCssVarName('border-dark', prefix)] = colors.border.dark;
+
+  // 边框色别名
+  cssVars[generateCssVarName('border', prefix)] = colors.border.base; // 默认边框
 
   // 背景色
   cssVars[generateCssVarName('bg-base', prefix)] = colors.bg.base;
@@ -87,6 +96,14 @@ export function generateColorCssVars(
   cssVars[generateCssVarName('bg-hover', prefix)] = colors.bg.hover;
   cssVars[generateCssVarName('bg-active', prefix)] = colors.bg.active;
   cssVars[generateCssVarName('bg-disabled', prefix)] = colors.bg.disabled;
+
+  // 背景色别名（常用的交互状态）
+  cssVars[generateCssVarName('hover', prefix)] = colors.bg.hover; // 悬停背景
+  cssVars[generateCssVarName('pressed', prefix)] = colors.bg.active; // 按下背景
+  cssVars[generateCssVarName('card', prefix)] = colors.neutral.card; // 卡片背景（重复定义以便使用）
+  cssVars[generateCssVarName('popover', prefix)] = colors.neutral.popover; // 气泡背景
+  cssVars[generateCssVarName('modal', prefix)] = colors.neutral.modal; // 弹窗背景
+  cssVars[generateCssVarName('body', prefix)] = colors.neutral.body; // 页面背景
 
   // 其他
   cssVars[generateCssVarName('divider', prefix)] = colors.divider;
