@@ -85,33 +85,9 @@ export function createNaiveTheme(config: ThemeConfig): GlobalThemeOverrides {
       heightHuge: '46px',
     },
 
-    // Menu 组件配置（使用主题色）
-    Menu: {
-      itemTextColor: colors.text.primary,
-      itemIconColor: colors.text.secondary,
-      itemTextColorHover: colors.primary,
-      itemIconColorHover: colors.primary,
-      itemTextColorActive: colors.primary,
-      itemIconColorActive: colors.primary,
-      itemTextColorChildActive: colors.primary,
-      itemIconColorChildActive: colors.primary,
-      itemColorHover: isDark ? `${colors.primary}1a` : `${colors.primary}0d`, // 10% / 5% 不透明度
-      itemColorActive: isDark ? `${colors.primary}26` : `${colors.primary}1a`, // 15% / 10% 不透明度
-      itemColorActiveHover: isDark ? `${colors.primary}33` : `${colors.primary}26`, // 20% / 15% 不透明度
-      itemTextColorHorizontal: colors.text.primary,
-      itemIconColorHorizontal: colors.text.secondary,
-      itemTextColorHoverHorizontal: colors.primary,
-      itemIconColorHoverHorizontal: colors.primary,
-      itemTextColorActiveHorizontal: colors.primary,
-      itemIconColorActiveHorizontal: colors.primary,
-      itemTextColorChildActiveHorizontal: colors.primary,
-      itemIconColorChildActiveHorizontal: colors.primary,
-      // 添加更多样式使菜单更美观
-      borderColor: 'transparent',
-      borderColorHorizontal: 'transparent',
-      color: 'transparent', // 菜单背景透明
-      colorHorizontal: 'transparent',
-    },
+    // 注意：Menu 组件配置请使用专门的函数
+    // - createSidebarMenuTheme(): 侧边栏菜单（白色文字）
+    // - createDefaultMenuTheme(): 普通菜单（自适应明暗模式）
 
     // Button 组件
     Button: {

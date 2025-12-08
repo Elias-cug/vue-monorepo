@@ -20,6 +20,20 @@ function generateColorSystem(palette: ColorPalette, isDark = false): Partial<Col
     primaryActive: palette[6]!,
     primarySuppl: palette[3]!,
 
+    // 主题色板（完整色系）
+    primaryPalette: {
+      1: palette[0]!,
+      2: palette[1]!,
+      3: palette[2]!,
+      4: palette[3]!,
+      5: palette[4]!,
+      6: palette[5]!, // 主色
+      7: palette[6]!,
+      8: palette[7]!,
+      9: palette[8]!,
+      10: palette[9]!,
+    },
+
     // 功能色
     info: isDark ? colors.blueDark[5]! : colors.blue[5]!,
     infoHover: isDark ? colors.blueDark[4]! : colors.blue[4]!,

@@ -36,6 +36,13 @@ export function generateColorCssVars(
   cssVars[generateCssVarName('primary-active', prefix)] = colors.primaryActive;
   cssVars[generateCssVarName('primary-suppl', prefix)] = colors.primarySuppl;
 
+  // 主题色板（如果存在）
+  if (colors.primaryPalette) {
+    Object.entries(colors.primaryPalette).forEach(([level, color]) => {
+      cssVars[generateCssVarName(`primary-${level}`, prefix)] = color;
+    });
+  }
+
   // 功能色
   cssVars[generateCssVarName('info', prefix)] = colors.info;
   cssVars[generateCssVarName('info-hover', prefix)] = colors.infoHover;
@@ -104,6 +111,14 @@ export function generateColorCssVars(
   cssVars[generateCssVarName('popover', prefix)] = colors.neutral.popover; // 气泡背景
   cssVars[generateCssVarName('modal', prefix)] = colors.neutral.modal; // 弹窗背景
   cssVars[generateCssVarName('body', prefix)] = colors.neutral.body; // 页面背景
+
+  // 侧边栏背景（根据是否是暗黑模式决定）
+  // 暗黑模式下使用黑色系，浅色模式使用主题色阶 7（深色）
+  const isDarkMode = colors.neutral.base === '#000000'; // 根据背景色判断是否暗黑模式
+  const siderBg = isDarkMode
+    ? '#1a1a1a' // 暗黑模式：黑色系
+    : colors.primaryPalette?.['7'] || colors.primaryActive || colors.primary; // 浅色模式：色阶 7
+  cssVars[generateCssVarName('sider-bg', prefix)] = siderBg; // 侧边栏背景
 
   // 其他
   cssVars[generateCssVarName('divider', prefix)] = colors.divider;

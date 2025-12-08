@@ -24,6 +24,20 @@ export interface ColorSystem {
   primaryActive: string;
   primarySuppl: string;
 
+  // 主题色板（完整的色系，从浅到深）
+  primaryPalette?: {
+    1: string; // 最浅
+    2: string;
+    3: string;
+    4: string;
+    5: string; // 主色（同 primary）
+    6: string;
+    7: string;
+    8: string;
+    9: string;
+    10: string; // 最深
+  };
+
   // 功能色
   info: string;
   infoHover: string;

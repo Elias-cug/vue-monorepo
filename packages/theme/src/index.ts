@@ -36,7 +36,10 @@ export {
 export { useTheme } from './composables/useTheme';
 
 // 导出 Naive UI 适配器
-export { createNaiveTheme, createNaiveDarkTheme, createNaiveLightTheme } from './adapters/naive';
+export { createNaiveLightTheme, createNaiveDarkTheme, createNaiveTheme } from './adapters/naive';
+
+// 导出侧边栏菜单主题
+export { createSidebarMenuTheme, createDefaultMenuTheme } from './adapters/sidebar-menu';
 
 // 导出预设主题
 export { themePresets } from './themes/presets';
