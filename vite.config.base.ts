@@ -6,10 +6,17 @@ import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
 import Unocss from 'unocss/vite';
 import legacy from '@vitejs/plugin-legacy';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import { resolve, dirname } from 'path';
+import { resolve, dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+function getRootPath() {
+  return resolve(process.cwd(), 'src/assets/svg-icon');
+}
+
+const appSvgIconPath = getRootPath();
+const uiSvgIconPath = resolve(__dirname, 'packages/ui/src/assets/svg-icon');
 
 export const baseViteConfig = {
   plugins: [
@@ -19,15 +26,17 @@ export const baseViteConfig = {
       resolvers: [NaiveUiResolver()],
     }),
     Unocss(),
-    // SVG 图标插件
+    // SVG 图标
     createSvgIconsPlugin({
       // 指定需要缓存的图标文件夹
-      iconDirs: [resolve(__dirname, 'packages/ui/src/assets/svg-icon')],
+      iconDirs: [uiSvgIconPath, appSvgIconPath],
       // 指定 symbolId 格式
-      symbolId: 'le-icon-[name]',
+      symbolId: 'le-[dir]-[name]',
       // 自定义插入位置
       inject: 'body-last',
+      customDomId: '__svg__icons__ui__dom__',
     }),
+
     // 如果需要支持旧浏览器（不支持 ?. 和 ??），取消下面的注释
     legacy({
       targets: ['defaults', 'not IE 11'],

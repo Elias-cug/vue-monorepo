@@ -55,7 +55,7 @@ export const SvgIcon = defineComponent({
   props: svgIconProps,
   setup(props) {
     // 图标 ID
-    const iconName = computed(() => `#le-icon-${props.name}`);
+    const iconName = computed(() => `#le-${props.name}`);
 
     // 图标样式
     const iconStyle = computed<CSSProperties>(() => {
