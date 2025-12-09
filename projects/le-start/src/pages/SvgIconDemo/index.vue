@@ -20,9 +20,11 @@
 
         <!-- 项目私有图标 -->
         <div>
-          <h3 class="demo-title">项目私有图标</h3>
+          <h3 class="demo-title">项目私有图标（菜单图标）</h3>
           <n-space :size="20">
-            <LeSvgIcon name="custom-home" />
+            <LeSvgIcon name="custom-menu-home" />
+            <LeSvgIcon name="custom-menu-theme" />
+            <LeSvgIcon name="custom-menu-code" />
           </n-space>
         </div>
 
@@ -136,8 +138,8 @@ const uiIcons = ref<string[]>([
   'ui-menu',
 ]);
 
-// 项目私有图标列表
-const customIcons = ref<string[]>(['custom-home']);
+// 项目私有图标列表（菜单图标）
+const customIcons = ref<string[]>(['custom-menu-home', 'custom-menu-theme', 'custom-menu-code']);
 
 // 所有图标
 const allIcons = ref<string[]>([...uiIcons.value, ...customIcons.value]);
