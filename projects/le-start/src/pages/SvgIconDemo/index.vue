@@ -98,12 +98,6 @@
               </template>
               设置中
             </n-button>
-            <n-button type="warning">
-              <template #icon>
-                <LeSvgIcon name="custom-home" />
-              </template>
-              项目图标
-            </n-button>
           </n-space>
         </div>
 
