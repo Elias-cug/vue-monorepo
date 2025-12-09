@@ -18,6 +18,14 @@
           </n-space>
         </div>
 
+        <!-- 项目图标 -->
+        <div>
+          <h3 class="demo-title">项目图标</h3>
+          <n-space :size="20">
+            <LeSvgIcon name="app-home" />
+          </n-space>
+        </div>
+
         <!-- 大小控制 -->
         <div>
           <h3 class="demo-title">大小控制</h3>
