@@ -5,6 +5,7 @@ import Components from 'unplugin-vue-components/vite';
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
 import Unocss from 'unocss/vite';
 import legacy from '@vitejs/plugin-legacy';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -18,6 +19,15 @@ export const baseViteConfig = {
       resolvers: [NaiveUiResolver()],
     }),
     Unocss(),
+    // SVG 图标插件
+    createSvgIconsPlugin({
+      // 指定需要缓存的图标文件夹
+      iconDirs: [resolve(__dirname, 'packages/ui/src/assets/svg-icon')],
+      // 指定 symbolId 格式
+      symbolId: 'le-icon-[name]',
+      // 自定义插入位置
+      inject: 'body-last',
+    }),
     // 如果需要支持旧浏览器（不支持 ?. 和 ??），取消下面的注释
     legacy({
       targets: ['defaults', 'not IE 11'],

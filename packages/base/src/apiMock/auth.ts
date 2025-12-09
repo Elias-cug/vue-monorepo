@@ -23,6 +23,10 @@ export const menusMock = [
         key: 'container-card',
         title: '容器卡片',
       },
+      {
+        key: 'svg-icon-demo',
+        title: 'SVG 图标',
+      },
     ],
     extraProps: {},
   },

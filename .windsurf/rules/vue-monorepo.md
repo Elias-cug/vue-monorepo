@@ -56,6 +56,7 @@ ui目录下的组件使用naive-ui源码的方式，支持单独引入，和整�
 ui 目录下的组件样式使用单独文件
 ui 目录下的组件有一样的前缀le- / Le，样式前缀 le-
 ui 目录下的样式不要用 unocss
+新建的页面（路由引入文件），都用 LeContainer 包裹
 
 theme 包下的设计遵循 antdesign 设计规范和思想，网址： https://ant.design/docs/spec/colors-cn
 

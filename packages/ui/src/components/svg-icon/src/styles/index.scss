@@ -1,0 +1,80 @@
+/**
+ * @Description: SVG 图标组件样式
+ */
+.le-svg-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  // 确保 SVG 内部元素使用 currentColor
+  fill: currentColor;
+  stroke: currentColor;
+
+  // 禁用状态
+  &.is-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  // 旋转动画
+  &.is-spin {
+    animation: le-icon-spin 1s linear infinite;
+  }
+
+  // 脉冲动画
+  &.is-pulse {
+    animation: le-icon-pulse 2s ease-in-out infinite;
+  }
+
+  // 大小变体
+  &--xs {
+    font-size: 12px;
+  }
+
+  &--sm {
+    font-size: 14px;
+  }
+
+  &--md {
+    font-size: 16px;
+  }
+
+  &--lg {
+    font-size: 20px;
+  }
+
+  &--xl {
+    font-size: 24px;
+  }
+
+  &--xxl {
+    font-size: 32px;
+  }
+}
+
+// 动画定义
+@keyframes le-icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes le-icon-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

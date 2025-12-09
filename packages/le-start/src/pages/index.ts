@@ -10,6 +10,7 @@ import {
   FishOutline as FishIcon,
   CodeSlashOutline as CodeIcon,
   ColorPaletteOutline as ThemeIcon,
+  AppsOutline as IconsIcon,
 } from '@vicons/ionicons5';
 
 function renderIcon(icon: any) {
@@ -70,6 +71,17 @@ const app1Map: Record<string, Route> = {
       layout: 'basic',
       title: '容器卡片',
       keepAlive: true,
+    },
+  },
+  'svg-icon-demo': {
+    path: `${appOnePrefix}/svg-icon-demo`,
+    name: 'SvgIconDemo',
+    component: () => import('@/pages/SvgIconDemo/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: 'SVG 图标',
+      keepAlive: true,
+      icon: renderIcon(IconsIcon),
     },
   },
 };

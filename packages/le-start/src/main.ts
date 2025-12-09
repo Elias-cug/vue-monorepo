@@ -8,6 +8,7 @@ import { useAppStore } from '@lee/base/src/store/app';
 import CustomHeader from './layout/CustomHeader.vue';
 import { setupRoutes } from './pages';
 import 'virtual:uno.css';
+import 'virtual:svg-icons-register';
 import App from './App.vue';
 
 setupRoutes();
