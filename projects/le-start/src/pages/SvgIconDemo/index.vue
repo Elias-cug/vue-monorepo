@@ -3,7 +3,7 @@
 -->
 <template>
   <LeContainer>
-    <n-card title="SVG 图标组件">
+    <LeCard title="SVG 图标组件" padding="24px">
       <n-space vertical :size="24">
         <!-- 基础用法 - UI 公共图标 -->
         <div>
@@ -70,9 +70,9 @@
         <div>
           <h3 class="demo-title">交互效果</h3>
           <n-space :size="20">
-            <LeSvgIcon name="ui-home" class-name="hover-scale" :size="24" />
-            <LeSvgIcon name="ui-user" class-name="hover-rotate" :size="24" />
-            <LeSvgIcon name="ui-settings" class-name="hover-color" :size="24" />
+            <LeSvgIcon name="ui-home" class-name="icon-hover-scale" :size="24" />
+            <LeSvgIcon name="ui-user" class-name="icon-hover-rotate" :size="24" />
+            <LeSvgIcon name="ui-settings" class-name="icon-hover-color" :size="24" />
           </n-space>
         </div>
 
@@ -114,7 +114,7 @@
           </n-grid>
         </div>
       </n-space>
-    </n-card>
+    </LeCard>
   </LeContainer>
 </template>
 
@@ -162,7 +162,8 @@ const allIcons = ref<string[]>([...uiIcons.value, ...customIcons.value]);
     box-shadow: var(--le-shadow-1);
     transform: translateY(-2px);
 
-    :deep(.le-svg-icon) {
+    // 直接设置 SVG 图标颜色变化
+    .le-svg-icon {
       color: var(--le-primary);
     }
   }
@@ -173,21 +174,22 @@ const allIcons = ref<string[]>([...uiIcons.value, ...customIcons.value]);
     color: var(--le-text-3);
   }
 }
+</style>
 
-// 交互效果样式 - 使用 :deep 选择器穿透 scoped
-:deep(.le-svg-icon) {
-  &.hover-scale:hover {
-    transform: scale(1.3);
-    color: var(--le-primary);
-  }
+<!-- 为交互效果添加全局样式 -->
+<style lang="scss">
+// 交互效果样式 - 使用全局样式
+.icon-hover-scale:hover {
+  transform: scale(1.3);
+  color: var(--le-primary);
+}
 
-  &.hover-rotate:hover {
-    transform: rotate(180deg);
-    color: var(--le-success);
-  }
+.icon-hover-rotate:hover {
+  transform: rotate(180deg);
+  color: var(--le-success);
+}
 
-  &.hover-color:hover {
-    color: var(--le-error);
-  }
+.icon-hover-color:hover {
+  color: var(--le-error);
 }
 </style>

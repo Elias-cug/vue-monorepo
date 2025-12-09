@@ -1,7 +1,7 @@
 <template>
   <LeContainer class="dashboard">
     <!-- 项目简介 -->
-    <LeCard class="intro-card">
+    <LeCard class="intro-card" padding="48px 32px">
       <div class="intro-content">
         <div class="intro-text">
           <h1>Vue Monorepo</h1>
@@ -139,10 +139,6 @@ const handleFeatureClick = (feature: (typeof features)[0]) => {
     margin-bottom: 32px;
     background: linear-gradient(135deg, var(--le-primary-1) 0%, var(--le-card) 50%);
     border: none;
-
-    :deep(.le-card__content) {
-      padding: 48px 32px;
-    }
 
     .intro-content {
       text-align: center;

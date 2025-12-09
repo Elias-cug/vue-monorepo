@@ -1,7 +1,7 @@
 <template>
   <LeContainer>
     <n-space vertical :size="24">
-      <n-card title="LeCodeViewer 组件示例">
+      <LeCard title="LeCodeViewer 组件示例">
         <n-space vertical :size="16">
           <!-- TypeScript 示例 -->
           <div>
@@ -45,7 +45,7 @@
             <LeCodeViewer :code="jsCode" language="javascript" :show-line-numbers="false" />
           </div>
         </n-space>
-      </n-card>
+      </LeCard>
     </n-space>
   </LeContainer>
 </template>
@@ -141,12 +141,6 @@ h3 {
   margin: 0 0 12px 0;
   font-size: 16px;
   font-weight: 600;
-  color: #333;
-}
-
-:global(.dark) {
-  h3 {
-    color: #fff;
-  }
+  color: var(--le-text-1);
 }
 </style>
