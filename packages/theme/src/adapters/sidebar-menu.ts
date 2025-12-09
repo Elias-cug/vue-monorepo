@@ -24,6 +24,9 @@ export function createSidebarMenuTheme(): Partial<MenuThemeVars> {
     itemIconColorChildActive: '#ffffff',
     itemTextColorChildActiveHover: '#ffffff', // 子项激活+悬停：纯白色
     itemIconColorChildActiveHover: '#ffffff', // 子项激活+悬停图标：纯白色
+    itemIconColorCollapsed: 'rgba(255, 255, 255)', // 收缩状态背景
+    itemColorActiveCollapsed: 'rgba(255, 255, 255, 0.15)', // 收缩状态激活背景
+    itemColorActiveCollapsedInverted: 'rgba(255, 255, 255, 0.15)', // 收缩状态激活背景（反色）
 
     // 背景色（白色半透明）
     itemColorHover: 'rgba(255, 255, 255, 0.1)', // 悬停背景

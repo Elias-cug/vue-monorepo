@@ -52,13 +52,13 @@
         <n-space direction="vertical">
           <n-text>主题系统自动将用户选择保存到 localStorage：</n-text>
           <n-descriptions :column="1" bordered size="small">
-            <n-descriptions-item label="主题键名">
-              <n-text code>app-theme</n-text>
+            <n-descriptions-item label="存储键名">
+              <n-text code>vue-monorepo-theme-config</n-text>
             </n-descriptions-item>
-            <n-descriptions-item label="模式键名">
-              <n-text code>app-mode</n-text>
+            <n-descriptions-item label="存储格式">
+              <n-text>JSON 字符串：</n-text>
+              <n-text code>{"{ theme: 'blue', mode: 'light' }"}</n-text>
             </n-descriptions-item>
-            <n-descriptions-item label="存储格式">JSON 字符串</n-descriptions-item>
           </n-descriptions>
 
           <n-text>你也可以手动管理持久化：</n-text>
@@ -230,22 +230,21 @@ const bestPracticesCode = `/* ✅ 好的实践 */
 
 const persistenceCode = `import { useTheme } from '@lee/theme';
 
-const { theme, mode, setTheme, setMode } = useTheme();
+const { theme, mode, setTheme, setMode, initTheme } = useTheme();
 
-// 手动保存
-function saveThemePreference() {
-  localStorage.setItem('custom-theme', theme.value);
-  localStorage.setItem('custom-mode', mode.value);
-}
+// 自动持久化 - 调用 setTheme 或 setMode 后自动保存
+setTheme('blue');  // 自动保存到 localStorage
+setMode('dark');   // 自动保存到 localStorage
 
-// 手动恢复
-function loadThemePreference() {
-  const savedTheme = localStorage.getItem('custom-theme');
-  const savedMode = localStorage.getItem('custom-mode');
-  
-  if (savedTheme) setTheme(savedTheme);
-  if (savedMode) setMode(savedMode);
-}`;
+// 初始化时自动从 localStorage 恢复
+initTheme();  // 自动从 'vue-monorepo-theme-config' 加载
+
+// 如需自定义存储键或禁用持久化
+initTheme({
+  theme: 'green',
+  mode: 'light',
+  persist: false  // 禁用自动持久化
+});`;
 </script>
 
 <style lang="scss" scoped>

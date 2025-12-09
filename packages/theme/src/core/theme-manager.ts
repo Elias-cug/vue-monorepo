@@ -20,6 +20,7 @@ import {
   removeCssVariables,
   getCssVariables,
 } from './css-generator';
+import { migrateThemeStorage } from '../utils/migrate-storage';
 
 /**
  * 默认配置
@@ -70,6 +71,9 @@ export class ThemeManager {
 
   private constructor(options?: Partial<ThemeManagerOptions>) {
     this.options = { ...DEFAULT_OPTIONS, ...options };
+
+    // 迁移旧的存储数据
+    migrateThemeStorage();
 
     // 初始化主题
     this.loadFromStorage();

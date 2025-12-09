@@ -49,3 +49,6 @@ export { defaultDesignTokens } from './tokens/design';
 
 // 导出预设颜色
 export * from './presets';
+
+// 导出存储迁移工具
+export { migrateThemeStorage } from './utils/migrate-storage';

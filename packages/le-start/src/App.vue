@@ -18,14 +18,9 @@ const { config, mode, initTheme } = useTheme();
 
 // 初始化主题
 onMounted(() => {
-  // 从 localStorage 获取保存的主题，如果没有则使用默认值
-  const savedTheme = localStorage.getItem('app-theme') || 'blue';
-  const savedMode = localStorage.getItem('app-mode') || 'light';
-
-  initTheme({
-    theme: savedTheme as any,
-    mode: savedMode as 'light' | 'dark',
-  });
+  // ThemeManager 会自动从 localStorage (vue-monorepo-theme-config) 加载配置
+  // 如果没有保存的配置，会使用默认值（blue/light）
+  initTheme();
 });
 
 // Naive UI 基础主题

@@ -88,16 +88,14 @@ const themeOptions = computed(() => {
 // 处理主题切换
 const handleThemeChange = (themeName: string) => {
   setTheme(themeName as ThemeName);
-  // 保存到 localStorage
-  localStorage.setItem('app-theme', themeName);
+  // ThemeManager 会自动持久化到 localStorage
 };
 
 // 处理模式切换
 const handleModeChange = (value: boolean) => {
   const newMode = value ? 'dark' : 'light';
   setMode(newMode);
-  // 保存到 localStorage
-  localStorage.setItem('app-mode', newMode);
+  // ThemeManager 会自动持久化到 localStorage
 };
 </script>
 

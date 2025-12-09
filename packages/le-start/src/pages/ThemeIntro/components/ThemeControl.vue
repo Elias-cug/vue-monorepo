@@ -63,9 +63,7 @@
         </div>
       </n-descriptions-item>
       <n-descriptions-item label="存储键">
-        <n-text code>app-theme</n-text>
-        ,
-        <n-text code>app-mode</n-text>
+        <n-text code>vue-monorepo-theme-config</n-text>
       </n-descriptions-item>
     </n-descriptions>
   </LeCard>
