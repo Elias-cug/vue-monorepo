@@ -54,6 +54,8 @@ theme 包下的设计遵循 antdesign 设计规范和思想，网址： https://
 
 projects 下项目UI组件使用优先级 1. @lee/ui 2. naive-ui
 projects 下面引入路由的页面，默认使用 LeContainer 包裹
+projects 下的 card 都要用 LeCard 不用 NCard
+projects 下的页面组件，尽可能使用 unocss 使用@apply
 
 ## 其他
 
