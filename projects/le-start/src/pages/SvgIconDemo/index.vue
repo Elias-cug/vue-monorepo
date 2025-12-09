@@ -5,24 +5,24 @@
   <LeContainer>
     <n-card title="SVG 图标组件">
       <n-space vertical :size="24">
-        <!-- 基础用法 -->
+        <!-- 基础用法 - UI 公共图标 -->
         <div>
-          <h3 class="demo-title">基础用法</h3>
+          <h3 class="demo-title">基础用法（UI 公共图标）</h3>
           <n-space :size="20">
-            <LeSvgIcon name="home" />
-            <LeSvgIcon name="user" />
-            <LeSvgIcon name="settings" />
-            <LeSvgIcon name="search" />
-            <LeSvgIcon name="close" />
-            <LeSvgIcon name="menu" />
+            <LeSvgIcon name="ui-home" />
+            <LeSvgIcon name="ui-user" />
+            <LeSvgIcon name="ui-settings" />
+            <LeSvgIcon name="ui-search" />
+            <LeSvgIcon name="ui-close" />
+            <LeSvgIcon name="ui-menu" />
           </n-space>
         </div>
 
-        <!-- 项目图标 -->
+        <!-- 项目私有图标 -->
         <div>
-          <h3 class="demo-title">项目图标</h3>
+          <h3 class="demo-title">项目私有图标</h3>
           <n-space :size="20">
-            <LeSvgIcon name="app-home" />
+            <LeSvgIcon name="custom-home" />
           </n-space>
         </div>
 
@@ -30,12 +30,12 @@
         <div>
           <h3 class="demo-title">大小控制</h3>
           <n-space :size="20" align="center">
-            <LeSvgIcon name="home" :size="12" />
-            <LeSvgIcon name="home" :size="16" />
-            <LeSvgIcon name="home" :size="20" />
-            <LeSvgIcon name="home" :size="24" />
-            <LeSvgIcon name="home" :size="32" />
-            <LeSvgIcon name="home" size="3em" />
+            <LeSvgIcon name="ui-home" :size="12" />
+            <LeSvgIcon name="ui-home" :size="16" />
+            <LeSvgIcon name="ui-home" :size="20" />
+            <LeSvgIcon name="ui-home" :size="24" />
+            <LeSvgIcon name="ui-home" :size="32" />
+            <LeSvgIcon name="ui-home" size="3em" />
           </n-space>
         </div>
 
@@ -43,12 +43,12 @@
         <div>
           <h3 class="demo-title">颜色控制</h3>
           <n-space :size="20">
-            <LeSvgIcon name="home" color="var(--le-primary)" />
-            <LeSvgIcon name="home" color="var(--le-success)" />
-            <LeSvgIcon name="home" color="var(--le-warning)" />
-            <LeSvgIcon name="home" color="var(--le-error)" />
-            <LeSvgIcon name="home" color="#722ed1" />
-            <LeSvgIcon name="home" color="#eb2f96" />
+            <LeSvgIcon name="ui-home" color="var(--le-primary)" />
+            <LeSvgIcon name="ui-home" color="var(--le-success)" />
+            <LeSvgIcon name="ui-home" color="var(--le-warning)" />
+            <LeSvgIcon name="ui-home" color="var(--le-error)" />
+            <LeSvgIcon name="ui-home" color="#722ed1" />
+            <LeSvgIcon name="ui-home" color="#eb2f96" />
           </n-space>
         </div>
 
@@ -56,11 +56,11 @@
         <div>
           <h3 class="demo-title">动画效果</h3>
           <n-space :size="20">
-            <LeSvgIcon name="settings" :spin="true" :size="24" />
-            <LeSvgIcon name="search" class-name="is-pulse" :size="24" />
-            <LeSvgIcon name="home" :rotate="45" :size="24" />
-            <LeSvgIcon name="user" :rotate="90" :size="24" />
-            <LeSvgIcon name="menu" :rotate="180" :size="24" />
+            <LeSvgIcon name="ui-settings" :spin="true" :size="24" />
+            <LeSvgIcon name="ui-search" class-name="is-pulse" :size="24" />
+            <LeSvgIcon name="ui-home" :rotate="45" :size="24" />
+            <LeSvgIcon name="ui-user" :rotate="90" :size="24" />
+            <LeSvgIcon name="ui-menu" :rotate="180" :size="24" />
           </n-space>
         </div>
 
@@ -68,9 +68,9 @@
         <div>
           <h3 class="demo-title">交互效果</h3>
           <n-space :size="20">
-            <LeSvgIcon name="home" class-name="hover-scale" :size="24" />
-            <LeSvgIcon name="user" class-name="hover-rotate" :size="24" />
-            <LeSvgIcon name="settings" class-name="hover-color" :size="24" />
+            <LeSvgIcon name="ui-home" class-name="hover-scale" :size="24" />
+            <LeSvgIcon name="ui-user" class-name="hover-rotate" :size="24" />
+            <LeSvgIcon name="ui-settings" class-name="hover-color" :size="24" />
           </n-space>
         </div>
 
@@ -80,21 +80,27 @@
           <n-space :size="20">
             <n-button>
               <template #icon>
-                <LeSvgIcon name="home" />
+                <LeSvgIcon name="ui-home" />
               </template>
               首页
             </n-button>
             <n-button type="primary">
               <template #icon>
-                <LeSvgIcon name="search" />
+                <LeSvgIcon name="ui-search" />
               </template>
               搜索
             </n-button>
             <n-button type="success">
               <template #icon>
-                <LeSvgIcon name="settings" :spin="true" />
+                <LeSvgIcon name="ui-settings" :spin="true" />
               </template>
               设置中
+            </n-button>
+            <n-button type="warning">
+              <template #icon>
+                <LeSvgIcon name="custom-home" />
+              </template>
+              项目图标
             </n-button>
           </n-space>
         </div>
@@ -120,8 +126,21 @@
 import { ref } from 'vue';
 import { LeSvgIcon, Container as LeContainer } from '@lee/ui';
 
-// 预设的图标列表
-const allIcons = ref<string[]>(['home', 'user', 'settings', 'search', 'close', 'menu']);
+// UI 公共图标列表
+const uiIcons = ref<string[]>([
+  'ui-home',
+  'ui-user',
+  'ui-settings',
+  'ui-search',
+  'ui-close',
+  'ui-menu',
+]);
+
+// 项目私有图标列表
+const customIcons = ref<string[]>(['custom-home']);
+
+// 所有图标
+const allIcons = ref<string[]>([...uiIcons.value, ...customIcons.value]);
 </script>
 
 <style lang="scss" scoped>
