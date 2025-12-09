@@ -1,6 +1,6 @@
 import { routeMap } from '@base/router/setupRoutes';
 import { h } from 'vue';
-import { SvgIcon } from '@lee/ui';
+import { LeSvgIcon } from '@lee/ui';
 
 export function formatUserInfo(userInfo: any) {
   return userInfo;
@@ -11,7 +11,7 @@ export function formatUserInfo(userInfo: any) {
  * @param iconName SVG 图标名称（如 'custom-home'）
  */
 function renderIcon(iconName: string) {
-  return () => h(SvgIcon, { name: iconName, size: 18 });
+  return () => h(LeSvgIcon, { name: iconName, size: 18 });
 }
 
 /**

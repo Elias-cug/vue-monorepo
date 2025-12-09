@@ -65,7 +65,6 @@
 
 <script setup lang="ts">
 import { NTabs, NTabPane, NGrid, NGridItem, NText, NSpace, NButton } from 'naive-ui';
-import { Card as LeCard, Container as LeContainer } from '@lee/ui';
 </script>
 
 <style lang="scss" scoped></style>

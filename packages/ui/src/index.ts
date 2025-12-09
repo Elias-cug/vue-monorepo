@@ -19,6 +19,12 @@ import type { App } from 'vue';
 // 导出 SVG 工具函数
 export * from './utils/svg-register';
 
+// 导出带 Le 前缀的组件名
+export { CodeViewer as LeCodeViewer } from './components/code-viewer';
+export { Container as LeContainer } from './components/container';
+export { Card as LeCard } from './components/card';
+export { SvgIcon as LeSvgIcon } from './components/svg-icon';
+
 const components = [CodeViewer, Container, Card, SvgIcon];
 
 /**

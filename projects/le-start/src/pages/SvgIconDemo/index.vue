@@ -120,7 +120,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { LeSvgIcon, Container as LeContainer } from '@lee/ui';
 
 // UI 公共图标列表
 const uiIcons = ref<string[]>([

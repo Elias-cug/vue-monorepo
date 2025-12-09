@@ -141,7 +141,6 @@
 <script setup lang="ts">
 // 不需要导入 ref，已移除所有变量相关功能
 import { NTabs, NTabPane, NH4, NGrid, NGridItem, NDivider, NSpace, NText } from 'naive-ui';
-import { Card as LeCard } from '@lee/ui';
 import ColorDisplay from './ColorDisplay.vue';
 import DesignToken from './DesignToken.vue';
 

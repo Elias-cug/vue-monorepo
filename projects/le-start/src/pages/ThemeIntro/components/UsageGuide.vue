@@ -95,7 +95,6 @@ import {
   NDescriptions,
   NDescriptionsItem,
 } from 'naive-ui';
-import { Card as LeCard } from '@lee/ui';
 
 const appInitCode = `<template>
   <n-config-provider :theme="naiveTheme" :theme-overrides="themeOverrides">

@@ -84,7 +84,6 @@ import {
   NDescriptionsItem,
   NText,
 } from 'naive-ui';
-import { Card as LeCard } from '@lee/ui';
 import { useTheme, themePresets } from '@lee/theme';
 import type { ThemeName } from '@lee/theme';
 

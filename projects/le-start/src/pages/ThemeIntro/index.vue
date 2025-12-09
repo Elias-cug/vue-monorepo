@@ -37,7 +37,6 @@ import CssVariables from './components/CssVariables.vue';
 import ComponentExamples from './components/ComponentExamples.vue';
 import ThemeControl from './components/ThemeControl.vue';
 import UsageGuide from './components/UsageGuide.vue';
-import { Container as LeContainer } from '@lee/ui';
 </script>
 
 <style lang="scss" scoped>

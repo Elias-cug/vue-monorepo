@@ -16,7 +16,6 @@
 
 <script setup lang="ts">
 import { NTabs, NTabPane, NCode } from 'naive-ui';
-import { Card as LeCard } from '@lee/ui';
 
 const basicUsageCode = `import { useTheme } from '@lee/theme';
 

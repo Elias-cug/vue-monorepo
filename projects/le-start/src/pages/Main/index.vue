@@ -121,7 +121,6 @@ import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useAppStore, useAuthStore } from '@lee/base/src/store';
 import { SpeedometerOutline } from '@vicons/ionicons5';
-import { Container as LeContainer, Card as LeCard } from '@lee/ui';
 import TypeDisplay from './components/TypeDisplay.vue';
 import RouterHelperDemo from './components/RouterHelperDemo.vue';
 

@@ -27,7 +27,6 @@
 
 <script setup lang="ts">
 import { NTabs, NTabPane, NCode, NTable, NDivider, NText, NH3, NH4 } from 'naive-ui';
-import { Card as LeCard } from '@lee/ui';
 
 const useThemeApiCode = `interface UseThemeReturn {
   theme: ComputedRef<ThemeName>;      // 当前主题名称
