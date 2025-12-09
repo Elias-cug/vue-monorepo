@@ -4,18 +4,7 @@
 
 import type { Route } from '@lee/base/src/types/route';
 import { setupRoutesBase } from '@lee/base/src/router/setupRoutes';
-import { NIcon } from 'naive-ui';
-import { h } from 'vue';
-import {
-  FishOutline as FishIcon,
-  CodeSlashOutline as CodeIcon,
-  ColorPaletteOutline as ThemeIcon,
-  AppsOutline as IconsIcon,
-} from '@vicons/ionicons5';
 
-function renderIcon(icon: any) {
-  return () => h(NIcon, null, { default: () => h(icon) });
-}
 const appOnePrefix = '/le-start';
 
 const app1Map: Record<string, Route> = {
@@ -27,7 +16,7 @@ const app1Map: Record<string, Route> = {
       layout: 'basic',
       title: '首页',
       keepAlive: true,
-      icon: renderIcon(FishIcon),
+      icon: 'menu-home',
     },
   },
   'theme-intro': {
@@ -37,7 +26,7 @@ const app1Map: Record<string, Route> = {
     meta: {
       layout: 'basic',
       title: '主题系统介绍',
-      icon: renderIcon(ThemeIcon),
+      icon: 'menu-theme',
       keepAlive: true,
     },
   },
@@ -50,7 +39,7 @@ const app1Map: Record<string, Route> = {
       layout: 'basic',
       title: '组件展示',
       keepAlive: true,
-      icon: renderIcon(CodeIcon),
+      icon: 'menu-code',
     },
   },
   'code-viewer': {
@@ -81,7 +70,6 @@ const app1Map: Record<string, Route> = {
       layout: 'basic',
       title: 'SVG 图标',
       keepAlive: true,
-      icon: renderIcon(IconsIcon),
     },
   },
 };

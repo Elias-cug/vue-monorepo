@@ -1,7 +1,17 @@
 import { routeMap } from '@base/router/setupRoutes';
+import { h } from 'vue';
+import { SvgIcon } from '@lee/ui';
 
 export function formatUserInfo(userInfo: any) {
   return userInfo;
+}
+
+/**
+ * 将字符串形式的图标名转换为 VNode
+ * @param iconName SVG 图标名称（如 'custom-home'）
+ */
+function renderIcon(iconName: string) {
+  return () => h(SvgIcon, { name: iconName, size: 18 });
 }
 
 /**
@@ -9,10 +19,14 @@ export function formatUserInfo(userInfo: any) {
  * 可以在这里统一维护字段合并逻辑
  */
 export function mergeMenuNode(menuInfo: any, routeInfo: any) {
+  // 处理图标：如果是字符串，转换为 VNode
+  const icon = routeInfo.meta?.icon;
+  const processedIcon = typeof icon === 'string' ? renderIcon(`custom-${icon}`) : icon;
+
   return {
     ...menuInfo,
     ...routeInfo,
-    icon: routeInfo.meta.icon,
+    icon: processedIcon,
     meta: {
       ...routeInfo.meta,
       title: menuInfo.title || routeInfo.meta?.title,

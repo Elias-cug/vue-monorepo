@@ -213,7 +213,6 @@ export function setGuard(router: Router) {
     }
 
     // 添加 tab
-    console.log('---to', to);
     appStore.addTab(formatTabItem(to));
   });
 }
