@@ -2,7 +2,7 @@
  * 服务层类型定义
  */
 
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosRequestConfig, AxiosProgressEvent } from 'axios';
 
 /**
  * 业务响应数据结构
@@ -32,6 +32,39 @@ export interface RequestConfig extends AxiosRequestConfig {
   isDownload?: boolean;
   /** 是否跳过 token，默认 false */
   skipToken?: boolean;
+  /** 重试配置 */
+  retry?: {
+    /** 重试次数，默认 0 */
+    count?: number;
+    /** 重试延迟(ms)，默认 1000 */
+    delay?: number;
+    /** 重试条件 */
+    condition?: (error: any) => boolean;
+  };
+  /** 缓存配置 */
+  cache?: {
+    /** 是否启用缓存，默认 false */
+    enable?: boolean;
+    /** 缓存时间(ms)，默认 5分钟 */
+    ttl?: number;
+    /** 缓存键，默认使用 url + params */
+    key?: string;
+  };
+  /** 取消控制器 */
+  abortController?: AbortController;
+  /** 请求优先级 */
+  priority?: 'low' | 'normal' | 'high';
+  /** 请求标签，用于批量取消 */
+  tag?: string;
+  /** 请求开始回调 */
+  onStart?: () => void;
+  /** 进度回调 */
+  onProgress?: (progress: AxiosProgressEvent) => void;
+  /** 请求结束回调 */
+  onFinish?: () => void;
+
+  /** 是否使用安全模式（默认 true，总是返回 resolve，通过数据结构区分成功失败；设为 false 使用传统模式） */
+  safe?: boolean;
 }
 
 /**
@@ -49,3 +82,28 @@ export interface DownloadConfig {
   autoDownload?: boolean;
 }
 
+/**
+ * 重试配置类型
+ */
+export interface RetryConfig {
+  /** 重试次数 */
+  count: number;
+  /** 重试延迟(ms) */
+  delay: number;
+  /** 重试条件 */
+  condition?: (error: any) => boolean;
+}
+
+/**
+ * 安全响应类型（总是 resolve，不会 reject）
+ */
+export interface SafeResponse<T = any> {
+  /** 响应数据 */
+  data: T | null;
+  /** 错误信息 */
+  error: {
+    message: string;
+    code?: string | number;
+    details?: any;
+  } | null;
+}

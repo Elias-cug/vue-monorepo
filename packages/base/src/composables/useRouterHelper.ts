@@ -8,6 +8,25 @@ import { useAppStore } from '../store/app';
 import { ls } from '../storage';
 import { TOKEN_KEY } from '../constants';
 import { clearAppPersist } from './useAppPersist';
+import router from '../router';
+
+/**
+ * 跳转到登录页
+ * @param redirect 重定向路径，默认使用当前路由路径
+ * @param clearToken 是否清除 token，默认 true
+ */
+export function toLogin(redirect?: string, clearToken = true) {
+  // 清除 token
+  if (clearToken) {
+    ls.remove(TOKEN_KEY, true);
+  }
+
+  // 跳转到登录页
+  router.push({
+    path: '/login',
+    query: redirect ? { redirect } : undefined,
+  });
+}
 
 export function useRouterHelper() {
   const router = useVueRouter();
@@ -23,9 +42,6 @@ export function useRouterHelper() {
    * @param redirect 是否保留当前路由作为重定向参数，默认 true
    */
   function logout(redirect = true) {
-    // 清除 token
-    ls.remove(TOKEN_KEY, true);
-
     // 清除持久化的 app 状态
     clearAppPersist();
 
@@ -33,15 +49,8 @@ export function useRouterHelper() {
     appStore.setTabs([]);
     appStore.clearCachedRoutes();
 
-    // 跳转登录页
-    router.push({
-      path: '/login',
-      query: redirect
-        ? {
-            redirect: route.fullPath,
-          }
-        : undefined,
-    });
+    // 跳转登录页（会清除 token）
+    toLogin(redirect ? route.fullPath : undefined);
   }
 
   /**

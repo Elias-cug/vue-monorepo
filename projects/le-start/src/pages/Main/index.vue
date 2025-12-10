@@ -43,6 +43,9 @@ import {
   GitNetworkOutline,
   CodeSlashOutline,
   GitBranchOutline,
+  CloudOutline,
+  SaveOutline,
+  DocumentsOutline,
 } from '@vicons/ionicons5';
 
 defineOptions({
@@ -95,6 +98,22 @@ const features = [
     route: null,
   },
   {
+    key: 'storage',
+    title: '持久化存储',
+    desc: 'LocalStorage 和 SessionStorage 封装',
+    icon: SaveOutline,
+    color: '#eb2f96',
+    route: '/le-start/storage-demo',
+  },
+  {
+    key: 'builtin-pages',
+    title: '内置页面',
+    desc: '登录、403、404、500 等系统页面',
+    icon: DocumentsOutline,
+    color: '#722ed1',
+    route: '/le-start/builtin-pages',
+  },
+  {
     key: 'router',
     title: '路由体系',
     desc: '动态路由和权限控制',
@@ -116,6 +135,14 @@ const features = [
     desc: '常用工具函数，提升效率',
     icon: ExtensionPuzzleOutline,
     color: '#43e97b',
+    route: null,
+  },
+  {
+    key: 'request',
+    title: '接口请求',
+    desc: 'Axios 封装，统一错误处理',
+    icon: CloudOutline,
+    color: '#00d9ff',
     route: null,
   },
 ];
