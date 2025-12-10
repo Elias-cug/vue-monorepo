@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["docs/*"],
+      "@lee/base/*": ["../../packages/base/src/*"],
+      "@lee/ui/*": ["../../packages/ui/src/*"],
+      "@lee/theme/*": ["../../packages/theme/src/*"],
+      "@lee/utils/*": ["../../packages/utils/src/*"]
+    },
+    "types": ["vite/client", "node"]
+  },
+  "include": [
+    "docs/**/*.ts",
+    "docs/**/*.tsx",
+    "docs/**/*.vue",
+    "docs/**/*.md",
+    "docs/.vitepress/**/*.ts",
+    "docs/.vitepress/**/*.mts"
+  ],
+  "exclude": ["node_modules", "docs/.vitepress/cache", "docs/.vitepress/dist"]
+}
