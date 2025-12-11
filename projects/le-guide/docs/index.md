@@ -15,7 +15,7 @@ hero:
       link: /guide/getting-started
     - theme: alt
       text: 在 GitHub 查看
-      link: https://github.com/your-repo/vue-monorepo
+      link: https://github.com/Elias-cug/vue-monorepo
 
 features:
   - icon: 🎨
@@ -33,14 +33,10 @@ features:
   - icon: 📦
     title: Monorepo 架构
     details: 使用 pnpm workspace 管理，模块化设计，包之间依赖清晰，易于维护和扩展
-    link: /guide/monorepo
-    linkText: 架构设计
 
   - icon: ⚡️
     title: 开发体验
     details: 基于 Vite 构建，支持热更新，TypeScript 类型安全，ESLint + Prettier 代码规范
-    link: /guide/development-guide
-    linkText: 开发指南
 
   - icon: 🔧
     title: 基础设施

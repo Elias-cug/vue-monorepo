@@ -19,7 +19,8 @@ export default defineConfig({
       { text: '基础架构', link: '/base/' },
       { text: 'UI 组件', link: '/ui/' },
       { text: '主题系统', link: '/theme/' },
-      { text: 'API 参考', link: '/api/' },
+      { text: '工具函数', link: '/utils/' },
+      // { text: 'API 参考', link: '/api/' },
     ],
 
     // 侧边栏
@@ -28,52 +29,54 @@ export default defineConfig({
         {
           text: '介绍',
           items: [
-            { text: '什么是 Vue Monorepo', link: '/guide/introduction' },
             { text: '快速开始', link: '/guide/getting-started' },
-            { text: '项目结构', link: '/guide/project-structure' },
-            { text: '开发规范', link: '/guide/development-guide' },
+            // { text: '什么是 Vue Monorepo', link: '/guide/introduction' },
+            // { text: '项目结构', link: '/guide/project-structure' },
+            // { text: '开发规范', link: '/guide/development-guide' },
           ],
         },
-        {
-          text: '核心概念',
-          items: [
-            { text: 'Monorepo 架构', link: '/guide/monorepo' },
-            { text: '包管理策略', link: '/guide/package-management' },
-            { text: '构建配置', link: '/guide/build-config' },
-            { text: '部署指南', link: '/guide/deployment' },
-          ],
-        },
+        // {
+        //   text: '核心概念',
+        //   items: [
+        //     { text: 'Monorepo 架构', link: '/guide/monorepo' },
+        //     { text: '包管理策略', link: '/guide/package-management' },
+        //     { text: '构建配置', link: '/guide/build-config' },
+        //     { text: '部署指南', link: '/guide/deployment' },
+        //   ],
+        // },
       ],
       '/base/': [
         {
-          text: '基础架构',
+          text: 'Base 基础架构',
+          collapsed: false,
           items: [
             { text: '概览', link: '/base/' },
-            { text: '路由系统', link: '/base/router' },
-            { text: '状态管理', link: '/base/store' },
-            { text: '请求封装', link: '/base/service' },
             { text: '布局系统', link: '/base/layout' },
-            { text: '工具函数', link: '/base/utils' },
+            { text: '路由系统', link: '/base/router' },
+            { text: '状态管理', link: '/base/state' },
+            { text: 'Service 模块', link: '/base/service' },
+            { text: '持久化存储', link: '/base/storage' },
+            { text: '内置页面', link: '/base/builtin-pages' },
           ],
         },
-        {
-          text: 'Service 模块',
-          items: [
-            { text: '请求配置', link: '/base/service/config' },
-            { text: '重试机制', link: '/base/service/retry' },
-            { text: '缓存管理', link: '/base/service/cache' },
-            { text: '请求管理器', link: '/base/service/manager' },
-            { text: '安全模式', link: '/base/service/safe-mode' },
-          ],
-        },
+        // {
+        //   text: 'Service 模块',
+        //   items: [
+        //     { text: '请求配置', link: '/base/service/config' },
+        //     { text: '重试机制', link: '/base/service/retry' },
+        //     { text: '缓存管理', link: '/base/service/cache' },
+        //     { text: '请求管理器', link: '/base/service/manager' },
+        //     { text: '安全模式', link: '/base/service/safe-mode' },
+        //   ],
+        // },
       ],
       '/ui/': [
         {
           text: 'UI 组件',
           items: [
             { text: '概览', link: '/ui/' },
-            { text: '安装使用', link: '/ui/installation' },
-            { text: '主题定制', link: '/ui/theming' },
+            // { text: '安装使用', link: '/ui/installation' },
+            // { text: '主题定制', link: '/ui/theming' },
           ],
         },
         {
@@ -82,7 +85,7 @@ export default defineConfig({
             { text: 'LeCard 卡片', link: '/ui/components/card' },
             { text: 'LeContainer 容器', link: '/ui/components/container' },
             { text: 'LeSvgIcon 图标', link: '/ui/components/svg-icon' },
-            { text: 'LeCodeViewer 代码查看器', link: '/ui/components/code-viewer' },
+            // { text: 'LeCodeViewer 代码查看器', link: '/ui/components/code-viewer' },
           ],
         },
       ],
@@ -91,38 +94,45 @@ export default defineConfig({
           text: '主题系统',
           items: [
             { text: '概览', link: '/theme/' },
-            { text: '快速开始', link: '/theme/getting-started' },
-            { text: '主题配置', link: '/theme/configuration' },
-            { text: 'CSS 变量', link: '/theme/css-variables' },
+            // { text: '快速开始', link: '/theme/getting-started' },
+            // { text: '主题配置', link: '/theme/configuration' },
+            // { text: 'CSS 变量', link: '/theme/css-variables' },
           ],
         },
+        // {
+        //   text: '高级功能',
+        //   items: [
+        //     { text: '动态主题', link: '/theme/dynamic-theme' },
+        //     { text: '主题编辑器', link: '/theme/theme-editor' },
+        //     { text: '色阶系统', link: '/theme/color-palette' },
+        //     { text: '设计 Token', link: '/theme/design-tokens' },
+        //     { text: 'Naive UI 集成', link: '/theme/naive-integration' },
+        //   ],
+        // },
+      ],
+      '/utils/': [
         {
-          text: '高级功能',
-          items: [
-            { text: '动态主题', link: '/theme/dynamic-theme' },
-            { text: '主题编辑器', link: '/theme/theme-editor' },
-            { text: '色阶系统', link: '/theme/color-palette' },
-            { text: '设计 Token', link: '/theme/design-tokens' },
-            { text: 'Naive UI 集成', link: '/theme/naive-integration' },
-          ],
+          text: 'Utils 工具库',
+          collapsed: false,
+          items: [{ text: '工具函数', link: '/utils/' }],
         },
       ],
-      '/api/': [
-        {
-          text: 'API 参考',
-          items: [
-            { text: '概览', link: '/api/' },
-            { text: 'Base API', link: '/api/base' },
-            { text: 'UI API', link: '/api/ui' },
-            { text: 'Theme API', link: '/api/theme' },
-            { text: 'Utils API', link: '/api/utils' },
-          ],
-        },
-      ],
+      // '/api/': [
+      //   {
+      //     text: 'API 参考',
+      //     items: [
+      //       { text: '概览', link: '/api/' },
+      //       { text: 'Base API', link: '/api/base' },
+      //       { text: 'UI API', link: '/api/ui' },
+      //       { text: 'Theme API', link: '/api/theme' },
+      //       { text: 'Utils API', link: '/api/utils' },
+      //     ],
+      //   },
+      // ],
     },
 
     // 社交链接
-    socialLinks: [{ icon: 'github', link: 'https://github.com/your-repo/vue-monorepo' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/Elias-cug/vue-monorepo' }],
 
     // 搜索
     search: {
@@ -157,7 +167,7 @@ export default defineConfig({
 
     // 编辑链接
     editLink: {
-      pattern: 'https://github.com/your-repo/vue-monorepo/edit/main/projects/le-guide/docs/:path',
+      pattern: 'https://github.com/Elias-cug/vue-monorepo/edit/main/projects/le-guide/docs/:path',
       text: '在 GitHub 上编辑此页',
     },
 

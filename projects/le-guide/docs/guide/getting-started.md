@@ -17,10 +17,10 @@
 
 ```bash
 # 使用 HTTPS
-git clone https://github.com/your-repo/vue-monorepo.git
+git clone https://github.com/Elias-cug/vue-monorepo.git
 
 # 或使用 SSH
-git clone git@github.com:your-repo/vue-monorepo.git
+git clone git@github.com:Elias-cug/vue-monorepo.git
 
 # 进入项目目录
 cd vue-monorepo
@@ -213,8 +213,8 @@ const appTitle = import.meta.env.VITE_APP_TITLE;
 如果你遇到问题：
 
 1. 查看[常见问题](/guide/faq)
-2. 在 [GitHub Issues](https://github.com/your-repo/vue-monorepo/issues) 提交问题
-3. 加入我们的[社区讨论](https://github.com/your-repo/vue-monorepo/discussions)
+2. 在 [GitHub Issues](https://github.com/Elias-cug/vue-monorepo/issues) 提交问题
+3. 加入我们的[社区讨论](https://github.com/Elias-cug/vue-monorepo/discussions)
 
 ::: info 提示
 确保你使用的是推荐的 Node.js 和 pnpm 版本，这能避免大多数环境问题。

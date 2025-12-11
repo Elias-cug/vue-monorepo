@@ -424,4 +424,4 @@ onUnmounted(() => {
 
 ## API 参考
 
-完整的 API 文档请参考 [Service API 参考](/api/base#service)。
+完整的 API 文档正在建设中。
