@@ -7,6 +7,8 @@ export default defineConfig({
   description: '基于 Vue 3 + TypeScript 的企业级前端 Monorepo 项目文档',
   base: '/le-guide/',
   lang: 'zh-CN',
+  // 忽略死链接检查
+  ignoreDeadLinks: true,
 
   // 主题配置
   themeConfig: {

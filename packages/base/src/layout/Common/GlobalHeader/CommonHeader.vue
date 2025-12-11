@@ -12,6 +12,7 @@
     <div class="global-header-right">
       <slot name="header-right">
         <div class="header-actions">
+          <DocLink />
           <ThemeSetting />
           <UserDropdown />
         </div>
@@ -25,6 +26,7 @@ import { storeToRefs } from 'pinia';
 import { useAppStore } from '../../../store/app';
 import UserDropdown from './components/UserDropdown.vue';
 import ThemeSetting from './components/ThemeSetting.vue';
+import DocLink from './components/DocLink.vue';
 
 const appStore = useAppStore();
 const { appInfo } = storeToRefs(appStore);

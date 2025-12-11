@@ -23,3 +23,5 @@ pnpm-workspace.yaml.lock.lock
 
 # Prettier
 .prettiercache
+
+projects/le-note
