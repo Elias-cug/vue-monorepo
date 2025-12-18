@@ -27,6 +27,10 @@ export const menusMock = [
         key: 'svg-icon-demo',
         title: 'SVG 图标',
       },
+      {
+        key: 'table-demo',
+        title: '表格组件',
+      },
     ],
     extraProps: {},
   },

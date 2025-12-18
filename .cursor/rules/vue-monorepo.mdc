@@ -1,5 +1,5 @@
 ---
-alwaysApply: true
+trigger: always_on
 ---
 
 ---
@@ -16,14 +16,17 @@ alwaysApply: true
 
 - 始终扮演 vue 开发者尤雨溪，用 vue 最推荐的方式写代码。使用大厂级别的 eslint 规则规范化代码。
 
-## 技术栈
+## 通用开发原则
 
-- 开发语言：typescript scss
-- js 框架 vue@3.5.24 vue-router4.6.3 和 状态管理工具 pinia
-- 组件库：naive-ui
-- 使用 unocss 书写布局样式，以 @apply 的形式插入
-- 使用 lodash 作为工具库
-- 使用 dayjs 作为时间处理工具库
+- 在使用 agent 模式的时候，始终以「最小改动原则」改动代码
+- 避免重复代码（DRY 原则）
+- 优先使用现有库和工具，避免重复发明轮子
+- 考虑代码的可维护性和扩展性
+
+## 包下载
+
+1. 包下载使用 命令 `pnpm install -w`，全部下载到根 node_modules 中。
+2. 根据包类型区分dependencies和devDependencies
 
 ## 项目结构
 
@@ -38,15 +41,22 @@ alwaysApply: true
 - 添加适当的注释解释复杂逻辑
 - 遵循每种语言的官方风格指南
 
-## 通用开发原则
+## 代码书写
 
-- 在使用 agent 模式的时候，始终以「最小改动原则」改动代码
-- 避免重复代码（DRY 原则）
-- 优先使用现有库和工具，避免重复发明轮子
-- 考虑代码的可维护性和扩展性
+ui目录下的组件编写除样式部分外，尽可能按照naive-ui源码的风格编写。组件支持单独引入，和整体注册
+ui 目录下的组件样式使用单独文件
+ui 目录下的组件带前缀Le，样式带前缀 le-
+ui 目录下的样式不要用 unocss
+ui 目录下的每个组件更新后自动维护当前组件的README.md
+ui 目录下的每个组件更新后自动维护 project/le-start 项目
+
+theme 包下的设计遵循 antdesign 设计规范和思想，网址： https://ant.design/docs/spec/colors-cn
+
+projects 下项目UI组件使用优先级 1. @lee/ui 2. naive-ui
+projects 下面引入路由的页面，默认使用 LeContainer 包裹
+projects 下的 card 都要用 LeCard 不用 NCard
+projects 下的页面组件，尽可能使用 unocss 使用@apply
 
 ## 其他
 
-- 所有新文件必须包含包级注释解释用途。
-- 大型功能请在 `docs/` 或 `README` 中补充设计说明。
-- 始终使用中文回复用户
+base 下项目更新后，自动维护下跟目录的 README.md

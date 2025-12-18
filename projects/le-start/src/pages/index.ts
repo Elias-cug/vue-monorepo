@@ -62,6 +62,16 @@ const app1Map: Record<string, Route> = {
       keepAlive: true,
     },
   },
+  'table-demo': {
+    path: `${appOnePrefix}/table-demo`,
+    name: 'TableDemo',
+    component: () => import('@/pages/ComponnetShow/TableDemo/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '表格组件',
+      keepAlive: true,
+    },
+  },
   'svg-icon-demo': {
     path: `${appOnePrefix}/svg-icon-demo`,
     name: 'SvgIconDemo',

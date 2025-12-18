@@ -8,12 +8,14 @@ export * from './components/code-viewer';
 export * from './components/container';
 export * from './components/card';
 export * from './components/svg-icon';
+export * from './components/table';
 
 // 组件列表（用于整体注册）
 import { CodeViewer } from './components/code-viewer';
 import { Container } from './components/container';
 import { Card } from './components/card';
 import { SvgIcon } from './components/svg-icon';
+import { Table } from './components/table';
 import type { App } from 'vue';
 
 // 导出 SVG 工具函数
@@ -24,8 +26,9 @@ export { CodeViewer as LeCodeViewer } from './components/code-viewer';
 export { Container as LeContainer } from './components/container';
 export { Card as LeCard } from './components/card';
 export { SvgIcon as LeSvgIcon } from './components/svg-icon';
+export { Table as LeTable } from './components/table';
 
-const components = [CodeViewer, Container, Card, SvgIcon];
+const components = [CodeViewer, Container, Card, SvgIcon, Table];
 
 /**
  * 整体注册所有组件

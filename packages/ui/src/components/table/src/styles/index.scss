@@ -1,0 +1,137 @@
+/**
+ * LeTable 组件样式
+ */
+
+.le-table {
+  width: 100%;
+
+  &__body {
+    width: 100%;
+    
+    // 自定义表格样式覆盖
+    :deep(.n-data-table) {
+      // 表头样式
+      .n-data-table-thead {
+        .n-data-table-th {
+          background-color: var(--le-fill-1, #fafafa);
+          font-weight: 600;
+          color: var(--le-text-1, #262626);
+          transition: background-color 0.3s ease;
+        }
+      }
+
+      // 表格行 hover 效果
+      .n-data-table-tr:hover {
+        .n-data-table-td {
+          background-color: var(--le-hover, rgba(0, 0, 0, 0.04));
+        }
+      }
+
+      // 单元格样式
+      .n-data-table-td {
+        color: var(--le-text-1, #262626);
+        transition: background-color 0.2s ease;
+      }
+
+      // 边框颜色
+      .n-data-table-th,
+      .n-data-table-td {
+        border-color: var(--le-divider, #f0f0f0) !important;
+      }
+
+      // 表格底部边框
+      .n-data-table-base-table {
+        border-color: var(--le-divider, #f0f0f0);
+      }
+    }
+  }
+
+  // 空状态样式
+  &__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 0;
+    color: var(--le-text-3, #8c8c8c);
+    font-size: 14px;
+  }
+
+  // 分页器样式
+  &__pagination {
+    display: flex;
+    padding: 16px 0;
+    margin-top: 8px;
+    
+    :deep(.n-pagination) {
+      .n-pagination-item {
+        transition: all 0.2s ease;
+        
+        &:hover:not(.n-pagination-item--disabled):not(.n-pagination-item--active) {
+          background-color: var(--le-hover, rgba(0, 0, 0, 0.04));
+        }
+        
+        &--active {
+          background-color: var(--le-primary, #1890ff);
+          color: #fff;
+          
+          &:hover {
+            background-color: var(--le-primary-6, #096dd9);
+          }
+        }
+      }
+      
+      .n-pagination-quick-jumper {
+        color: var(--le-text-2, #595959);
+      }
+    }
+  }
+
+  // 条纹样式
+  &--striped {
+    :deep(.n-data-table) {
+      .n-data-table-tr:nth-child(even) {
+        .n-data-table-td {
+          background-color: var(--le-fill-1, #fafafa);
+        }
+        
+        &:hover {
+          .n-data-table-td {
+            background-color: var(--le-hover, rgba(0, 0, 0, 0.04));
+          }
+        }
+      }
+    }
+  }
+}
+
+// 暗色模式适配
+@media (prefers-color-scheme: dark) {
+  .le-table {
+    &__body {
+      :deep(.n-data-table) {
+        .n-data-table-thead {
+          .n-data-table-th {
+            background-color: var(--le-fill-1, #262626);
+          }
+        }
+
+        .n-data-table-tr:hover {
+          .n-data-table-td {
+            background-color: var(--le-hover, rgba(255, 255, 255, 0.08));
+          }
+        }
+      }
+    }
+
+    &--striped {
+      :deep(.n-data-table) {
+        .n-data-table-tr:nth-child(even) {
+          .n-data-table-td {
+            background-color: var(--le-fill-1, #262626);
+          }
+        }
+      }
+    }
+  }
+}
+
