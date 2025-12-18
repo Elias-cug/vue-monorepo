@@ -16,6 +16,7 @@
       <LeTable
         :columns="basicColumns"
         :data="paginationData"
+        :remote="false"
         :pagination="localPagination"
         @page-change="handleLocalPageChange"
         @page-size-change="handleLocalPageSizeChange"
@@ -35,7 +36,6 @@
         :data="remoteData"
         :loading="remoteLoading"
         :pagination="remotePagination"
-        remote
         @page-change="handleRemotePageChange"
         @page-size-change="handleRemotePageSizeChange"
       />
@@ -44,42 +44,6 @@
     <!-- 条纹表格 -->
     <LeCard title="条纹表格" class="demo-card">
       <LeTable :columns="basicColumns" :data="basicData" :pagination="false" striped />
-    </LeCard>
-
-    <!-- 不同尺寸 -->
-    <LeCard title="表格尺寸" class="demo-card">
-      <n-space vertical :size="16">
-        <div>
-          <n-text depth="3">Small 尺寸</n-text>
-          <LeTable :columns="basicColumns" :data="basicData.slice(0, 2)" :pagination="false" size="small" />
-        </div>
-        <div>
-          <n-text depth="3">Medium 尺寸（默认）</n-text>
-          <LeTable :columns="basicColumns" :data="basicData.slice(0, 2)" :pagination="false" size="medium" />
-        </div>
-        <div>
-          <n-text depth="3">Large 尺寸</n-text>
-          <LeTable :columns="basicColumns" :data="basicData.slice(0, 2)" :pagination="false" size="large" />
-        </div>
-      </n-space>
-    </LeCard>
-
-    <!-- 分页位置 -->
-    <LeCard title="分页位置" class="demo-card">
-      <n-space vertical :size="24">
-        <div>
-          <n-text depth="3">左对齐</n-text>
-          <LeTable :columns="basicColumns" :data="basicData" pagination-position="left" />
-        </div>
-        <div>
-          <n-text depth="3">居中</n-text>
-          <LeTable :columns="basicColumns" :data="basicData" pagination-position="center" />
-        </div>
-        <div>
-          <n-text depth="3">右对齐（默认）</n-text>
-          <LeTable :columns="basicColumns" :data="basicData" pagination-position="right" />
-        </div>
-      </n-space>
     </LeCard>
 
     <!-- 固定高度 -->
@@ -96,7 +60,12 @@
         </div>
         <div>
           <n-text depth="3">自定义空状态文案</n-text>
-          <LeTable :columns="basicColumns" :data="[]" :pagination="false" empty-description="没有找到匹配的数据" />
+          <LeTable
+            :columns="basicColumns"
+            :data="[]"
+            :pagination="false"
+            empty-description="没有找到匹配的数据"
+          />
         </div>
       </n-space>
     </LeCard>
@@ -240,4 +209,3 @@ onMounted(() => {
   }
 }
 </style>
-

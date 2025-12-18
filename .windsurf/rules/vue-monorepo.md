@@ -50,6 +50,8 @@ ui 目录下的样式不要用 unocss
 ui 目录下的每个组件更新后自动维护当前组件的README.md
 ui 目录下的每个组件更新后自动维护 project/le-start 项目
 
+naive-ui 中的组件样式尽量不要用:deep，而是在 theme/src/adapters 中维护
+
 theme 包下的设计遵循 antdesign 设计规范和思想，网址： https://ant.design/docs/spec/colors-cn
 
 projects 下项目UI组件使用优先级 1. @lee/ui 2. naive-ui

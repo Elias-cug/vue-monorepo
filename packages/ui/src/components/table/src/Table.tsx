@@ -1,7 +1,7 @@
 import { defineComponent, ref, computed, watch } from 'vue';
 import type { PropType, CSSProperties } from 'vue';
 import { NDataTable, NPagination, NSpin } from 'naive-ui';
-import type { DataTableColumns, DataTableRowKey } from 'naive-ui';
+import type { DataTableProps } from 'naive-ui';
 import './styles/index.scss';
 
 export interface TablePagination {
@@ -13,35 +13,20 @@ export interface TablePagination {
   total: number;
 }
 
-export interface TableProps {
-  /** 表格列配置 */
-  columns?: DataTableColumns<any>;
-  /** 表格数据 */
-  data?: any[];
+/**
+ * LeTable 组件属性
+ * 注意：大部分属性通过 attrs 透传给 NDataTable 和 NPagination
+ * 这里只定义 LeTable 特有的属性
+ */
+export interface TableProps extends Partial<DataTableProps> {
   /** 是否加载中 */
   loading?: boolean;
-  /** 分页配置 */
+  /** 分页配置，false 表示不显示分页 */
   pagination?: TablePagination | false;
   /** 是否远程数据模式 */
   remote?: boolean;
-  /** 行键 */
-  rowKey?: (row: any) => DataTableRowKey;
-  /** 是否显示边框 */
-  bordered?: boolean;
-  /** 是否单行省略 */
-  singleLine?: boolean;
-  /** 表格最大高度 */
-  maxHeight?: number | string;
-  /** 表格最小高度 */
-  minHeight?: number | string;
-  /** 是否开启条纹 */
-  striped?: boolean;
   /** 表格尺寸 */
   size?: 'small' | 'medium' | 'large';
-  /** 自定义样式 */
-  style?: CSSProperties;
-  /** 自定义类名 */
-  class?: string;
   /** 分页位置 */
   paginationPosition?: 'left' | 'center' | 'right';
   /** 每页条数选项 */
@@ -52,19 +37,17 @@ export interface TableProps {
   showQuickJumper?: boolean;
   /** 空状态描述 */
   emptyDescription?: string;
-  /** 滚动配置 */
-  scrollX?: number | string;
+  /** 自定义样式 */
+  style?: CSSProperties;
+  /** 自定义类名 */
+  class?: string;
 }
 
+/**
+ * LeTable 特有的 props
+ * 其他属性通过 inheritAttrs: false + useAttrs() 透传
+ */
 const tableProps = {
-  columns: {
-    type: Array as PropType<DataTableColumns<any>>,
-    default: () => [],
-  },
-  data: {
-    type: Array as PropType<any[]>,
-    default: () => [],
-  },
   loading: {
     type: Boolean,
     default: false,
@@ -75,43 +58,11 @@ const tableProps = {
   },
   remote: {
     type: Boolean,
-    default: false,
-  },
-  rowKey: {
-    type: Function as PropType<(row: any) => DataTableRowKey>,
-    default: (row: any) => row.id,
-  },
-  bordered: {
-    type: Boolean,
     default: true,
-  },
-  singleLine: {
-    type: Boolean,
-    default: true,
-  },
-  maxHeight: {
-    type: [Number, String] as PropType<number | string>,
-    default: undefined,
-  },
-  minHeight: {
-    type: [Number, String] as PropType<number | string>,
-    default: undefined,
-  },
-  striped: {
-    type: Boolean,
-    default: false,
   },
   size: {
     type: String as PropType<'small' | 'medium' | 'large'>,
-    default: 'medium',
-  },
-  style: {
-    type: Object as PropType<CSSProperties>,
-    default: undefined,
-  },
-  class: {
-    type: String,
-    default: '',
+    default: 'small',
   },
   paginationPosition: {
     type: String as PropType<'left' | 'center' | 'right'>,
@@ -127,32 +78,31 @@ const tableProps = {
   },
   showQuickJumper: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   emptyDescription: {
     type: String,
     default: '暂无数据',
   },
-  scrollX: {
-    type: [Number, String] as PropType<number | string>,
+  style: {
+    type: Object as PropType<CSSProperties>,
     default: undefined,
+  },
+  class: {
+    type: String,
+    default: '',
   },
 } as const;
 
 export const Table = defineComponent({
   name: 'LeTable',
+  inheritAttrs: false,
   props: tableProps,
-  emits: [
-    'update:page',
-    'update:pageSize',
-    'update:sorter',
-    'update:filters',
-    'page-change',
-    'page-size-change',
-    'sorter-change',
-    'filters-change',
-  ],
-  setup(props, { slots, emit }) {
+  emits: ['update:page', 'update:pageSize', 'page-change', 'page-size-change'],
+  setup(props, { slots, emit, attrs }) {
+    // 获取透传的 data 属性
+    const tableData = computed(() => (attrs.data as any[]) || []);
+
     // 内部分页状态（非远程模式时使用）
     const internalPage = ref(1);
     const internalPageSize = ref(10);
@@ -170,17 +120,17 @@ export const Table = defineComponent({
 
     const total = computed(() => {
       if (props.pagination === false) return 0;
-      return props.remote ? props.pagination.total : props.data.length;
+      return props.remote ? props.pagination.total : tableData.value.length;
     });
 
     // 当前页数据（非远程模式时需要切片）
     const displayData = computed(() => {
       if (props.remote || props.pagination === false) {
-        return props.data;
+        return tableData.value;
       }
       const start = (internalPage.value - 1) * internalPageSize.value;
       const end = start + internalPageSize.value;
-      return props.data.slice(start, end);
+      return tableData.value.slice(start, end);
     });
 
     // 监听 pagination 变化，同步内部状态
@@ -195,7 +145,7 @@ export const Table = defineComponent({
       { immediate: true, deep: true }
     );
 
-    // 页码变化处理
+    // 页码变化处理（LeTable 特有逻辑：处理内部分页）
     const handlePageChange = (page: number) => {
       if (props.remote) {
         emit('update:page', page);
@@ -206,7 +156,7 @@ export const Table = defineComponent({
       }
     };
 
-    // 每页条数变化处理
+    // 每页条数变化处理（LeTable 特有逻辑：处理内部分页）
     const handlePageSizeChange = (pageSize: number) => {
       if (props.remote) {
         emit('update:pageSize', pageSize);
@@ -218,25 +168,9 @@ export const Table = defineComponent({
       }
     };
 
-    // 排序变化处理
-    const handleSorterChange = (sorter: any) => {
-      emit('update:sorter', sorter);
-      emit('sorter-change', sorter);
-    };
-
-    // 筛选变化处理
-    const handleFiltersChange = (filters: any) => {
-      emit('update:filters', filters);
-      emit('filters-change', filters);
-    };
-
     // 构建类名
     const getClassNames = () => {
       const classes = ['le-table'];
-
-      if (props.striped) {
-        classes.push('le-table--striped');
-      }
 
       if (props.class) {
         classes.push(props.class);
@@ -244,6 +178,35 @@ export const Table = defineComponent({
 
       return classes;
     };
+
+    // 分离 DataTable 和 Pagination 的 attrs 和 events
+    const dataTableAttrs = computed(() => {
+      const {
+        pageSizes,
+        showSizePicker,
+        showQuickJumper,
+        size: _size,
+        'onUpdate:page': _onUpdatePage,
+        'onUpdate:pageSize': _onUpdatePageSize,
+        'onPage-change': _onPageChange,
+        'onPage-size-change': _onPageSizeChange,
+        ...rest
+      } = attrs;
+      return rest;
+    });
+
+    // Pagination 属性：优先使用 props，其次使用 attrs
+    const paginationAttrs = computed(() => {
+      const attrsPageSizes = attrs.pageSizes as number[] | undefined;
+      const attrsShowSizePicker = attrs.showSizePicker as boolean | undefined;
+      const attrsShowQuickJumper = attrs.showQuickJumper as boolean | undefined;
+
+      return {
+        pageSizes: props.pageSizes ?? attrsPageSizes,
+        showSizePicker: props.showSizePicker ?? attrsShowSizePicker,
+        showQuickJumper: props.showQuickJumper ?? attrsShowQuickJumper,
+      };
+    });
 
     // 分页对齐样式
     const getPaginationStyle = () => {
@@ -263,20 +226,11 @@ export const Table = defineComponent({
         <div class="le-table__body">
           <NSpin show={props.loading}>
             <NDataTable
-              columns={props.columns}
+              {...dataTableAttrs.value}
               data={displayData.value}
               remote={props.remote}
-              rowKey={props.rowKey}
-              bordered={props.bordered}
-              singleLine={props.singleLine}
-              maxHeight={props.maxHeight}
-              minHeight={props.minHeight}
-              striped={props.striped}
               size={props.size}
-              scrollX={props.scrollX}
               pagination={false}
-              onUpdate:sorter={handleSorterChange}
-              onUpdate:filters={handleFiltersChange}
             >
               {{
                 empty: slots.empty
@@ -289,17 +243,18 @@ export const Table = defineComponent({
 
         {/* 分页器 */}
         {props.pagination !== false && (
-          <div class="le-table__pagination" style={getPaginationStyle()}>
-            <NPagination
-              page={currentPage.value}
-              pageSize={currentPageSize.value}
-              itemCount={total.value}
-              pageSizes={props.pageSizes}
-              showSizePicker={props.showSizePicker}
-              showQuickJumper={props.showQuickJumper}
-              onUpdate:page={handlePageChange}
-              onUpdate:pageSize={handlePageSizeChange}
-            />
+          <div class="le-table__pagination">
+            <div class="le-table__pagination-total">总数: {total.value}</div>
+            <div class="le-table__pagination-wrapper" style={getPaginationStyle()}>
+              <NPagination
+                {...paginationAttrs.value}
+                page={currentPage.value}
+                pageSize={currentPageSize.value}
+                itemCount={total.value}
+                onUpdate:page={handlePageChange}
+                onUpdate:pageSize={handlePageSizeChange}
+              />
+            </div>
           </div>
         )}
       </div>

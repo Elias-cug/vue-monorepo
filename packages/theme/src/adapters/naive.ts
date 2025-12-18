@@ -11,7 +11,6 @@ import type { ThemeConfig } from '../types/theme';
  */
 export function createNaiveTheme(config: ThemeConfig): GlobalThemeOverrides {
   const { colors } = config;
-  const isDark = config.mode === 'dark';
 
   return {
     common: {
@@ -124,19 +123,81 @@ export function createNaiveTheme(config: ThemeConfig): GlobalThemeOverrides {
       titleTextColor: colors.text.primary,
     },
 
-    // Table 组件
-    Table: isDark
-      ? {
-          tdColor: colors.neutral.card,
-          thColor: colors.neutral.modal,
-          thTextColor: colors.text.primary,
-          tdTextColor: colors.text.primary,
-          borderColor: colors.border.base,
-          // 深色模式下的表格特殊处理
-        }
-      : {
-          // 浅色模式保持默认或轻微调整
-        },
+    // DataTable 组件
+    DataTable: {
+      // 表头样式
+      thColor: colors.bg.section,
+      thTextColor: colors.text.primary,
+      thFontWeight: '600',
+      thButtonColorHover: colors.bg.hover,
+      thColorHover: colors.bg.section,
+
+      // 单元格样式
+      tdColor: colors.neutral.card,
+      tdTextColor: colors.text.primary,
+      tdColorHover: colors.bg.hover,
+      tdColorStriped: colors.bg.section,
+
+      // 边框颜色
+      borderColor: colors.divider,
+      thBorderColor: colors.divider,
+      tdBorderColor: colors.divider,
+
+      // 排序图标
+      sorterColor: colors.text.tertiary,
+      sorterColorHover: colors.text.secondary,
+
+      // 过滤图标
+      filterColor: colors.text.tertiary,
+      filterColorHover: colors.text.secondary,
+    },
+
+    // Pagination 组件
+    Pagination: {
+      // 分页项文字颜色
+      itemTextColor: colors.text.primary,
+      itemTextColorHover: colors.text.primary,
+      itemTextColorActive: '#fff',
+      itemTextColorDisabled: colors.text.disabled,
+      itemTextColorPressed: '#fff',
+
+      // 分页项背景颜色
+      itemColor: 'transparent',
+      itemColorHover: colors.bg.hover,
+      itemColorActive: colors.primary,
+      itemColorActiveHover: colors.primaryActive,
+      itemColorDisabled: 'transparent',
+      itemColorPressed: colors.primaryActive,
+
+      // 分页项边框
+      itemBorder: `1px solid ${colors.border.base}`,
+      itemBorderHover: `1px solid ${colors.border.base}`,
+      itemBorderActive: `1px solid ${colors.primary}`,
+      itemBorderDisabled: `1px solid ${colors.border.light}`,
+      itemBorderPressed: `1px solid ${colors.primaryActive}`,
+
+      // 按钮样式
+      buttonColor: 'transparent',
+      buttonColorHover: colors.bg.hover,
+      buttonColorPressed: colors.bg.active,
+      buttonBorder: `1px solid ${colors.border.base}`,
+      buttonBorderHover: `1px solid ${colors.border.base}`,
+      buttonBorderPressed: `1px solid ${colors.border.dark}`,
+      buttonIconColor: colors.text.secondary,
+      buttonIconColorHover: colors.text.primary,
+      buttonIconColorPressed: colors.text.primary,
+
+      // 输入框样式（快速跳转）
+      inputColor: colors.bg.base,
+      inputColorDisabled: colors.bg.disabled,
+      inputBorder: `1px solid ${colors.border.base}`,
+      inputBorderHover: `1px solid ${colors.primaryHover}`,
+      inputBorderFocus: `1px solid ${colors.primary}`,
+
+      // 选择器样式（每页条数）
+      selectColor: colors.bg.base,
+      selectColorDisabled: colors.bg.disabled,
+    },
 
     // Dialog 组件
     Dialog: {
