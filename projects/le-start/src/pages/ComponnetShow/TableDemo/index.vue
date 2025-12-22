@@ -1,5 +1,23 @@
 <template>
   <LeContainer>
+    <!-- 远程数据表格 -->
+    <LeCard title="远程数据表格（模拟）" class="demo-card">
+      <template #header-extra>
+        <n-space>
+          <n-button size="small" @click="fetchRemoteData">刷新数据</n-button>
+          <n-tag type="warning" size="small">远程模式</n-tag>
+        </n-space>
+      </template>
+      <LeTable
+        :columns="remoteColumns"
+        :data="remoteData"
+        :loading="remoteLoading"
+        :pagination="remotePagination"
+        @page-change="handleRemotePageChange"
+        @page-size-change="handleRemotePageSizeChange"
+      />
+    </LeCard>
+
     <!-- 基础表格 -->
     <LeCard title="基础表格" class="demo-card">
       <template #header-extra>
@@ -20,24 +38,6 @@
         :pagination="localPagination"
         @page-change="handleLocalPageChange"
         @page-size-change="handleLocalPageSizeChange"
-      />
-    </LeCard>
-
-    <!-- 远程数据表格 -->
-    <LeCard title="远程数据表格（模拟）" class="demo-card">
-      <template #header-extra>
-        <n-space>
-          <n-button size="small" @click="fetchRemoteData">刷新数据</n-button>
-          <n-tag type="warning" size="small">远程模式</n-tag>
-        </n-space>
-      </template>
-      <LeTable
-        :columns="remoteColumns"
-        :data="remoteData"
-        :loading="remoteLoading"
-        :pagination="remotePagination"
-        @page-change="handleRemotePageChange"
-        @page-size-change="handleRemotePageSizeChange"
       />
     </LeCard>
 
