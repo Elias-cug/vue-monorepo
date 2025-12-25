@@ -76,9 +76,9 @@ export const OperateGroup = defineComponent({
         {normalOptions.value.map(option => (
           <Button
             key={option.value}
-            quaternary={props.type === 'text'}
+            linkStyle={props.type === 'text'}
             type={option.type ?? 'primary'}
-            iconName={option.iconName}
+            iconName={props.type === 'button' ? option.iconName : undefined}
             disabled={option.disabled}
             loading={option.loading}
             onClick={() =>
@@ -90,7 +90,7 @@ export const OperateGroup = defineComponent({
         ))}
         {moreOptions.value.length > 0 && props.type === 'text' && (
           <NDropdown trigger="hover" options={dropdownOptions.value} onSelect={handleMoreSelect}>
-            <Button quaternary type="primary" class="le-operate-group__more">
+            <Button linkStyle type="primary" class="le-operate-group__more">
               <NIcon size={16}>
                 <EllipsisHorizontal />
               </NIcon>

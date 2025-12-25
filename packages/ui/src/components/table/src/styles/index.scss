@@ -7,6 +7,24 @@
 .le-table {
   width: 100%;
 
+  // 顶部工具栏
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    gap: 16px;
+  }
+
+  &__header-left {
+    flex: 1;
+    font-size: 14px;
+  }
+
+  &__header-right {
+    flex-shrink: 0;
+  }
+
   &__body {
     width: 100%;
   }

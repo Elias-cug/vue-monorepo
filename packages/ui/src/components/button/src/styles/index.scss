@@ -5,3 +5,18 @@
     justify-content: center;
   }
 }
+
+.le-button--link {
+  padding: 0 !important;
+  height: auto !important;
+  min-width: auto !important;
+  font-weight: normal !important;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+}

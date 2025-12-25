@@ -12,6 +12,8 @@ export interface ButtonProps extends Partial<NButtonProps> {
   iconSize?: number | string;
   /** 图标颜色 */
   iconColor?: string;
+  /** 纯文字风格，无背景色和包围盒 */
+  linkStyle?: boolean;
 }
 
 const buttonProps = {
@@ -28,6 +30,10 @@ const buttonProps = {
     type: String,
     default: undefined,
   },
+  linkStyle: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export const Button = defineComponent({
@@ -35,6 +41,10 @@ export const Button = defineComponent({
   props: buttonProps,
   setup(props, { slots }) {
     const hasIcon = computed(() => !!props.iconName);
+
+    const buttonClass = computed(() => ({
+      'le-button--link': props.linkStyle,
+    }));
 
     return () => {
       const iconSlot =
@@ -47,10 +57,18 @@ export const Button = defineComponent({
                 color: props.iconColor,
               });
 
-      return h(NButton, props, {
-        default: slots.default,
-        icon: iconSlot,
-      });
+      return h(
+        NButton,
+        {
+          ...props,
+          text: props.linkStyle || props.text,
+          class: buttonClass.value,
+        },
+        {
+          default: slots.default,
+          icon: iconSlot,
+        }
+      );
     };
   },
 });

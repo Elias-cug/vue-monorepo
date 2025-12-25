@@ -18,6 +18,52 @@
       />
     </LeCard>
 
+    <!-- 序号列 + 操作列 -->
+    <LeCard title="序号列 + 操作列" class="demo-card">
+      <template #header-extra>
+        <n-tag type="success" size="small">自动生成</n-tag>
+      </template>
+      <LeTable
+        :columns="simpleColumns"
+        :data="basicData"
+        :pagination="false"
+        show-index
+        :operate-column="operateColumnConfig"
+      />
+    </LeCard>
+
+    <!-- 高级功能 -->
+    <LeCard title="高级功能（事件 + 排序 + 拖拽列宽）" class="demo-card">
+      <template #header-extra>
+        <n-tag type="error" size="small">交互丰富</n-tag>
+      </template>
+      <p class="mb-2 text-sm text-gray-500">
+        支持：点击行、点击单元格、右键单元格、列排序、拖拽调整列宽
+      </p>
+      <LeTable
+        :columns="advancedColumns"
+        :data="basicData"
+        :pagination="false"
+        :row-props="getRowProps"
+        :cell-props="getCellProps"
+        resizable
+        @update:sorter="handleSorterChange"
+      />
+    </LeCard>
+
+    <!-- 顶部插槽 -->
+    <LeCard title="顶部插槽（左侧提示 + 右侧操作）" class="demo-card">
+      <template #header-extra>
+        <n-tag type="info" size="small">插槽支持</n-tag>
+      </template>
+      <LeTable :columns="basicColumns" :data="basicData" :pagination="false">
+        <template #headerLeft>注意：删除后不可恢复，请谨慎操作！</template>
+        <template #headerRight>
+          <LeOperateGroup type="button" :options="headerOperateOptions" />
+        </template>
+      </LeTable>
+    </LeCard>
+
     <!-- 基础表格 -->
     <LeCard title="基础表格" class="demo-card">
       <template #header-extra>
@@ -73,10 +119,76 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue';
-import { NTag, NButton, NSpace, NText } from 'naive-ui';
-import { Container as LeContainer, Card as LeCard, Table as LeTable } from '@lee/ui';
-import type { TablePagination } from '@lee/ui';
+import { ref, reactive, onMounted, h } from 'vue';
+import { NTag, NButton, NSpace, NText, useMessage } from 'naive-ui';
+import {
+  Container as LeContainer,
+  Card as LeCard,
+  Table as LeTable,
+  OperateGroup as LeOperateGroup,
+} from '@lee/ui';
+import type { TablePagination, OperateColumnConfig } from '@lee/ui';
+
+const message = useMessage();
+
+// 顶部操作按钮配置
+const headerOperateOptions = [
+  {
+    value: 'add',
+    label: '新增',
+    type: 'primary' as const,
+    iconName: 'custom-menu-home',
+    onClick: () => message.success('点击新增'),
+  },
+  {
+    value: 'export',
+    label: '导出',
+    type: undefined,
+    onClick: () => message.info('点击导出'),
+  },
+  {
+    value: 'batchDelete',
+    label: '批量删除',
+    type: 'error' as const,
+    onClick: () => message.warning('点击批量删除'),
+  },
+];
+
+// 简化列配置（用于序号+操作列示例）
+const simpleColumns = [
+  { title: '姓名', key: 'name' },
+  { title: '年龄', key: 'age', width: 80 },
+  { title: '地址', key: 'address' },
+];
+
+// 操作列配置
+const operateColumnConfig: OperateColumnConfig = {
+  title: '操作',
+  width: 180,
+  fixed: 'right',
+  options: row => [
+    {
+      value: 'view',
+      label: '查看',
+      type: 'primary',
+      iconName: 'custom-menu-home',
+      onClick: () => message.info(`查看: ${row.name}`),
+    },
+    {
+      value: 'edit',
+      label: '编辑',
+      type: 'warning',
+      onClick: () => message.info(`编辑: ${row.name}`),
+    },
+    {
+      value: 'delete',
+      label: '删除',
+      type: 'error',
+      more: true,
+      onClick: () => message.warning(`删除: ${row.name}`),
+    },
+  ],
+};
 
 // 基础列配置
 const basicColumns = [
@@ -86,6 +198,76 @@ const basicColumns = [
   { title: '地址', key: 'address' },
   { title: '邮箱', key: 'email' },
 ];
+
+// 高级功能列配置（支持排序 + 拖拽列宽）
+const advancedColumns = [
+  { title: 'ID', key: 'id', width: 80, sorter: true, resizable: true },
+  {
+    title: '姓名',
+    key: 'name',
+    width: 120,
+    resizable: true,
+    render: (row: any) =>
+      h(
+        'span',
+        {
+          style: 'color: #1890ff; cursor: pointer;',
+          onClick: (e: MouseEvent) => {
+            e.stopPropagation();
+            message.success(`点击姓名: ${row.name}`);
+          },
+        },
+        row.name
+      ),
+  },
+  { title: '年龄', key: 'age', width: 100, sorter: true, resizable: true },
+  {
+    title: '地址',
+    key: 'address',
+    width: 200,
+    resizable: true,
+    render: (row: any) =>
+      h(
+        'span',
+        {
+          style: 'cursor: context-menu;',
+          onContextmenu: (e: MouseEvent) => {
+            e.preventDefault();
+            message.warning(`右键地址: ${row.address}`);
+          },
+        },
+        row.address
+      ),
+  },
+  { title: '邮箱', key: 'email', resizable: true },
+];
+
+// 行属性（点击行事件）
+const getRowProps = (row: any) => {
+  return {
+    style: 'cursor: pointer;',
+    onClick: () => {
+      message.info(`点击行: ${row.name}`);
+    },
+  };
+};
+
+// 单元格属性（右键事件）
+const getCellProps = (row: any, col: any) => {
+  return {
+    onContextmenu: (e: MouseEvent) => {
+      e.preventDefault();
+      message.warning(`右键单元格 [${col.title}]: ${row[col.key]}`);
+    },
+  };
+};
+
+// 排序变化处理
+const handleSorterChange = (sorter: any) => {
+  if (sorter) {
+    message.info(`排序: ${sorter.columnKey} - ${sorter.order || '无'}`);
+  }
+};
 
 // 远程表格列配置（带操作列）
 const remoteColumns = [
