@@ -102,6 +102,26 @@ const app1Map: Record<string, Route> = {
       keepAlive: true,
     },
   },
+  'filter-demo': {
+    path: `${appOnePrefix}/filter-demo`,
+    name: 'FilterDemo',
+    component: () => import('@/pages/ComponnetShow/FilterDemo/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '过滤组件',
+      keepAlive: true,
+    },
+  },
+  'filter-table-demo': {
+    path: `${appOnePrefix}/filter-table-demo`,
+    name: 'FilterTableDemo',
+    component: () => import('@/pages/ComponnetShow/FilterTableDemo/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '过滤表格',
+      keepAlive: true,
+    },
+  },
 };
 
 const apps = { ...app1Map };

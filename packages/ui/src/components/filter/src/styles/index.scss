@@ -1,0 +1,23 @@
+.le-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    align-items: flex-end;
+    gap: 16px;
+  }
+
+  &__item {
+    max-width: 240px;
+  }
+
+  &__actions {
+    flex-shrink: 0;
+    align-self: flex-end;
+  }
+}

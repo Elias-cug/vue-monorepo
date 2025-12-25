@@ -39,6 +39,14 @@ export const menusMock = [
         key: 'button-demo',
         title: '按钮组件',
       },
+      {
+        key: 'filter-demo',
+        title: '过滤组件',
+      },
+      {
+        key: 'filter-table-demo',
+        title: '过滤表格',
+      },
     ],
     extraProps: {},
   },
