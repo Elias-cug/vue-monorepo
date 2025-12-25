@@ -1,7 +1,7 @@
 <template>
   <LeContainer content-class="filter-table-demo">
     <!-- 过滤区域 -->
-    <LeCard title="筛选条件" collapsible class="mb-20px">
+    <LeCard title="筛选条件" collapsible class="filter-table-demo__filter">
       <LeFilter
         v-model="filterValues"
         :items="filterItems"
@@ -12,26 +12,23 @@
     </LeCard>
 
     <!-- 表格区域 -->
-    <LeCard title="用户列表" class="flex-1">
-      <div class="flex h-full overflow-hidden">
-        <LeTable
-          class="flex-1 w-full"
-          :columns="columns"
-          :data="paginatedData"
-          :pagination="pagination"
-          show-index
-          max-height="100%"
-          @update:page="handlePageChange"
-          @update:page-size="handlePageSizeChange"
-        >
-          <template #headerLeft>
-            <n-text type="warning">提示：点击操作列可进行数据管理</n-text>
-          </template>
-          <template #headerRight>
-            <LeOperateGroup type="button" :options="headerOperations" />
-          </template>
-        </LeTable>
-      </div>
+    <LeCard title="用户列表" class="filter-table-demo__table-card">
+      <LeTable
+        :columns="columns"
+        :data="paginatedData"
+        :pagination="pagination"
+        show-index
+        flex-height
+        @update:page="handlePageChange"
+        @update:page-size="handlePageSizeChange"
+      >
+        <template #headerLeft>
+          <n-text type="warning">提示：点击操作列可进行数据管理</n-text>
+        </template>
+        <template #headerRight>
+          <LeOperateGroup type="button" :options="headerOperations" />
+        </template>
+      </LeTable>
     </LeCard>
   </LeContainer>
 </template>
@@ -343,7 +340,36 @@ const handleReset = (_values: FilterValues) => {
 </script>
 
 <style lang="scss" scoped>
+// Container 内容区域使用 flex 布局
 :deep(.filter-table-demo) {
-  @apply flex flex-col;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.filter-table-demo {
+  // 筛选区域不伸缩
+  &__filter {
+    flex-shrink: 0;
+    margin-bottom: 20px;
+  }
+
+  // 表格卡片填充剩余空间
+  &__table-card {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+
+    // Card 内容区域也需要 flex 填充
+    :deep(.le-card__content) {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+  }
 }
 </style>

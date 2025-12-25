@@ -67,6 +67,8 @@ export interface TableProps extends Partial<DataTableProps> {
   style?: CSSProperties;
   /** 自定义类名 */
   class?: string;
+  /** 是否启用弹性高度模式（表格自动填充剩余空间，内容超出时内部滚动，表头固定） */
+  flexHeight?: boolean;
 }
 
 /**
@@ -141,6 +143,10 @@ const tableProps = {
   class: {
     type: String,
     default: '',
+  },
+  flexHeight: {
+    type: Boolean,
+    default: false,
   },
 } as const;
 
@@ -267,6 +273,10 @@ export const Table = defineComponent({
     const getClassNames = () => {
       const classes = ['le-table'];
 
+      if (props.flexHeight) {
+        classes.push('le-table--flex-height');
+      }
+
       if (props.class) {
         classes.push(props.class);
       }
@@ -340,6 +350,7 @@ export const Table = defineComponent({
               remote={props.remote}
               size={props.size}
               pagination={false}
+              flexHeight={props.flexHeight}
             >
               {{
                 empty: slots.empty
