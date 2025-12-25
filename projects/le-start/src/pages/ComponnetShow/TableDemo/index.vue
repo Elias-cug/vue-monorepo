@@ -1,5 +1,5 @@
 <template>
-  <LeContainer>
+  <LeContainer overflow="auto">
     <!-- 远程数据表格 -->
     <LeCard title="远程数据表格（模拟）" class="demo-card">
       <template #header-extra>

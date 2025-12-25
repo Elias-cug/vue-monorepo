@@ -2,7 +2,7 @@
  * @Description: SVG 图标示例页面
 -->
 <template>
-  <LeContainer>
+  <LeContainer overflow="auto">
     <LeCard title="SVG 图标组件" padding="24px">
       <n-space vertical :size="24">
         <!-- 基础用法 - UI 公共图标 -->

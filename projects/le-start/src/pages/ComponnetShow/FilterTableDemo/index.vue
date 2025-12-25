@@ -1,30 +1,26 @@
 <template>
-  <LeContainer class="!overflow-hidden">
-    <div class="filter-table-demo">
-      <!-- 过滤区域 -->
-      <LeCard title="筛选条件" collapsible class="filter-card">
-        <LeFilter
-          v-model="filterValues"
-          :items="filterItems"
-          :default-value="defaultFilterValue"
-          @search="handleSearch"
-          @reset="handleReset"
-        />
-      </LeCard>
+  <LeContainer content-class="filter-table-demo">
+    <!-- 过滤区域 -->
+    <LeCard title="筛选条件" collapsible class="mb-20px">
+      <LeFilter
+        v-model="filterValues"
+        :items="filterItems"
+        :default-value="defaultFilterValue"
+        @search="handleSearch"
+        @reset="handleReset"
+      />
+    </LeCard>
 
-      <!-- 表格区域 -->
-      <LeCard title="用户列表" class="table-card">
-        <template #header-extra>
-          <n-space>
-            <n-tag type="success" size="small">{{ filteredData.length }} 条数据</n-tag>
-          </n-space>
-        </template>
+    <!-- 表格区域 -->
+    <LeCard title="用户列表" class="flex-1">
+      <div class="flex h-full overflow-hidden">
         <LeTable
+          class="flex-1 w-full"
           :columns="columns"
           :data="paginatedData"
           :pagination="pagination"
           show-index
-          :max-height="500"
+          max-height="100%"
           @update:page="handlePageChange"
           @update:page-size="handlePageSizeChange"
         >
@@ -35,14 +31,14 @@
             <LeOperateGroup type="button" :options="headerOperations" />
           </template>
         </LeTable>
-      </LeCard>
-    </div>
+      </div>
+    </LeCard>
   </LeContainer>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, h } from 'vue';
-import { NTag, NText, NSpace, useMessage, useDialog } from 'naive-ui';
+import { NTag, NText, useMessage, useDialog } from 'naive-ui';
 import {
   Container as LeContainer,
   Card as LeCard,
@@ -265,7 +261,7 @@ const headerOperations: OperateOption[] = [
     label: '新增',
     value: 'add',
     type: 'primary',
-    iconName: 'custom-add',
+    iconName: 'ui-add',
     onClick: () => {
       message.success('点击了新增');
     },
@@ -273,7 +269,7 @@ const headerOperations: OperateOption[] = [
   {
     label: '导出',
     value: 'export',
-    iconName: 'custom-export',
+    iconName: 'ui-export',
     onClick: () => {
       message.info('点击了导出');
     },
@@ -282,7 +278,7 @@ const headerOperations: OperateOption[] = [
     label: '批量删除',
     value: 'batchDelete',
     type: 'error',
-    iconName: 'custom-delete',
+    iconName: 'ui-delete',
     onClick: () => {
       dialog.warning({
         title: '确认删除',
@@ -347,24 +343,7 @@ const handleReset = (_values: FilterValues) => {
 </script>
 
 <style lang="scss" scoped>
-.filter-table-demo {
-  @apply flex flex-col h-full;
-  gap: 20px;
-
-  .filter-card {
-    flex-shrink: 0;
-  }
-
-  .table-card {
-    @apply flex-1 min-h-0;
-
-    :deep(.le-card) {
-      @apply h-full;
-    }
-
-    :deep(.le-card__content) {
-      height: calc(100% - 56px);
-    }
-  }
+:deep(.filter-table-demo) {
+  @apply flex flex-col;
 }
 </style>

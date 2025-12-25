@@ -1,5 +1,5 @@
 <template>
-  <LeContainer>
+  <LeContainer overflow="auto">
     <!-- 基础过滤 -->
     <LeCard title="基础过滤" class="demo-card">
       <template #header-extra>

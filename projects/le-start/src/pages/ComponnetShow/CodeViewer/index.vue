@@ -1,5 +1,5 @@
 <template>
-  <LeContainer>
+  <LeContainer overflow="auto">
     <n-space vertical :size="24">
       <LeCard title="LeCodeViewer 组件示例">
         <n-space vertical :size="16">

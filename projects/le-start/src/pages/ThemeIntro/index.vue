@@ -1,5 +1,5 @@
 <template>
-  <LeContainer>
+  <LeContainer overflow="auto">
     <div class="flex flex-col gap-16px">
       <!-- 页面标题 -->
       <IntroHeader />

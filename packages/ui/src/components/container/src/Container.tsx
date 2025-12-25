@@ -16,6 +16,10 @@ export interface ContainerProps {
   bordered?: boolean;
   /** 是否显示顶部装饰线（简写属性） */
   accent?: boolean;
+  /** 溢出处理方式，auto 时启用滚动条 */
+  overflow?: 'hidden' | 'auto';
+  /** 内容区域自定义类名 */
+  contentClass?: string;
 }
 
 const containerProps = {
@@ -42,6 +46,14 @@ const containerProps = {
   accent: {
     type: Boolean,
     default: false,
+  },
+  overflow: {
+    type: String as PropType<'hidden' | 'auto'>,
+    default: 'hidden',
+  },
+  contentClass: {
+    type: String,
+    default: '',
   },
 } as const;
 
@@ -85,9 +97,13 @@ export const Container = defineComponent({
           '--le-container-padding': paddingValue,
         }}
       >
-        <NScrollbar class="le-container__scrollbar">
-          <div class="le-container__content">{slots.default?.()}</div>
-        </NScrollbar>
+        {props.overflow === 'auto' ? (
+          <NScrollbar class="le-container__scrollbar">
+            <div class={['le-container__content', props.contentClass]}>{slots.default?.()}</div>
+          </NScrollbar>
+        ) : (
+          <div class={['le-container__content', props.contentClass]}>{slots.default?.()}</div>
+        )}
       </div>
     );
   },

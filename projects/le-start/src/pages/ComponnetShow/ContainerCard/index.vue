@@ -1,5 +1,5 @@
 <template>
-  <LeContainer>
+  <LeContainer overflow="auto">
     <LeCard title="卡片">
       <template #header-extra>
         <span>操作</span>

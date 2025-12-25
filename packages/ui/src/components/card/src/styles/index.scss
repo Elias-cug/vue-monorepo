@@ -3,6 +3,8 @@
  */
 
 .le-card {
+  display: flex;
+  flex-direction: column;
   // 使用主题变量
   background-color: var(--le-card);
   border-radius: var(--le-radius-lg);
@@ -29,6 +31,7 @@
     // 移除底部边框，让卡片更简洁
     // border-bottom: 1px solid var(--le-divider);
     transition: border-color 0.3s ease;
+    flex-shrink: 0;
   }
 
   &__title {
@@ -48,6 +51,7 @@
   }
 
   &__content {
+    flex: 1;
     padding: var(--le-card-padding, 16px);
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <LeContainer class="dashboard">
+  <LeContainer class="dashboard" overflow="auto">
     <!-- 项目简介 -->
     <LeCard class="intro-card" padding="48px 32px">
       <div class="intro-content">

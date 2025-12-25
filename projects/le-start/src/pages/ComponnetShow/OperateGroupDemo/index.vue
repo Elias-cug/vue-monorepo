@@ -1,5 +1,5 @@
 <template>
-  <LeContainer padding="24px">
+  <LeContainer overflow="auto" padding="24px">
     <div class="demo-section">
       <LeCard title="文字按钮模式（默认）">
         <LeOperateGroup :options="textOptions" :data="rowData" />

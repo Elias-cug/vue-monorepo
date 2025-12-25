@@ -78,6 +78,7 @@ export const OperateGroup = defineComponent({
             key={option.value}
             linkStyle={props.type === 'text'}
             type={option.type ?? 'primary'}
+            size={props.type === 'button' ? 'medium' : undefined}
             iconName={props.type === 'button' ? option.iconName : undefined}
             disabled={option.disabled}
             loading={option.loading}
@@ -100,8 +101,10 @@ export const OperateGroup = defineComponent({
         {moreOptions.value.length > 0 && props.type === 'button' && (
           <NDropdown trigger="hover" options={dropdownOptions.value} onSelect={handleMoreSelect}>
             <NButtonGroup>
-              <Button type="primary">更多</Button>
-              <Button type="primary" style={{ padding: '0 8px' }}>
+              <Button type="primary" size="medium">
+                更多
+              </Button>
+              <Button type="primary" size="medium" style={{ padding: '0 8px' }}>
                 <NIcon size={14}>
                   <ChevronDownOutline />
                 </NIcon>

@@ -1,5 +1,5 @@
 <template>
-  <LeContainer padding="24px">
+  <LeContainer overflow="auto" padding="24px">
     <div class="demo-section">
       <LeCard title="基础用法">
         <p class="mb-2 text-sm text-gray-500">LeButton 完全透传 NButton 的 props 和 events</p>
