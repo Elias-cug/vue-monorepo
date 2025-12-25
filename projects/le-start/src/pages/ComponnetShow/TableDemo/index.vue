@@ -97,6 +97,20 @@
       <LeTable :columns="basicColumns" :data="scrollData" :pagination="false" :max-height="200" />
     </LeCard>
 
+    <!-- 虚拟滚动大数据 -->
+    <LeCard title="虚拟滚动（10000条数据）" class="demo-card">
+      <template #header-extra>
+        <n-tag type="error" size="small">高性能</n-tag>
+      </template>
+      <LeTable
+        :columns="basicColumns"
+        :data="virtualData"
+        :pagination="false"
+        :max-height="400"
+        virtual-scroll
+      />
+    </LeCard>
+
     <!-- 空状态 -->
     <LeCard title="空状态" class="demo-card">
       <n-space vertical :size="16">
@@ -329,6 +343,17 @@ const scrollData = ref(
     name: `用户${i + 1}`,
     age: 20 + (i % 30),
     address: `城市${i + 1}区域${i + 1}`,
+    email: `user${i + 1}@example.com`,
+  }))
+);
+
+// 虚拟滚动大数据量
+const virtualData = ref(
+  Array.from({ length: 10000 }, (_, i) => ({
+    id: i + 1,
+    name: `用户${i + 1}`,
+    age: 20 + (i % 50),
+    address: `城市${(i % 100) + 1}区域${(i % 50) + 1}`,
     email: `user${i + 1}@example.com`,
   }))
 );
