@@ -31,6 +31,14 @@ export const menusMock = [
         key: 'table-demo',
         title: '表格组件',
       },
+      {
+        key: 'operate-group-demo',
+        title: '操作按钮组',
+      },
+      {
+        key: 'button-demo',
+        title: '按钮组件',
+      },
     ],
     extraProps: {},
   },

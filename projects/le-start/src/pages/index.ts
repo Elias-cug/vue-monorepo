@@ -82,6 +82,26 @@ const app1Map: Record<string, Route> = {
       keepAlive: true,
     },
   },
+  'operate-group-demo': {
+    path: `${appOnePrefix}/operate-group-demo`,
+    name: 'OperateGroupDemo',
+    component: () => import('@/pages/ComponnetShow/OperateGroupDemo/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '操作按钮组',
+      keepAlive: true,
+    },
+  },
+  'button-demo': {
+    path: `${appOnePrefix}/button-demo`,
+    name: 'ButtonDemo',
+    component: () => import('@/pages/ComponnetShow/ButtonDemo/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '按钮组件',
+      keepAlive: true,
+    },
+  },
 };
 
 const apps = { ...app1Map };

@@ -1,2 +1,9 @@
 .le-operate-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  &--button {
+    gap: 20px;
+  }
 }

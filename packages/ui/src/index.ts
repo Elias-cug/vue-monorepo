@@ -9,6 +9,8 @@ export * from './components/container';
 export * from './components/card';
 export * from './components/svg-icon';
 export * from './components/table';
+export * from './components/operate-group';
+export * from './components/button';
 
 // 组件列表（用于整体注册）
 import { CodeViewer } from './components/code-viewer';
@@ -16,6 +18,8 @@ import { Container } from './components/container';
 import { Card } from './components/card';
 import { SvgIcon } from './components/svg-icon';
 import { Table } from './components/table';
+import { OperateGroup } from './components/operate-group';
+import { Button } from './components/button';
 import type { App } from 'vue';
 
 // 导出 SVG 工具函数
@@ -27,8 +31,10 @@ export { Container as LeContainer } from './components/container';
 export { Card as LeCard } from './components/card';
 export { SvgIcon as LeSvgIcon } from './components/svg-icon';
 export { Table as LeTable } from './components/table';
+export { OperateGroup as LeOperateGroup } from './components/operate-group';
+export { Button as LeButton } from './components/button';
 
-const components = [CodeViewer, Container, Card, SvgIcon, Table];
+const components = [CodeViewer, Container, Card, SvgIcon, Table, OperateGroup, Button];
 
 /**
  * 整体注册所有组件
