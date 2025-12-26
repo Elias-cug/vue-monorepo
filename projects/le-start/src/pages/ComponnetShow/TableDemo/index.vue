@@ -321,7 +321,7 @@ const paginationData = ref([
 // 本地分页状态
 const localPagination = reactive<TablePagination>({
   page: 1,
-  pageSize: 5,
+  pageSize: 20,
   total: 12,
 });
 

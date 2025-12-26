@@ -14,57 +14,57 @@
 
 ## Props
 
-| 属性               | 类型                               | 默认值                    | 说明                       |
-| ------------------ | ---------------------------------- | ------------------------- | -------------------------- |
-| columns            | DataTableColumns                   | []                        | 表格列配置                 |
-| data               | any[]                              | []                        | 表格数据                   |
-| loading            | boolean                            | false                     | 是否加载中                 |
-| pagination         | TablePagination \| false           | { page: 1, pageSize: 10 } | 分页配置，false 禁用分页   |
-| remote             | boolean                            | false                     | 是否远程数据模式           |
-| rowKey             | (row: any) => DataTableRowKey      | (row) => row.id           | 行键函数                   |
-| bordered           | boolean                            | true                      | 是否显示边框               |
-| singleLine         | boolean                            | true                      | 是否单行省略               |
-| maxHeight          | number \| string                   | -                         | 表格最大高度               |
-| minHeight          | number \| string                   | -                         | 表格最小高度               |
-| striped            | boolean                            | false                     | 是否开启条纹               |
-| size               | 'small' \| 'medium' \| 'large'     | 'medium'                  | 表格尺寸                   |
-| style              | CSSProperties                      | -                         | 自定义样式                 |
-| class              | string                             | -                         | 自定义类名                 |
-| paginationPosition | 'left' \| 'center' \| 'right'      | 'right'                   | 分页位置                   |
-| pageSizes          | number[]                           | [10, 20, 30, 50, 100]     | 每页条数选项               |
-| showSizePicker     | boolean                            | true                      | 是否显示每页条数选择器     |
-| showQuickJumper    | boolean                            | true                      | 是否显示快速跳转           |
-| emptyDescription   | string                             | '暂无数据'                | 空状态描述                 |
-| scrollX            | number \| string                   | -                         | 横向滚动宽度               |
+| 属性               | 类型                           | 默认值                    | 说明                     |
+| ------------------ | ------------------------------ | ------------------------- | ------------------------ |
+| columns            | DataTableColumns               | []                        | 表格列配置               |
+| data               | any[]                          | []                        | 表格数据                 |
+| loading            | boolean                        | false                     | 是否加载中               |
+| pagination         | TablePagination \| false       | { page: 1, pageSize: 10 } | 分页配置，false 禁用分页 |
+| remote             | boolean                        | false                     | 是否远程数据模式         |
+| rowKey             | (row: any) => DataTableRowKey  | (row) => row.id           | 行键函数                 |
+| bordered           | boolean                        | true                      | 是否显示边框             |
+| singleLine         | boolean                        | true                      | 是否单行省略             |
+| maxHeight          | number \| string               | -                         | 表格最大高度             |
+| minHeight          | number \| string               | -                         | 表格最小高度             |
+| striped            | boolean                        | false                     | 是否开启条纹             |
+| size               | 'small' \| 'medium' \| 'large' | 'medium'                  | 表格尺寸                 |
+| style              | CSSProperties                  | -                         | 自定义样式               |
+| class              | string                         | -                         | 自定义类名               |
+| paginationPosition | 'left' \| 'center' \| 'right'  | 'right'                   | 分页位置                 |
+| pageSizes          | number[]                       | [20, 50, 100, 200]        | 每页条数选项             |
+| showSizePicker     | boolean                        | true                      | 是否显示每页条数选择器   |
+| showQuickJumper    | boolean                        | true                      | 是否显示快速跳转         |
+| emptyDescription   | string                         | '暂无数据'                | 空状态描述               |
+| scrollX            | number \| string               | -                         | 横向滚动宽度             |
 
 ## TablePagination 类型
 
 ```typescript
 interface TablePagination {
-  page: number;      // 当前页码
-  pageSize: number;  // 每页条数
-  total: number;     // 总条数
+  page: number; // 当前页码
+  pageSize: number; // 每页条数
+  total: number; // 总条数
 }
 ```
 
 ## 事件
 
-| 事件名           | 参数                   | 说明             |
-| ---------------- | ---------------------- | ---------------- |
-| update:page      | (page: number)         | 页码变化         |
-| update:pageSize  | (pageSize: number)     | 每页条数变化     |
-| update:sorter    | (sorter: any)          | 排序变化         |
-| update:filters   | (filters: any)         | 筛选变化         |
-| page-change      | (page: number)         | 页码变化         |
-| page-size-change | (pageSize: number)     | 每页条数变化     |
-| sorter-change    | (sorter: any)          | 排序变化         |
-| filters-change   | (filters: any)         | 筛选变化         |
+| 事件名           | 参数               | 说明         |
+| ---------------- | ------------------ | ------------ |
+| update:page      | (page: number)     | 页码变化     |
+| update:pageSize  | (pageSize: number) | 每页条数变化 |
+| update:sorter    | (sorter: any)      | 排序变化     |
+| update:filters   | (filters: any)     | 筛选变化     |
+| page-change      | (page: number)     | 页码变化     |
+| page-size-change | (pageSize: number) | 每页条数变化 |
+| sorter-change    | (sorter: any)      | 排序变化     |
+| filters-change   | (filters: any)     | 筛选变化     |
 
 ## 插槽
 
-| 插槽名  | 说明           |
-| ------- | -------------- |
-| empty   | 自定义空状态   |
+| 插槽名 | 说明         |
+| ------ | ------------ |
+| empty  | 自定义空状态 |
 
 ## 使用示例
 
@@ -72,10 +72,7 @@ interface TablePagination {
 
 ```vue
 <template>
-  <LeTable
-    :columns="columns"
-    :data="data"
-  />
+  <LeTable :columns="columns" :data="data" />
 </template>
 
 <script setup lang="ts">
@@ -167,18 +164,10 @@ onMounted(() => {
 ```vue
 <template>
   <!-- 分页居中 -->
-  <LeTable
-    :columns="columns"
-    :data="data"
-    pagination-position="center"
-  />
+  <LeTable :columns="columns" :data="data" pagination-position="center" />
 
   <!-- 分页居左 -->
-  <LeTable
-    :columns="columns"
-    :data="data"
-    pagination-position="left"
-  />
+  <LeTable :columns="columns" :data="data" pagination-position="left" />
 </template>
 
 <script setup lang="ts">
@@ -190,11 +179,7 @@ import { Table as LeTable } from '@lee/ui';
 
 ```vue
 <template>
-  <LeTable
-    :columns="columns"
-    :data="data"
-    :pagination="false"
-  />
+  <LeTable :columns="columns" :data="data" :pagination="false" />
 </template>
 
 <script setup lang="ts">
@@ -206,12 +191,7 @@ import { Table as LeTable } from '@lee/ui';
 
 ```vue
 <template>
-  <LeTable
-    :columns="columns"
-    :data="data"
-    striped
-    size="small"
-  />
+  <LeTable :columns="columns" :data="data" striped size="small" />
 </template>
 
 <script setup lang="ts">
@@ -223,11 +203,7 @@ import { Table as LeTable } from '@lee/ui';
 
 ```vue
 <template>
-  <LeTable
-    :columns="columns"
-    :data="data"
-    :max-height="400"
-  />
+  <LeTable :columns="columns" :data="data" :max-height="400" />
 </template>
 
 <script setup lang="ts">
@@ -292,11 +268,7 @@ const handleFiltersChange = (filters: any) => {
 
 ```vue
 <template>
-  <LeTable
-    :columns="columns"
-    :data="[]"
-    empty-description="没有找到相关数据"
-  />
+  <LeTable :columns="columns" :data="[]" empty-description="没有找到相关数据" />
 
   <!-- 使用插槽自定义 -->
   <LeTable :columns="columns" :data="[]">
@@ -335,4 +307,3 @@ import { Table as LeTable } from '@lee/ui';
 5. **性能优化**
    - 对于大数据量，建议使用 `remote` 模式配合后端分页
    - 设置 `maxHeight` 开启虚拟滚动以提升性能
-

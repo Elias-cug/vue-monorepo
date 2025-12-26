@@ -231,9 +231,9 @@ const filteredData = computed(() => {
 // 分页
 const pagination = ref({
   page: 1,
-  pageSize: 5,
+  pageSize: 20,
   showSizePicker: true,
-  pageSizes: [5, 10, 20],
+  pageSizes: [20, 50, 100, 200],
   total: computed(() => filteredData.value.length),
 });
 

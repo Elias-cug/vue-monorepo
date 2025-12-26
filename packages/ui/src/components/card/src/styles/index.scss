@@ -62,13 +62,13 @@
       user-select: none;
       transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
-      &:hover {
-        background-color: var(--le-hover);
-      }
+      // &:hover {
+      //   background-color: var(--le-hover);
+      // }
 
-      &:active {
-        background-color: var(--le-pressed);
-      }
+      // &:active {
+      //   background-color: var(--le-pressed);
+      // }
     }
   }
 
@@ -76,12 +76,13 @@
   &__collapse-icon {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     color: var(--le-text-2) !important;
+    transform: rotate(180deg); // 展开时箭头向下
   }
 
   // 折叠状态下的图标旋转
   &--collapsed {
     .le-card__collapse-icon {
-      transform: rotate(-90deg);
+      transform: rotate(0deg); // 收起时箭头向上
     }
   }
 

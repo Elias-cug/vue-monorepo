@@ -102,7 +102,7 @@ const tableProps = {
   },
   pagination: {
     type: [Object, Boolean] as PropType<TablePagination | false>,
-    default: () => ({ page: 1, pageSize: 10, total: 0 }),
+    default: () => ({ page: 1, pageSize: 20, total: 0 }),
   },
   remote: {
     type: Boolean,
@@ -118,7 +118,7 @@ const tableProps = {
   },
   pageSizes: {
     type: Array as PropType<number[]>,
-    default: () => [10, 20, 30, 50, 100],
+    default: () => [20, 50, 100, 200],
   },
   showSizePicker: {
     type: Boolean,
