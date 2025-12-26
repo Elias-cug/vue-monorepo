@@ -153,31 +153,11 @@
   }
 }
 
-// 折叠动画
-.le-card-collapse-enter-active {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-}
-
-.le-card-collapse-leave-active {
-  transition: all 0.3s cubic-bezier(0.4, 0, 1, 1);
-  overflow: hidden;
-}
-
+// 折叠动画 - 简单直接，无动画
 .le-card-collapse-enter-from,
 .le-card-collapse-leave-to {
-  max-height: 0;
-  opacity: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  transform: translateY(-8px);
-}
-
-.le-card-collapse-enter-to,
-.le-card-collapse-leave-from {
-  max-height: 3000px;
-  opacity: 1;
-  transform: translateY(0);
+  height: 0;
+  overflow: hidden;
 }
 
 // 暗色模式特殊处理（大部分样式通过 CSS 变量自动适配）
