@@ -2,6 +2,7 @@ import { defineComponent, ref, computed, watch } from 'vue';
 import type { PropType, CSSProperties } from 'vue';
 import { NModal, NIcon } from 'naive-ui';
 import { CloseOutline, ExpandOutline, ContractOutline } from '@vicons/ionicons5';
+import { useDraggable } from './useDraggable';
 import './styles/index.scss';
 
 export interface DialogProps {
@@ -15,6 +16,8 @@ export interface DialogProps {
   closable?: boolean;
   /** 是否支持全屏 */
   fullscreenable?: boolean;
+  /** 是否可拖拽 */
+  draggable?: boolean;
   /** 自定义样式 */
   style?: CSSProperties;
   /** 自定义类名 */
@@ -45,6 +48,10 @@ const dialogProps = {
     default: true,
   },
   fullscreenable: {
+    type: Boolean,
+    default: true,
+  },
+  draggable: {
     type: Boolean,
     default: true,
   },
@@ -86,6 +93,12 @@ export const Dialog = defineComponent({
   setup(props, { slots, emit, attrs }) {
     const isFullscreen = ref(false);
 
+    // 拖拽功能
+    const { position, isDragging, resetPosition, handleDragStart } = useDraggable({
+      boundary: true,
+      boundaryPadding: 20,
+    });
+
     const internalVisible = computed({
       get: () => props.visible,
       set: (val: boolean) => {
@@ -98,6 +111,8 @@ export const Dialog = defineComponent({
       val => {
         if (!val) {
           isFullscreen.value = false;
+          // 关闭时重置拖拽位置
+          resetPosition();
         }
       }
     );
@@ -124,21 +139,50 @@ export const Dialog = defineComponent({
       if (isFullscreen.value) {
         classes.push('le-dialog--fullscreen');
       }
+      if (props.draggable) {
+        classes.push('le-dialog--draggable');
+      }
+      if (isDragging.value) {
+        classes.push('le-dialog--dragging');
+      }
       if (props.class) {
         classes.push(props.class);
       }
       return classes.join(' ');
     });
 
-    const contentStyles = computed<CSSProperties>(() => ({
-      width: widthValue.value,
-      ...props.contentStyle,
-    }));
+    const contentStyles = computed<CSSProperties>(() => {
+      const styles: CSSProperties = {
+        width: widthValue.value,
+        ...props.contentStyle,
+      };
+
+      // 拖拽位置（全屏时不应用）
+      if (
+        props.draggable &&
+        !isFullscreen.value &&
+        (position.value.x !== 0 || position.value.y !== 0)
+      ) {
+        styles.transform = `translate(${position.value.x}px, ${position.value.y}px)`;
+      }
+
+      return styles;
+    });
+
+    // Header 拖拽事件处理
+    const onHeaderMouseDown = (e: MouseEvent) => {
+      // 不在全屏模式下拖拽
+      if (!props.draggable || isFullscreen.value) return;
+      // 不在按钮上触发拖拽
+      const target = e.target as HTMLElement;
+      if (target.closest('.le-dialog__action-btn')) return;
+      handleDragStart(e);
+    };
 
     const renderHeader = () => {
       if (slots.header) {
         return (
-          <div class="le-dialog__header">
+          <div class="le-dialog__header" onMousedown={onHeaderMouseDown}>
             <div class="le-dialog__header-content">{slots.header()}</div>
             <div class="le-dialog__header-actions">
               {props.fullscreenable && (
@@ -170,7 +214,7 @@ export const Dialog = defineComponent({
 
       if (props.title) {
         return (
-          <div class="le-dialog__header">
+          <div class="le-dialog__header" onMousedown={onHeaderMouseDown}>
             <div class="le-dialog__title">{props.title}</div>
             <div class="le-dialog__header-actions">
               {props.fullscreenable && (

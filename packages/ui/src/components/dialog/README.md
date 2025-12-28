@@ -1,12 +1,13 @@
 # LeDialog 弹窗组件
 
-基于 Naive UI 的 NModal 二次封装的弹窗组件，支持全屏切换功能。
+基于 Naive UI 的 NModal 二次封装的弹窗组件，支持全屏切换和拖拽功能。
 
 ## 特性
 
 - ✅ 基于 NModal 二次封装，属性和事件透传
 - ✅ 支持 `v-model:visible` 控制弹窗显示/隐藏
 - ✅ 支持全屏/退出全屏切换
+- ✅ 支持拖拽移动（含边界限制）
 - ✅ 支持自定义 header、footer 插槽
 - ✅ 主题响应式，自动适配明暗模式
 
@@ -71,6 +72,24 @@ const visible = ref(false);
 </template>
 ```
 
+## 可拖拽弹窗
+
+```vue
+<template>
+  <LeDialog v-model:visible="visible" title="拖拽我" draggable>
+    <p>拖拽标题栏可以移动弹窗</p>
+    <p>弹窗不会超出视口边界</p>
+  </LeDialog>
+</template>
+```
+
+### 拖拽特性
+
+- **仅标题栏可拖拽**：避免内容区域误操作
+- **边界限制**：弹窗不会被拖出视口范围
+- **关闭重置**：弹窗关闭后位置自动重置到中心
+- **全屏禁用**：全屏模式下不可拖拽
+
 ## Props
 
 | 属性           | 类型               | 默认值  | 说明                              |
@@ -80,6 +99,7 @@ const visible = ref(false);
 | width          | `string \| number` | `520`   | 弹窗宽度                          |
 | closable       | `boolean`          | `true`  | 是否显示关闭按钮                  |
 | fullscreenable | `boolean`          | `true`  | 是否支持全屏切换                  |
+| draggable      | `boolean`          | `true`  | 是否可拖拽移动                    |
 | maskClosable   | `boolean`          | `true`  | 点击遮罩是否关闭                  |
 | destroyOnClose | `boolean`          | `false` | 关闭时是否销毁内容                |
 | style          | `CSSProperties`    | -       | 自定义样式                        |

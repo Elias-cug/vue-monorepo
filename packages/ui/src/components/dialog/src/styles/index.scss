@@ -105,6 +105,29 @@
       flex: 1;
     }
   }
+
+  // 可拖拽状态
+  &--draggable {
+    .le-dialog__header {
+      cursor: move;
+      user-select: none;
+    }
+
+    .le-dialog__action-btn {
+      cursor: pointer;
+    }
+  }
+
+  // 拖拽中状态
+  &--dragging {
+    .le-dialog__content {
+      transition: none;
+    }
+
+    .le-dialog__header {
+      cursor: grabbing;
+    }
+  }
 }
 
 // 动画过渡

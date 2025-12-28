@@ -41,6 +41,22 @@
         </LeDialog>
       </LeCard>
 
+      <LeCard title="可拖拽弹窗">
+        <p class="mb-2 text-sm text-gray-500">通过 draggable 属性启用拖拽功能</p>
+        <LeButton type="primary" @click="draggableVisible = true">打开可拖拽弹窗</LeButton>
+
+        <LeDialog v-model:visible="draggableVisible" title="拖拽我试试" draggable>
+          <p>拖拽标题栏可以移动弹窗</p>
+          <p class="text-sm text-gray-500 mt-2">特性：</p>
+          <ul class="text-sm text-gray-500 list-disc ml-4">
+            <li>仅标题栏可拖拽</li>
+            <li>边界限制，不会拖出视口</li>
+            <li>关闭后自动回到中心位置</li>
+            <li>全屏模式下不可拖拽</li>
+          </ul>
+        </LeDialog>
+      </LeCard>
+
       <LeCard title="带底部操作">
         <p class="mb-2 text-sm text-gray-500">通过 footer 插槽自定义底部操作区域</p>
         <LeButton type="primary" @click="footerVisible = true">打开带底部弹窗</LeButton>
@@ -124,6 +140,7 @@ const message = useMessage();
 const basicVisible = ref(false);
 const fullscreenVisible = ref(false);
 const noFullscreenVisible = ref(false);
+const draggableVisible = ref(false);
 const footerVisible = ref(false);
 const customHeaderVisible = ref(false);
 const widthVisible = ref(false);
