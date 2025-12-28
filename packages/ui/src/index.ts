@@ -13,6 +13,7 @@ export * from './components/operate-group';
 export * from './components/button';
 export * from './components/filter';
 export * from './components/dialog';
+export * from './components/left-right-layout';
 
 // 组件列表（用于整体注册）
 import { CodeViewer } from './components/code-viewer';
@@ -24,6 +25,7 @@ import { OperateGroup } from './components/operate-group';
 import { Button } from './components/button';
 import { Filter } from './components/filter';
 import { Dialog } from './components/dialog';
+import { LeftRightLayout } from './components/left-right-layout';
 import type { App } from 'vue';
 
 // 导出 SVG 工具函数
@@ -39,6 +41,7 @@ export { OperateGroup as LeOperateGroup } from './components/operate-group';
 export { Button as LeButton } from './components/button';
 export { Filter as LeFilter } from './components/filter';
 export { Dialog as LeDialog } from './components/dialog';
+export { LeftRightLayout as LeLeftRightLayout } from './components/left-right-layout';
 
 const components = [
   CodeViewer,
@@ -50,6 +53,7 @@ const components = [
   Button,
   Filter,
   Dialog,
+  LeftRightLayout,
 ];
 
 /**

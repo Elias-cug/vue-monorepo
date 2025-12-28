@@ -132,6 +132,16 @@ const app1Map: Record<string, Route> = {
       keepAlive: true,
     },
   },
+  'left-right-layout-demo': {
+    path: `${appOnePrefix}/left-right-layout-demo`,
+    name: 'LeftRightLayoutDemo',
+    component: () => import('@/pages/ComponnetShow/LeftRightLayoutDemo/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '左右布局',
+      keepAlive: true,
+    },
+  },
 };
 
 const apps = { ...app1Map };

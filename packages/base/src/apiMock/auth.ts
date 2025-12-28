@@ -51,6 +51,10 @@ export const menusMock = [
         key: 'dialog-demo',
         title: '弹窗组件',
       },
+      {
+        key: 'left-right-layout-demo',
+        title: '左右布局',
+      },
     ],
     extraProps: {},
   },
