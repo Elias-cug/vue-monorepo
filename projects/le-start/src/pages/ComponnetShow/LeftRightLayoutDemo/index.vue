@@ -62,18 +62,14 @@
                 <h3>左侧面板</h3>
                 <p>默认收起，点击按钮展开</p>
                 <n-list>
-                  <n-list-item v-for="i in 3" :key="i">
-                    列表项 {{ i }}
-                  </n-list-item>
+                  <n-list-item v-for="i in 3" :key="i">列表项 {{ i }}</n-list-item>
                 </n-list>
               </div>
             </template>
             <template #right>
               <div class="demo-panel">
                 <h3>内容区域</h3>
-                <n-alert type="info" title="提示">
-                  当前左侧面板状态: {{ collapseStatus }}
-                </n-alert>
+                <n-alert type="info" title="提示">当前左侧面板状态: {{ collapseStatus }}</n-alert>
               </div>
             </template>
           </LeLeftRightLayout>
@@ -81,7 +77,7 @@
       </LeCard>
 
       <!-- 使用场景示例 -->
-      <LeCard title="典型使用场景：文件管理器" padding="0">
+      <LeCard title="典型使用场景：文件管理器" padding="24px">
         <div class="demo-layout-wrapper demo-layout-wrapper--large">
           <LeLeftRightLayout :left-width="280">
             <template #left>
@@ -90,9 +86,9 @@
                   <LeSvgIcon name="ui-menu" :size="16" />
                   <span>文件资源管理器</span>
                 </div>
-                <n-tree 
-                  :data="fileTreeData" 
-                  block-line 
+                <n-tree
+                  :data="fileTreeData"
+                  block-line
                   :default-expanded-keys="['root']"
                   selectable
                 />
@@ -117,6 +113,46 @@
                     </n-grid-item>
                   </n-grid>
                 </div>
+              </div>
+            </template>
+          </LeLeftRightLayout>
+        </div>
+      </LeCard>
+
+      <!-- 右侧透明示例 -->
+      <LeCard title="右侧透明：多卡片布局" padding="24px">
+        <div class="demo-layout-wrapper demo-layout-wrapper--xlarge">
+          <LeLeftRightLayout :left-width="260" right-transparent>
+            <template #left>
+              <div class="demo-panel">
+                <h3>导航菜单</h3>
+                <n-menu :options="menuOptions" />
+              </div>
+            </template>
+            <template #right>
+              <div class="right-cards-flex">
+                <LeCard title="数据概览" padding="16px" class="right-cards-flex__top">
+                  <n-grid :cols="3" :x-gap="12">
+                    <n-grid-item>
+                      <n-statistic label="总用户" :value="12580" />
+                    </n-grid-item>
+                    <n-grid-item>
+                      <n-statistic label="今日活跃" :value="368" />
+                    </n-grid-item>
+                    <n-grid-item>
+                      <n-statistic label="新增用户" :value="56" />
+                    </n-grid-item>
+                  </n-grid>
+                </LeCard>
+                <LeCard title="最近动态" padding="16px" class="right-cards-flex__bottom">
+                  <n-list>
+                    <n-list-item>用户 张三 完成了订单 #10086</n-list-item>
+                    <n-list-item>用户 李四 提交了工单 #2024</n-list-item>
+                    <n-list-item>系统完成了数据备份</n-list-item>
+                    <n-list-item>管理员更新了系统配置</n-list-item>
+                    <n-list-item>用户 王五 登录了系统</n-list-item>
+                  </n-list>
+                </LeCard>
               </div>
             </template>
           </LeLeftRightLayout>
@@ -163,9 +199,7 @@ const treeData = [
   {
     label: '节点 2',
     key: '2',
-    children: [
-      { label: '节点 2-1', key: '2-1' },
-    ],
+    children: [{ label: '节点 2-1', key: '2-1' }],
   },
 ];
 
@@ -233,6 +267,10 @@ const onExpand = () => {
   &--large {
     height: 400px;
   }
+
+  &--xlarge {
+    height: 500px;
+  }
 }
 
 .demo-panel {
@@ -258,7 +296,11 @@ const onExpand = () => {
   }
 
   &--success {
-    background: linear-gradient(135deg, var(--le-success-1, rgba(82, 196, 26, 0.1)) 0%, transparent 100%);
+    background: linear-gradient(
+      135deg,
+      var(--le-success-1, rgba(82, 196, 26, 0.1)) 0%,
+      transparent 100%
+    );
   }
 }
 
@@ -327,5 +369,28 @@ const onExpand = () => {
     word-break: break-all;
   }
 }
-</style>
 
+// 右侧多卡片 flex 布局
+.right-cards-flex {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 16px;
+
+  &__top {
+    flex-shrink: 0;
+  }
+
+  &__bottom {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+
+    :deep(.le-card__content) {
+      flex: 1;
+      overflow: auto;
+    }
+  }
+}
+</style>

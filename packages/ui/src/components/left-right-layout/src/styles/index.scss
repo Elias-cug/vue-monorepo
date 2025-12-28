@@ -7,6 +7,25 @@
   width: 100%;
   height: 100%;
   min-height: 0;
+  padding: var(--le-lrl-padding, 16px);
+  box-sizing: border-box;
+  position: relative;
+
+  // 控制器区域 - 在左侧 padding 中
+  &__toggle-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--le-lrl-padding, 16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+  }
 
   // 左侧区域
   &__left {
@@ -35,6 +54,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   // 收起/展开按钮
@@ -95,6 +115,27 @@
       min-width: 0;
       opacity: 0;
       overflow: hidden;
+    }
+
+    .le-left-right-layout__divider {
+      width: 0;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    // 收起时显示左侧 padding 区域的控制器
+    .le-left-right-layout__toggle-area {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  // 右侧透明
+  &--right-transparent {
+    .le-left-right-layout__right {
+      background-color: transparent;
+      box-shadow: none;
+      border-radius: 0;
     }
   }
 }

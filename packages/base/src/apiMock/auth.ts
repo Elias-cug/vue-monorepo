@@ -55,6 +55,10 @@ export const menusMock = [
         key: 'left-right-layout-demo',
         title: '左右布局',
       },
+      {
+        key: 'left-right-layout-full-demo',
+        title: '左右布局(全屏)',
+      },
     ],
     extraProps: {},
   },
