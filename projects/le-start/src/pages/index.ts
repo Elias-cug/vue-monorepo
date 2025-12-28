@@ -122,6 +122,16 @@ const app1Map: Record<string, Route> = {
       keepAlive: true,
     },
   },
+  'dialog-demo': {
+    path: `${appOnePrefix}/dialog-demo`,
+    name: 'DialogDemo',
+    component: () => import('@/pages/ComponnetShow/DialogDemo/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '弹窗组件',
+      keepAlive: true,
+    },
+  },
 };
 
 const apps = { ...app1Map };

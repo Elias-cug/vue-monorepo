@@ -1,0 +1,113 @@
+/**
+ * LeDialog 组件样式
+ */
+
+.le-dialog {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--le-card);
+    border-radius: var(--le-radius-lg);
+    box-shadow: var(--le-shadow-3);
+    max-height: calc(100vh - 64px);
+    transition:
+      width 0.3s ease,
+      height 0.3s ease,
+      max-height 0.3s ease;
+
+    &--fullscreen {
+      max-height: calc(100vh - 32px);
+      height: calc(100vh - 32px);
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--le-divider);
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--le-text-1);
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__header-content {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  &__header-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 16px;
+    flex-shrink: 0;
+  }
+
+  &__action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--le-radius-sm);
+    cursor: pointer;
+    color: var(--le-text-2);
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+
+    &:hover {
+      color: var(--le-text-1);
+      background-color: var(--le-hover);
+    }
+
+    &:active {
+      background-color: var(--le-pressed);
+    }
+  }
+
+  &__close-btn {
+    &:hover {
+      color: var(--le-error);
+      background-color: var(--le-error-1, rgba(208, 48, 80, 0.1));
+    }
+  }
+
+  &__body {
+    flex: 1;
+    padding: 20px;
+    overflow: auto;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 12px 20px;
+    border-top: 1px solid var(--le-divider);
+    flex-shrink: 0;
+  }
+
+  // 全屏状态
+  &--fullscreen {
+    .le-dialog__body {
+      flex: 1;
+    }
+  }
+}
+
+// 动画过渡
+.n-modal-mask {
+  transition: background-color 0.3s ease;
+}

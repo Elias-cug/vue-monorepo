@@ -47,6 +47,10 @@ export const menusMock = [
         key: 'filter-table-demo',
         title: '过滤表格',
       },
+      {
+        key: 'dialog-demo',
+        title: '弹窗组件',
+      },
     ],
     extraProps: {},
   },
