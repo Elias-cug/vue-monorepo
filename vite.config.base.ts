@@ -19,6 +19,8 @@ const appSvgIconPath = getRootPath();
 const uiSvgIconPath = resolve(__dirname, 'packages/ui/src/assets/svg-icon');
 
 export const baseViteConfig = {
+  // 打包后使用相对路径
+  base: './',
   plugins: [
     vue(),
     vueJsx(),
