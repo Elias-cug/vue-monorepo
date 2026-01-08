@@ -9,7 +9,7 @@ import { menusMock, userMock } from '@base/apiMock/auth';
  * @param token 用户 token
  * @returns 用户信息
  */
-export async function fetchUserInfo(_token: string): Promise<any> {
+export async function fetchUserInfo(): Promise<any> {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve({
@@ -27,12 +27,12 @@ export async function fetchUserInfo(_token: string): Promise<any> {
  * @param token 用户 token
  * @returns 菜单列表
  */
-export async function fetchMenus(_token: string): Promise<any> {
+export async function fetchMenus(appId: string): Promise<any> {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve({
         code: 200,
-        data: [...menusMock],
+        data: [...(menusMock[appId as keyof typeof menusMock] || [])],
       } as any);
     }, 500);
   });

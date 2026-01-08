@@ -63,16 +63,16 @@ export const useAuthStore = defineStore('auth', {
      * 获取用户信息并存储
      * @param token 用户 token
      */
-    async getUserInfo(token: string) {
-      const userInfo = await fetchUserInfo(token);
+    async getUserInfo() {
+      const userInfo = await fetchUserInfo();
       return userInfo;
     },
     /**
      * 获取菜单并存储
      * @param token 用户 token
      */
-    async getMenus(token: string) {
-      const menus = await fetchMenus(token);
+    async getMenus(appId: string) {
+      const menus = await fetchMenus(appId);
       return menus;
     },
     async getBtns() {
@@ -96,11 +96,13 @@ export const useAuthStore = defineStore('auth', {
         }, 500);
       });
     },
-    async getAllAuthInfo(token: string) {
+    async getAllAuthInfo() {
+      const appStore = useAppStore();
+      const appId = appStore.appInfo?.id || 'le-start';
       // 使用 Promise.all 并发获取用户信息、菜单、按钮、字典、参数
       const [userInfo, menus, btns, dics, params] = await Promise.all([
-        this.getUserInfo(token),
-        this.getMenus(token),
+        this.getUserInfo(),
+        this.getMenus(appId),
         this.getBtns(),
         this.getDics(),
         this.getParams(),
@@ -115,7 +117,6 @@ export const useAuthStore = defineStore('auth', {
       this.setParams(params);
       this.setLoaded(true);
 
-      const appStore = useAppStore();
       appStore.setCachedRoutes(genCachedRoutes(this.flatMenus));
       dynamicRegisterRouter(this.flatMenus);
     },

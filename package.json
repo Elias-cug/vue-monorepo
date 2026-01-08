@@ -11,6 +11,8 @@
     "type-check": "vue-tsc --noEmit -p projects/vite-vue",
     "start:le-start": "pnpm --filter le-start dev",
     "build:le-start": "pnpm --filter le-start build",
+    "start:le-admin": "pnpm --filter le-admin dev",
+    "build:le-admin": "pnpm --filter le-admin build",
     "start:le-guide": "pnpm --filter le-guide docs:dev"
   },
   "keywords": [],

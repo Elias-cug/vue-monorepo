@@ -138,7 +138,7 @@ export function setGuard(router: Router) {
         try {
           // 使用携带的 token 获取用户信息存储到 auth Store
           appStore.getAppInfo();
-          await authStore.getAllAuthInfo(token);
+          await authStore.getAllAuthInfo();
 
           // 如果访问的是首页，重定向到 homeMenu
           if (handleHomeRedirect(to, next, authStore)) {
@@ -178,7 +178,7 @@ export function setGuard(router: Router) {
           // 未加载，需要获取用户信息
           try {
             appStore.getAppInfo();
-            await authStore.getAllAuthInfo(token);
+            await authStore.getAllAuthInfo();
 
             // 如果访问的是首页，重定向到 homeMenu
             if (handleHomeRedirect(to, next, authStore)) {

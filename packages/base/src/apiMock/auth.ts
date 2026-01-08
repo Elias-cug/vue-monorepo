@@ -1,68 +1,77 @@
-export const menusMock = [
-  {
-    key: 'main',
-    title: '首页',
-    pinned: true,
-    extraProps: {
-      params1: '123',
+export const menusMock = {
+  'le-start': [
+    {
+      key: 'main',
+      title: '首页',
+      pinned: true,
+      extraProps: {
+        params1: '123',
+      },
     },
-  },
-  {
-    key: 'theme-intro',
-    title: '主题系统介绍',
-  },
-  {
-    key: 'component-show',
-    title: '组件展示',
-    children: [
-      {
-        key: 'code-viewer',
-        title: '代码查看器',
-      },
-      {
-        key: 'container-card',
-        title: '容器卡片',
-      },
-      {
-        key: 'svg-icon-demo',
-        title: 'SVG 图标',
-      },
-      {
-        key: 'table-demo',
-        title: '表格组件',
-      },
-      {
-        key: 'operate-group-demo',
-        title: '操作按钮组',
-      },
-      {
-        key: 'button-demo',
-        title: '按钮组件',
-      },
-      {
-        key: 'filter-demo',
-        title: '过滤组件',
-      },
-      {
-        key: 'filter-table-demo',
-        title: '过滤表格',
-      },
-      {
-        key: 'dialog-demo',
-        title: '弹窗组件',
-      },
-      {
-        key: 'left-right-layout-demo',
-        title: '左右布局',
-      },
-      {
-        key: 'left-right-layout-full-demo',
-        title: '左右布局(全屏)',
-      },
-    ],
-    extraProps: {},
-  },
-];
+    {
+      key: 'theme-intro',
+      title: '主题系统介绍',
+    },
+    {
+      key: 'component-show',
+      title: '组件展示',
+      children: [
+        {
+          key: 'code-viewer',
+          title: '代码查看器',
+        },
+        {
+          key: 'container-card',
+          title: '容器卡片',
+        },
+        {
+          key: 'svg-icon-demo',
+          title: 'SVG 图标',
+        },
+        {
+          key: 'table-demo',
+          title: '表格组件',
+        },
+        {
+          key: 'operate-group-demo',
+          title: '操作按钮组',
+        },
+        {
+          key: 'button-demo',
+          title: '按钮组件',
+        },
+        {
+          key: 'filter-demo',
+          title: '过滤组件',
+        },
+        {
+          key: 'filter-table-demo',
+          title: '过滤表格',
+        },
+        {
+          key: 'dialog-demo',
+          title: '弹窗组件',
+        },
+        {
+          key: 'left-right-layout-demo',
+          title: '左右布局',
+        },
+        {
+          key: 'left-right-layout-full-demo',
+          title: '左右布局(全屏)',
+        },
+      ],
+      extraProps: {},
+    },
+  ],
+  'le-admin': [
+    {
+      key: 'profile',
+      title: '个人中心',
+      pinned: true,
+    },
+  ],
+};
 
 export const userMock = {
   id: 1,

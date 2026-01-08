@@ -182,7 +182,7 @@ function handleLogin() {
 // 登录表单
 .login-form {
   .input-icon {
-    @apply text-gray-400;
+    color: #666 !important;
   }
 
   :deep(.n-form-item) {
@@ -200,12 +200,29 @@ function handleLogin() {
     &:focus-within {
       background: #fff;
     }
+
+    // 强制输入框文字为黑色（包括暗黑模式）
+    input {
+      color: #000 !important;
+    }
+
+    // naive-ui placeholder 颜色
+    .n-input__placeholder {
+      color: #999 !important;
+    }
   }
 }
 
 // 表单选项
 .form-options {
-  @apply flex items-center justify-between mb-6 text-sm text-gray-500;
+  @apply flex items-center justify-between mb-6 text-sm;
+  color: #666 !important;
+
+  :deep(.n-checkbox) {
+    .n-checkbox__label {
+      color: #666 !important;
+    }
+  }
 }
 
 // 登录按钮
