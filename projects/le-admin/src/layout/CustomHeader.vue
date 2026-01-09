@@ -1,5 +1,5 @@
 <template>
-  <CommonHeader :show-opts="['user']">
+  <CommonHeader :show-opts="['user', 'theme']">
     <template #header-center>
       <div class="w-40%">
         <NInput round placeholder="请输入搜索内容">
