@@ -11,11 +11,7 @@
     </div>
     <div class="global-header-right">
       <slot name="header-right">
-        <div class="header-actions">
-          <DocLink />
-          <ThemeSetting />
-          <UserDropdown />
-        </div>
+        <HeaderRightOpts :show-opts="showOpts" />
       </slot>
     </div>
   </div>
@@ -24,9 +20,19 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useAppStore } from '../../../store/app';
-import UserDropdown from './components/UserDropdown.vue';
-import ThemeSetting from './components/ThemeSetting.vue';
-import DocLink from './components/DocLink.vue';
+import HeaderRightOpts from './components/HeaderRightOpts.vue';
+
+interface Props {
+  /**
+   * 右侧操作选项显示配置
+   * @example ['doc', 'theme', 'user']
+   */
+  showOpts?: ('doc' | 'theme' | 'user')[];
+}
+
+withDefaults(defineProps<Props>(), {
+  showOpts: () => ['doc', 'theme', 'user'],
+});
 
 const appStore = useAppStore();
 const { appInfo } = storeToRefs(appStore);

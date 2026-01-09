@@ -49,9 +49,9 @@
 
 ## 01.05 - 01.11
 
-1. 跟据系统命名缓存key
-2. 可选配右侧header操作
-3. 持久化逻辑控制
+1. ✅ 跟据系统命名缓存key
    - 公共持久化区分 是否加 appid 前缀。加 app-appid-[]，不加 app-[]
    - tabs/collapsed 区分appid
    - token/theme 不区分appid
+
+2. ✅ 可选配右侧header操作
