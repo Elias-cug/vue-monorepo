@@ -56,6 +56,7 @@ pnpm --filter <project-name> dev
 
 ## 开发原则
 
+- **始终使用 pnpm，不要使用 npm 或 yarn**
 - 始终以 Vue 最推荐的方式写代码，遵循 Vue 官方风格指南
 - 使用「最小改动原则」修改代码
 - 避免重复代码（DRY 原则）
