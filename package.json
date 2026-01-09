@@ -8,7 +8,7 @@
     "lint:check": "eslint .",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,vue,json,css,scss,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,vue,json,css,scss,md}\"",
-    "type-check": "vue-tsc --noEmit -p projects/vite-vue",
+    "type-check": "vue-tsc --noEmit -p projects/le-start",
     "start:le-start": "pnpm --filter le-start dev",
     "build:le-start": "pnpm --filter le-start build",
     "start:le-admin": "pnpm --filter le-admin dev",
