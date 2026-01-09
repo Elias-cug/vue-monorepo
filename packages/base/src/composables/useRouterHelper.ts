@@ -42,8 +42,11 @@ export function useRouterHelper() {
    * @param redirect 是否保留当前路由作为重定向参数，默认 true
    */
   function logout(redirect = true) {
+    // 获取 appId
+    const appId = appStore.appInfo?.id || 'le-start';
+
     // 清除持久化的 app 状态
-    clearAppPersist();
+    clearAppPersist(appId);
 
     // 清除 store 中的状态
     appStore.setTabs([]);

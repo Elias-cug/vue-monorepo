@@ -29,13 +29,14 @@ const appStore = useAppStore();
 
 // 在组件挂载前初始化
 onBeforeMount(() => {
-  // 注意：appId 已在路由守卫中设置（guard.ts）
-  
+  // 获取 appId（从 appStore 或其他方式）
+  const appId = appStore.appInfo?.id || 'le-start';
+
   // 1. 恢复持久化状态
-  appStore.restoreState();
-  
+  appStore.restoreState(appId);
+
   // 2. 启用持久化监听
-  useAppPersist();
+  useAppPersist(appId);
 });
 </script>
 

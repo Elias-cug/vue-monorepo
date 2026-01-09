@@ -17,14 +17,24 @@ import { storeToRefs } from 'pinia';
 import { useAppStore } from '../store/app';
 import { ls } from '../storage';
 
-// 存储键常量
-const STORAGE_KEYS = {
-  TABS: 'app-tabs',
-  COLLAPSED: 'app-collapsed',
-  // 未来可以轻松扩展：
-  // THEME: 'app-theme',
-  // LAYOUT_MODE: 'app-layout-mode',
-} as const;
+/**
+ * 生成带 appId 的存储键
+ */
+const createStorageKey = (appId: string, keyName: string): string => {
+  return `app-${appId}-${keyName}`;
+};
+
+/**
+ * 获取存储键常量工厂函数
+ */
+const getStorageKeys = (appId: string) =>
+  ({
+    TABS: createStorageKey(appId, 'tabs'),
+    COLLAPSED: createStorageKey(appId, 'collapsed'),
+    // 未来可以轻松扩展：
+    // THEME: createStorageKey(appId, 'theme'),
+    // LAYOUT_MODE: createStorageKey(appId, 'layout-mode'),
+  }) as const;
 
 /**
  * 持久化配置选项
@@ -40,9 +50,10 @@ interface PersistOptions {
 
 /**
  * App 状态持久化
+ * @param appId App ID，用于生成带前缀的存储键
  * @param options 持久化选项，可以选择性开启某些状态的持久化
  */
-export function useAppPersist(options: PersistOptions = {}) {
+export function useAppPersist(appId: string, options: PersistOptions = {}) {
   const {
     tabs: persistTabs = true,
     collapsed: persistCollapsed = true,
@@ -51,6 +62,7 @@ export function useAppPersist(options: PersistOptions = {}) {
 
   const appStore = useAppStore();
   const { tabs, collapsed } = storeToRefs(appStore);
+  const STORAGE_KEYS = getStorageKeys(appId);
 
   // 创建保存函数（可选防抖）
   const createSaver = (key: string, getValue: () => any) => {
@@ -82,10 +94,10 @@ export function useAppPersist(options: PersistOptions = {}) {
 
 /**
  * 从 localStorage 恢复 app 状态
- * 这个函数应该在 store 的 state 初始化时调用
- * 注意：需要在调用此函数之前先设置 ls.setAppId()
+ * @param appId App ID，用于生成带前缀的存储键
  */
-export function restoreAppState() {
+export function restoreAppState(appId: string) {
+  const STORAGE_KEYS = getStorageKeys(appId);
   return {
     tabs: ls.get(STORAGE_KEYS.TABS),
     collapsed: ls.get(STORAGE_KEYS.COLLAPSED),
@@ -94,13 +106,14 @@ export function restoreAppState() {
 
 /**
  * 清除持久化的 app 状态
- * 可用于用户退出登录时
+ * @param appId App ID，用于生成带前缀的存储键
  */
-export function clearAppPersist() {
+export function clearAppPersist(appId: string) {
+  const STORAGE_KEYS = getStorageKeys(appId);
   Object.values(STORAGE_KEYS).forEach(key => {
     ls.remove(key);
   });
 }
 
-// 导出常量供其他地方使用
-export { STORAGE_KEYS };
+// 导出工厂函数供其他地方使用
+export { getStorageKeys };

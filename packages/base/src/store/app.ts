@@ -17,10 +17,11 @@ export const useAppStore = defineStore('app', {
   actions: {
     /**
      * 从 localStorage 恢复状态
-     * 在 Layout 初始化时调用（此时 appId 已设置）
+     * 在 Layout 初始化时调用
+     * @param appId App ID，用于生成带前缀的存储键
      */
-    restoreState() {
-      const restored = restoreAppState();
+    restoreState(appId: string) {
+      const restored = restoreAppState(appId);
 
       // 恢复 collapsed 状态
       if (restored.collapsed !== undefined) {

@@ -70,6 +70,10 @@ export const menusMock = {
       title: '个人中心',
       pinned: true,
     },
+    {
+      key: 'user-management',
+      title: '用户管理',
+    },
   ],
 };
 
