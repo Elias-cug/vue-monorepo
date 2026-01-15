@@ -19,6 +19,17 @@ const app1Map: Record<string, Route> = {
       icon: 'menu-home',
     },
   },
+  'storage-demo': {
+    path: `${appOnePrefix}/storage-demo`,
+    name: 'StorageDemo',
+    component: () => import('@/pages/StorageDemo/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '存储信息展示',
+      keepAlive: true,
+      icon: 'menu-storage',
+    },
+  },
   'theme-intro': {
     path: `${appOnePrefix}/theme-intro`,
     name: 'ThemeIntro',

@@ -9,6 +9,10 @@ export const menusMock = {
       },
     },
     {
+      key: 'storage-demo',
+      title: '存储信息展示',
+    },
+    {
       key: 'theme-intro',
       title: '主题系统介绍',
     },
