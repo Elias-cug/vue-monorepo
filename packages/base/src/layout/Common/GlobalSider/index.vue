@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, nextTick } from 'vue';
 import { storeToRefs } from 'pinia';
 import { NConfigProvider } from 'naive-ui';
 import { CloudFog, LayoutSidebarLeftCollapse, LayoutSidebarRightCollapse } from '@vicons/tabler';
@@ -51,6 +51,8 @@ const menuThemeOverrides = computed(() => ({
 
 // 当前激活的菜单项
 const activeMenuKey = ref<string | null>(null);
+// 保存最后一次内部路由的菜单 key
+const lastInternalMenuKey = ref<string | null>(null);
 
 // 根据路由路径找到对应的菜单 key
 function getMenuKeyByPath(path: string): string | null {
@@ -58,14 +60,36 @@ function getMenuKeyByPath(path: string): string | null {
   return menu?.key || null;
 }
 
+// 判断菜单项是否为外链
+function isExternalLink(key: string | null): boolean {
+  if (!key) return false;
+  const menu = flatMenus.value.find(m => m.key === key);
+  return !!menu?.meta?.href;
+}
+
 // 监听路由变化，更新激活的菜单项
 watch(
   () => route.path,
   newPath => {
-    activeMenuKey.value = getMenuKeyByPath(newPath);
+    const menuKey = getMenuKeyByPath(newPath);
+    activeMenuKey.value = menuKey;
+    // 保存非外链的菜单 key
+    if (menuKey && !isExternalLink(menuKey)) {
+      lastInternalMenuKey.value = menuKey;
+    }
   },
   { immediate: true }
 );
+
+// 监听 activeMenuKey 变化，如果选中外链则恢复上次的内部菜单高亮
+watch(activeMenuKey, (newKey) => {
+  if (newKey && isExternalLink(newKey)) {
+    // 延迟恢复，避免与 v-model 冲突
+    nextTick(() => {
+      activeMenuKey.value = lastInternalMenuKey.value;
+    });
+  }
+});
 
 const changeCollapsed = () => {
   appStore.switchCollapsed();
