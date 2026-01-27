@@ -38,7 +38,40 @@ const app1Map: Record<string, Route> = {
       layout: 'basic',
       title: '角色管理',
       keepAlive: true,
-      icon: 'menu-user-management',
+      icon: 'menu-role-management',
+    },
+  },
+  'menu-management': {
+    path: `${appOnePrefix}/menu-management`,
+    name: 'MenuManagement',
+    component: () => import('@/pages/MenuManagement/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '菜单管理',
+      keepAlive: true,
+      icon: 'menu-menu-management',
+    },
+  },
+  'permission-management': {
+    path: `${appOnePrefix}/permission-management`,
+    name: 'PermissionManagement',
+    component: () => import('@/pages/PermissionManagement/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '权限管理',
+      keepAlive: true,
+      icon: 'menu-permission-management',
+    },
+  },
+  'app-management': {
+    path: `${appOnePrefix}/app-management`,
+    name: 'AppManagement',
+    component: () => import('@/pages/AppManagement/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '应用管理',
+      keepAlive: true,
+      icon: 'menu-app-management',
     },
   },
 };
