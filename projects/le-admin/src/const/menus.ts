@@ -7,6 +7,9 @@ export const menuList = [
   {
     key: 'user-management',
     title: '用户管理',
+    meta: {
+      href: 'https://www.baidu.com',
+    },
   },
   {
     key: 'role-management',

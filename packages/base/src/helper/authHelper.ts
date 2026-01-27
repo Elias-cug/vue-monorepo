@@ -32,6 +32,7 @@ export function mergeMenuNode(menuInfo: any, routeInfo: any) {
       title: menuInfo.title || routeInfo.meta?.title,
       hidden: menuInfo.hidden ?? routeInfo.meta?.hidden,
       pinned: menuInfo.pinned ?? routeInfo.meta?.pinned,
+      href: menuInfo.meta?.href,
       extraProps: menuInfo?.extraProps || {},
       menuKey: menuInfo.key || routeInfo.name,
     },

@@ -30,7 +30,7 @@
 import { ref, watch, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { NConfigProvider } from 'naive-ui';
-import { LayoutSidebarLeftCollapse, LayoutSidebarRightCollapse } from '@vicons/tabler';
+import { CloudFog, LayoutSidebarLeftCollapse, LayoutSidebarRightCollapse } from '@vicons/tabler';
 import { createSidebarMenuTheme } from '@lee/theme';
 import { useAppStore, useAuthStore } from '../../../store';
 import { useRouter, useRoute } from 'vue-router';
@@ -72,6 +72,11 @@ const changeCollapsed = () => {
 };
 
 function handleMenuClick(_key: string, item: any) {
+  console.log('item--', item);
+  if (item.meta.href) {
+    window.open(item.meta.href, '_blank');
+    return;
+  }
   if (item.path) {
     router.push(item.path);
   }
