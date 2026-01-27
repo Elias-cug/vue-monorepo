@@ -18,7 +18,7 @@ export interface Menu {
   query?: Record<string, any>;
   /** 其他属性，存放一些业务属性 */
   extraProps?: Record<string, any>;
-  meta: menuMeta;
+  meta?: menuMeta;
   /** 前端路径不建议在后端返回 */
   path?: string;
   /** 菜单图标，不建议在后端返回 */
@@ -52,6 +52,15 @@ export interface Params {}
 
 export interface AuthState {
   userInfo: UserInfo | null;
+  /** 菜单配置  */
+  menuConfig: {
+    /** default: base统一接口获取菜单 custom: 项目自定义菜单 static: 项目静态菜单 */
+    mode: 'default' | 'custom' | 'static';
+    staticMenu?: {
+      data: Menu[];
+    };
+    loader?: () => Promise<{ data: Menu[] }>;
+  };
   menus: Menu[];
   flatMenus: Menu[];
   homeMenu: Menu | null;

@@ -14,6 +14,9 @@ export const useAuthStore = defineStore('auth', {
   state: () =>
     ({
       userInfo: null,
+      menuConfig: {
+        mode: 'default',
+      },
       menus: [],
       homeMenu: null,
       flatMenus: [],
@@ -59,6 +62,9 @@ export const useAuthStore = defineStore('auth', {
     setLoaded(loaded: boolean) {
       this.isLoaded = loaded;
     },
+    setMenuConfig(config: AuthState['menuConfig']) {
+      this.menuConfig = config;
+    },
     /**
      * 获取用户信息并存储
      * @param token 用户 token
@@ -72,7 +78,17 @@ export const useAuthStore = defineStore('auth', {
      * @param token 用户 token
      */
     async getMenus(appId: string) {
-      const menus = await fetchMenus(appId);
+      let menus = { data: [] as Menu[] };
+      if (this.menuConfig.mode === 'static' && this.menuConfig.staticMenu) {
+        menus = this.menuConfig.staticMenu;
+      }
+      if (this.menuConfig.mode === 'custom' && this.menuConfig.loader) {
+        menus = await this.menuConfig.loader();
+      }
+      if (this.menuConfig.mode === 'default') {
+        menus = await fetchMenus(appId);
+      }
+
       return menus;
     },
     async getBtns() {

@@ -8,6 +8,10 @@ export const menuList = [
     key: 'user-management',
     title: '用户管理',
   },
+  {
+    key: 'role-management',
+    title: '角色管理',
+  },
 ];
 
-export default { data: menuList };
+export default { data: [...menuList] };

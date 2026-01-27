@@ -30,6 +30,17 @@ const app1Map: Record<string, Route> = {
       icon: 'menu-user-management',
     },
   },
+  'role-management': {
+    path: `${appOnePrefix}/role-management`,
+    name: 'RoleManagement',
+    component: () => import('@/pages/RoleManagement/index.vue'),
+    meta: {
+      layout: 'basic',
+      title: '角色管理',
+      keepAlive: true,
+      icon: 'menu-user-management',
+    },
+  },
 };
 
 const apps = { ...app1Map };
