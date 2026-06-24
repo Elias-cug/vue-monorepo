@@ -5,8 +5,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 28px;
-  // 使用卡片背景色，保持清爽
-  background-color: var(--le-card);
+  background-color: #041c31;
+  background-image: url(../../../assets/layout/bg-header.png);
   color: var(--le-text-1); // 设置默认文本颜色，子元素会继承
   // 使用更轻的阴影，通过阴影区分层次
   box-shadow: var(--le-shadow-1);
@@ -45,12 +45,9 @@
       font-size: 24px;
       font-weight: 500;
       // 标题使用主题色，更有品牌感
-      color: var(--le-primary);
+      color: #ffffff;
       // 添加过渡效果
       transition: color 0.3s ease;
-
-      // 如果需要更低调的效果，可以改为深色主题色
-      // color: var(--le-primary-8);
     }
   }
   .global-header-center {
@@ -67,7 +64,6 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
 
       // 为 actions 中的按钮添加统一样式
       .action-button {

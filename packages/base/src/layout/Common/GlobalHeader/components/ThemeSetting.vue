@@ -1,53 +1,55 @@
 <template>
-  <n-popover trigger="click" placement="bottom" :show-arrow="false">
-    <template #trigger>
-      <n-button quaternary circle>
-        <template #icon>
-          <n-icon :size="20">
-            <ColorPaletteOutline />
-          </n-icon>
-        </template>
-      </n-button>
-    </template>
-    <div class="theme-setting">
-      <div class="theme-setting-title">主题设置</div>
-
-      <!-- 明暗模式切换 -->
-      <div class="mode-switch">
-        <span class="mode-label">深色模式</span>
-        <n-switch v-model:value="isDark" @update:value="handleModeChange">
-          <template #checked-icon>
-            <n-icon>
-              <MoonOutline />
+  <div>
+    <n-popover trigger="click" placement="bottom" :show-arrow="false">
+      <template #trigger>
+        <n-button quaternary circle>
+          <template #icon>
+            <n-icon :size="20" color="#ffffff">
+              <ColorPaletteOutline />
             </n-icon>
           </template>
-          <template #unchecked-icon>
-            <n-icon>
-              <SunnyOutline />
-            </n-icon>
-          </template>
-        </n-switch>
-      </div>
+        </n-button>
+      </template>
+      <div class="theme-setting">
+        <div class="theme-setting-title">主题设置</div>
 
-      <!-- 主题列表 -->
-      <div class="theme-setting-list">
-        <div
-          v-for="theme in themeOptions"
-          :key="theme.name"
-          class="theme-item"
-          :class="{ active: currentTheme === theme.name }"
-          @click="handleThemeChange(theme.name)"
-        >
-          <div class="theme-color" :style="{ backgroundColor: theme.color }">
-            <n-icon v-if="currentTheme === theme.name" :size="16" color="#fff">
-              <CheckmarkOutline />
-            </n-icon>
+        <!-- 明暗模式切换 -->
+        <div class="mode-switch">
+          <span class="mode-label">深色模式</span>
+          <n-switch v-model:value="isDark" @update:value="handleModeChange">
+            <template #checked-icon>
+              <n-icon>
+                <MoonOutline />
+              </n-icon>
+            </template>
+            <template #unchecked-icon>
+              <n-icon>
+                <SunnyOutline />
+              </n-icon>
+            </template>
+          </n-switch>
+        </div>
+
+        <!-- 主题列表 -->
+        <div class="theme-setting-list">
+          <div
+            v-for="theme in themeOptions"
+            :key="theme.name"
+            class="theme-item"
+            :class="{ active: currentTheme === theme.name }"
+            @click="handleThemeChange(theme.name)"
+          >
+            <div class="theme-color" :style="{ backgroundColor: theme.color }">
+              <n-icon v-if="currentTheme === theme.name" :size="16" color="#fff">
+                <CheckmarkOutline />
+              </n-icon>
+            </div>
+            <span class="theme-label">{{ theme.label }}</span>
           </div>
-          <span class="theme-label">{{ theme.label }}</span>
         </div>
       </div>
-    </div>
-  </n-popover>
+    </n-popover>
+  </div>
 </template>
 
 <script setup lang="ts">

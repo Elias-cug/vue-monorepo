@@ -1,7 +1,7 @@
 <template>
   <div class="header-actions">
     <DocLink v-if="isOptVisible('doc')" />
-    <ThemeSetting v-if="isOptVisible('theme')" />
+    <ThemeSetting class="mr-8px" v-if="isOptVisible('theme')" />
     <UserDropdown v-if="isOptVisible('user')" />
   </div>
 </template>

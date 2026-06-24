@@ -83,6 +83,7 @@ const handleProfile = () => {
   display: flex;
   align-items: center;
   cursor: pointer;
+  color: #ffffff;
 
   .user-avatar {
     width: 24px;

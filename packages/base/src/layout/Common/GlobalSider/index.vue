@@ -5,10 +5,12 @@
         <n-menu
           v-model:value="activeMenuKey"
           :collapsed="collapsed"
-          :collapsed-width="64"
+          :collapsed-width="60"
           :collapsed-icon-size="22"
           :options="menus"
-          :indent="28"
+          :indent="26"
+          :root-indent="24"
+          :icon-size="16"
           @update:value="handleMenuClick"
         />
       </n-config-provider>
@@ -82,7 +84,7 @@ watch(
 );
 
 // 监听 activeMenuKey 变化，如果选中外链则恢复上次的内部菜单高亮
-watch(activeMenuKey, (newKey) => {
+watch(activeMenuKey, newKey => {
   if (newKey && isExternalLink(newKey)) {
     // 延迟恢复，避免与 v-model 冲突
     nextTick(() => {

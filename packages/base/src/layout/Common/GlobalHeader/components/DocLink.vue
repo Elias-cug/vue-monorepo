@@ -3,7 +3,7 @@
     <template #trigger>
       <n-button quaternary circle @click="openDoc">
         <template #icon>
-          <n-icon :size="20">
+          <n-icon :size="20" color="#ffffff">
             <BookOutline />
           </n-icon>
         </template>

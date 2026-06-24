@@ -12,8 +12,8 @@ import type { MenuThemeVars } from 'naive-ui/es/menu/styles';
 export function createSidebarMenuTheme(): Partial<MenuThemeVars> {
   return {
     // 文字和图标颜色（白色系）
-    itemTextColor: 'rgba(255, 255, 255, 0.82)', // 普通状态：白色带透明度
-    itemIconColor: 'rgba(255, 255, 255, 0.82)',
+    itemTextColor: 'rgba(200, 222, 250, 1)',
+    itemIconColor: 'rgba(200, 222, 250, 1)',
     itemTextColorHover: '#ffffff', // 悬停时：纯白色
     itemIconColorHover: '#ffffff',
     itemTextColorActive: '#ffffff', // 激活时：纯白色
@@ -29,9 +29,11 @@ export function createSidebarMenuTheme(): Partial<MenuThemeVars> {
     itemColorActiveCollapsedInverted: 'rgba(255, 255, 255, 0.15)', // 收缩状态激活背景（反色）
 
     // 背景色（白色半透明）
-    itemColorHover: 'rgba(255, 255, 255, 0.1)', // 悬停背景
-    itemColorActive: 'rgba(255, 255, 255, 0.15)', // 激活背景
-    itemColorActiveHover: 'rgba(255, 255, 255, 0.2)', // 激活+悬停背景
+    itemColorHover: 'linear-gradient(135deg, rgba(51, 166, 253, 1) 0%, rgba(23, 109, 251, 1) 100%)', // 悬停背景
+    itemColorActive:
+      'linear-gradient(135deg, rgba(51, 166, 253, 1) 0%, rgba(23, 109, 251, 1) 100%)', // 激活背景
+    itemColorActiveHover:
+      'linear-gradient(135deg, rgba(51, 166, 253, 1) 0%, rgba(23, 109, 251, 1) 100%)', // 激活+悬停背景
 
     // 箭头颜色
     arrowColor: 'rgba(255, 255, 255, 0.6)',
