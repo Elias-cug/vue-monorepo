@@ -1,5 +1,6 @@
 .vscode
 node_modules
+.pnpm-store
 .DS_Store
 dist
 .env
@@ -11,7 +12,6 @@ dist
 .env.test
 .env.production
 pnpm-lock.yaml
-pnpm-workspace.yaml
 pnpm-workspace.yaml.lock
 pnpm-workspace.yaml.lock.lock
 
@@ -24,4 +24,4 @@ pnpm-workspace.yaml.lock.lock
 # Prettier
 .prettiercache
 
-projects/le-note
+apps-web/le-note

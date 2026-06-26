@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Vue 3 + TypeScript enterprise monorepo using pnpm workspace. Contains shared packages (`packages/`) and application projects (`projects/`).
+Vue 3 + TypeScript enterprise monorepo using pnpm workspace. Contains shared packages (`packages-web/`) and application projects (`apps-web/`).
 
 ## Commands
 
@@ -34,14 +34,14 @@ pnpm --filter <project-name> dev
 
 ## Architecture
 
-### Packages (`packages/`)
+### Packages (`packages-web/`)
 
 - **@lee/base** - Core infrastructure: layouts (AdminLayout, BasicLayout, BlankLayout, HeaderLayout), routing, composables, stores, services
 - **@lee/theme** - Theme system with 12 presets, light/dark modes, Naive UI integration, CSS variable generation
 - **@lee/ui** - Component library with `Le` prefix (LeContainer, LeCard, LeCodeViewer, LeSvgIcon, LeTable, LeButton, LeFilter, LeDialog, LeLeftRightLayout, LeOperateGroup)
 - **@lee/utils** - Utility functions
 
-### Projects (`projects/`)
+### Projects (`apps-web/`)
 
 - **le-start** - Demo/starter application
 - **le-admin** - Admin application
@@ -50,9 +50,9 @@ pnpm --filter <project-name> dev
 ### Path Aliases (defined in `vite.config.base.ts`)
 
 - `@` → `./src`
-- `@base` → `./packages/base/src`
-- `@ui` → `./packages/ui/src`
-- `@theme` → `./packages/theme/src`
+- `@base` → `./packages-web/base/src`
+- `@ui` → `./packages-web/ui/src`
+- `@theme` → `./packages-web/theme/src`
 
 ## 开发原则
 
@@ -65,7 +65,7 @@ pnpm --filter <project-name> dev
 
 ## 代码规范
 
-### UI 组件 (`packages/ui/`)
+### UI 组件 (`packages-web/ui/`)
 
 - 组件名使用 `Le` 前缀（如 `LeCard`、`LeContainer`）
 - CSS 类名使用 `le-` 前缀
@@ -73,9 +73,9 @@ pnpm --filter <project-name> dev
 - 除样式外，尽可能按照 naive-ui 源码风格编写
 - 支持单独引入和整体注册两种方式
 - 每个组件更新后自动维护当前组件的 README.md
-- 每个组件更新后自动维护 `projects/le-start` 项目
+- 每个组件更新后自动维护 `apps-web/le-start` 项目
 
-### 项目开发 (`projects/`)
+### 项目开发 (`apps-web/`)
 
 - UI 组件使用优先级：1. `@lee/ui` 2. `naive-ui`
 - 路由页面默认使用 `LeContainer` 包裹
@@ -83,7 +83,7 @@ pnpm --filter <project-name> dev
 - 页面组件尽可能使用 UnoCSS 的 `@apply`
 - 注意支持暗黑模式
 
-### 主题包 (`packages/theme/`)
+### 主题包 (`packages-web/theme/`)
 
 - 设计遵循 Ant Design 设计规范：https://ant.design/docs/spec/colors-cn
 
@@ -94,7 +94,7 @@ setTheme('blue');  // blue, red, orange, green, purple, etc.
 setMode('dark');   // light, dark
 ```
 
-### 基础包 (`packages/base/`)
+### 基础包 (`packages-web/base/`)
 
 - 更新后自动维护根目录的 README.md
 
@@ -102,7 +102,7 @@ setMode('dark');   // light, dark
 
 - 双层级管理：UI 公共图标 (`ui-*`) + 项目私有图标 (`custom-*`)
 - 通过 `vite-plugin-svg-icons` 自动注册
-- UI 图标路径：`packages/ui/src/assets/svg-icon/`
+- UI 图标路径：`packages-web/ui/src/assets/svg-icon/`
 - 项目图标路径：`<project>/src/assets/svg-icon/`
 
 ## Tech Stack

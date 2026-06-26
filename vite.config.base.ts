@@ -6,7 +6,7 @@ import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
 import Unocss from 'unocss/vite';
 import legacy from '@vitejs/plugin-legacy';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import { resolve, dirname, join } from 'path';
+import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -16,7 +16,7 @@ function getRootPath() {
 }
 
 const appSvgIconPath = getRootPath();
-const uiSvgIconPath = resolve(__dirname, 'packages/ui/src/assets/svg-icon');
+const uiSvgIconPath = resolve(__dirname, 'packages-web/ui/src/assets/svg-icon');
 
 export const baseViteConfig = {
   // 打包后使用相对路径
@@ -49,9 +49,9 @@ export const baseViteConfig = {
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
-      '@base': resolve(__dirname, './packages/base/src'),
-      '@ui': resolve(__dirname, './packages/ui/src'),
-      '@theme': resolve(__dirname, './packages/theme/src'),
+      '@base': resolve(__dirname, './packages-web/base/src'),
+      '@ui': resolve(__dirname, './packages-web/ui/src'),
+      '@theme': resolve(__dirname, './packages-web/theme/src'),
     },
   },
   build: {

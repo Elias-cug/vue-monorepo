@@ -6,13 +6,19 @@
 
 ```
 vue-monorepo/
-├── packages/          # 公共包
-│   ├── base/         # 基础架构（路由、布局、状态管理）
-│   ├── theme/        # 主题系统（12种预设主题 + 动态主题）
-│   ├── ui/           # UI 组件库
-│   └── utils/        # 工具函数库
-└── projects/         # 应用项目
-    └── le-start/     # 示例应用
+├── apps-web/              # 前端应用项目
+│   ├── le-start/          # 示例应用
+│   ├── le-admin/          # 管理后台应用
+│   └── le-guide/          # VitePress 文档
+├── apps-backend/          # 后端服务项目预留
+├── packages-web/          # 前端公共包
+│   ├── base/              # 基础架构（路由、布局、状态管理）
+│   ├── theme/             # 主题系统（12种预设主题 + 动态主题）
+│   ├── ui/                # UI 组件库
+│   └── utils/             # 工具函数库
+├── packages-backend/      # 后端公共包预留
+├── contracts/             # 公共契约预留
+└── tooling/               # 工程脚本与工具预留
 ```
 
 ## 🚀 技术栈
