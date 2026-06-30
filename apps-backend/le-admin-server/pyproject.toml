@@ -1,0 +1,27 @@
+[project]
+name = "le-admin-server"
+version = "0.1.0"
+description = "Backend service for le-admin."
+requires-python = ">=3.12"
+dependencies = [
+  "alembic>=1.13,<2.0",
+  "asyncpg>=0.29,<1.0",
+  "fastapi>=0.115,<1.0",
+  "lee-api-core",
+  "lee-auth",
+  "lee-contracts",
+  "lee-db",
+  "pydantic-settings>=2.6,<3.0",
+  "sqlalchemy[asyncio]>=2.0,<3.0",
+  "uvicorn[standard]>=0.30,<1.0",
+]
+
+[project.scripts]
+le-admin-server = "le_admin_server.main:run"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/le_admin_server"]

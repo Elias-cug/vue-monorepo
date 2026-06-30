@@ -1,0 +1,13 @@
+[project]
+name = "lee-contracts"
+version = "0.1.0"
+description = "Shared backend contract constants and schemas."
+requires-python = ">=3.12"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lee_contracts"]

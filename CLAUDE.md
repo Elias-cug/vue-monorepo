@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Vue 3 + TypeScript enterprise monorepo using pnpm workspace. Contains shared packages (`packages-web/`) and application projects (`apps-web/`).
+Vue 3 + TypeScript and FastAPI enterprise monorepo. Frontend uses pnpm workspace. Backend uses uv workspace with services in `apps-backend/` and shared Python packages in `packages-backend/`.
 
 ## Commands
 
@@ -30,6 +30,21 @@ pnpm type-check        # TypeScript check (le-start)
 
 # Run single project dev server directly
 pnpm --filter <project-name> dev
+
+# Backend dependencies
+uv sync
+
+# Backend development
+uv run --package le-admin-server uvicorn le_admin_server.main:app --reload
+
+# Backend quality
+uv run pytest
+uv run ruff check apps-backend packages-backend
+
+# Backend database migrations
+cd apps-backend/le-admin-server
+uv run --package le-admin-server alembic revision --autogenerate -m "message"
+uv run --package le-admin-server alembic upgrade head
 ```
 
 ## Architecture
@@ -47,6 +62,19 @@ pnpm --filter <project-name> dev
 - **le-admin** - Admin application
 - **le-guide** - VitePress documentation
 
+### Backend Services (`apps-backend/`)
+
+- **le-admin-server** - FastAPI service for `apps-web/le-admin`
+
+Each backend service uses the Python `src/<package_name>/` layout. Service roots keep operational files such as `pyproject.toml`, `alembic.ini`, `database/migrations/`, `contracts/`, and `tests/`.
+
+### Backend Packages (`packages-backend/`)
+
+- **lee-api-core** - FastAPI primitives: response schemas, exceptions, app factory, health route
+- **lee-db** - SQLAlchemy async primitives: `Base`, mixins, engine/session factory
+- **lee-auth** - Password hashing, JWT helpers, Bearer token parsing
+- **lee-contracts** - Shared error codes and cross-service contract constants
+
 ### Path Aliases (defined in `vite.config.base.ts`)
 
 - `@` → `./src`
@@ -57,6 +85,7 @@ pnpm --filter <project-name> dev
 ## 开发原则
 
 - **始终使用 pnpm，不要使用 npm 或 yarn**
+- **后端始终使用 uv，不要使用 poetry、pipenv 或裸 pip 管理项目依赖**
 - 始终以 Vue 最推荐的方式写代码，遵循 Vue 官方风格指南
 - 使用「最小改动原则」修改代码
 - 避免重复代码（DRY 原则）
@@ -98,6 +127,17 @@ setMode('dark');   // light, dark
 
 - 更新后自动维护根目录的 README.md
 
+### 后端服务 (`apps-backend/*-server/`)
+
+- 使用 FastAPI + SQLAlchemy 2.x async + PostgreSQL
+- Python import 包名使用下划线，例如 `le-admin-server` 对应 `le_admin_server`
+- API 层只做参数解析、依赖注入和响应组织
+- 业务逻辑放在 service，数据库访问放在 repository
+- repository 不主动提交事务，事务边界由 service 或 unit-of-work 控制
+- Alembic 迁移脚本放在服务根目录的 `database/migrations/`
+- 项目私有 OpenAPI 输出放在服务根目录的 `contracts/`
+- 跨服务公共能力优先抽到 `packages-backend/`
+
 ### SVG 图标
 
 - 双层级管理：UI 公共图标 (`ui-*`) + 项目私有图标 (`custom-*`)
@@ -111,3 +151,4 @@ setMode('dark');   // light, dark
 - Naive UI (component library), UnoCSS (atomic CSS), SCSS
 - Vue Router 4, Pinia
 - ESLint + Prettier + Stylelint
+- FastAPI, uv workspace, SQLAlchemy async, PostgreSQL, Alembic, pytest

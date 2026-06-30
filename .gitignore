@@ -21,7 +21,17 @@ pnpm-workspace.yaml.lock.lock
 # TypeScript
 *.tsbuildinfo
 
+# Python
+.venv
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
 # Prettier
 .prettiercache
 
 apps-web/le-note
+python-admin

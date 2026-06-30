@@ -1,6 +1,6 @@
 # Vue Monorepo
 
-基于 Vue 3 + TypeScript 的企业级前端 Monorepo 项目，提供完整的主题系统、UI 组件库和基础架构。
+基于 Vue 3 + TypeScript、FastAPI、uv workspace 的全栈 Monorepo 项目，提供前端应用、前端公共包、后端服务和后端公共包的统一工程结构。
 
 ## 📦 项目结构
 
@@ -10,15 +10,20 @@ vue-monorepo/
 │   ├── le-start/          # 示例应用
 │   ├── le-admin/          # 管理后台应用
 │   └── le-guide/          # VitePress 文档
-├── apps-backend/          # 后端服务项目预留
+├── apps-backend/          # 后端服务项目
+│   └── le-admin-server/   # le-admin 对应后端服务
 ├── packages-web/          # 前端公共包
 │   ├── base/              # 基础架构（路由、布局、状态管理）
 │   ├── theme/             # 主题系统（12种预设主题 + 动态主题）
 │   ├── ui/                # UI 组件库
 │   └── utils/             # 工具函数库
-├── packages-backend/      # 后端公共包预留
-├── contracts/             # 公共契约预留
-└── tooling/               # 工程脚本与工具预留
+├── packages-backend/      # 后端公共包
+│   ├── lee-api-core/      # FastAPI 通用响应、异常、健康检查
+│   ├── lee-auth/          # 密码、JWT、Bearer token 工具
+│   ├── lee-contracts/     # 共享错误码与公共契约常量
+│   └── lee-db/            # SQLAlchemy async 基础设施
+├── contracts/             # 跨项目公共契约
+└── tooling/               # 工程脚本与工具
 ```
 
 ## 🚀 技术栈
@@ -29,6 +34,15 @@ vue-monorepo/
 - **TypeScript** - 类型安全
 - **Vite** - 构建工具
 - **pnpm workspace** - Monorepo 管理
+
+### 后端
+
+- **FastAPI** - API 框架
+- **uv workspace** - Python 多包工作区管理
+- **SQLAlchemy 2.x async** - ORM 与异步数据库访问
+- **PostgreSQL** - 默认数据库
+- **Alembic** - 数据库迁移
+- **pytest** - 后端测试
 
 ### UI 与样式
 
@@ -99,6 +113,7 @@ vue-monorepo/
 
 ```bash
 pnpm install
+uv sync
 ```
 
 ### 启动开发服务器
@@ -118,6 +133,23 @@ pnpm format
 
 # 类型检查
 pnpm type-check
+
+# 后端测试
+uv run pytest
+
+# 后端 lint
+uv run ruff check apps-backend packages-backend
+```
+
+### 后端开发
+
+```bash
+# 启动 le-admin 后端
+uv run --package le-admin-server uvicorn le_admin_server.main:app --reload
+
+# 运行 Alembic 迁移
+cd apps-backend/le-admin-server
+uv run --package le-admin-server alembic upgrade head
 ```
 
 ## 🎨 主题使用

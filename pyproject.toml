@@ -1,0 +1,61 @@
+[project]
+name = "vue-monorepo-backend"
+version = "0.1.0"
+description = "Backend workspace for the Vue monorepo."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "le-admin-server",
+  "lee-api-core",
+  "lee-auth",
+  "lee-contracts",
+  "lee-db",
+]
+
+[dependency-groups]
+dev = [
+  "httpx>=0.27,<1.0",
+  "pytest>=8.0,<9.0",
+  "pytest-asyncio>=0.23,<2.0",
+  "ruff>=0.6,<1.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = [
+  "apps-backend/*-server",
+  "packages-backend/*",
+]
+
+[tool.uv.sources]
+le-admin-server = { workspace = true }
+lee-api-core = { workspace = true }
+lee-auth = { workspace = true }
+lee-contracts = { workspace = true }
+lee-db = { workspace = true }
+
+[tool.pytest.ini_options]
+testpaths = [
+  "apps-backend",
+  "packages-backend",
+]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+  "E",
+  "F",
+  "I",
+  "UP",
+  "B",
+]
+ignore = [
+  "UP046",
+  "UP047",
+]

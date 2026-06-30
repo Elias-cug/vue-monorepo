@@ -116,8 +116,8 @@ instance.interceptors.response.use(
     // 获取响应数据
     const { code, data, message: msg } = response.data as ApiResponse;
 
-    // 业务成功
-    if (code === 200) {
+    // 业务成功。兼容后端统一响应的 code=0，以及部分旧接口的 code=200。
+    if (code === 0 || code === 200) {
       // 显示成功提示
       if (config.showSuccess && msg) {
         message.success(msg);
@@ -222,8 +222,9 @@ instance.interceptors.response.use(
     // 处理 HTTP 错误
     if (error.response) {
       const status = error.response.status;
-      errorMsg = getHttpStatusMessage(status);
-      errorCode = status;
+      const responseData = error.response.data as Partial<ApiResponse> | undefined;
+      errorMsg = responseData?.message || getHttpStatusMessage(status);
+      errorCode = responseData?.code ?? status;
 
       // 401/403 跳转登录
       if (status === 401 || status === 403) {
