@@ -4,8 +4,10 @@ import { createPinia } from 'pinia';
 import UI from '@lee/ui';
 import '@lee/base/src/styles/index.scss';
 import router from '@lee/base/src/router/index';
+import { dynamicRegisterRouter } from '@lee/base/src/router/index';
 import { useAppStore } from '@lee/base/src/store/app';
 import { useAuthStore } from '@lee/base/src/store/auth';
+import { formatFlatMenus } from '@lee/base/src/helper/authHelper';
 import CustomHeader from './layout/CustomHeader.vue';
 import { setupRoutes } from './pages';
 import 'virtual:uno.css';
@@ -14,6 +16,7 @@ import App from './App.vue';
 import menus from './const/menus';
 
 setupRoutes();
+dynamicRegisterRouter(formatFlatMenus(menus.data));
 
 const pinia = createPinia();
 const app = createApp(App);

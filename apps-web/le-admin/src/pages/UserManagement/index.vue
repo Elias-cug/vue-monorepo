@@ -4,25 +4,12 @@ import type { DataTableColumn, FormRules, TreeOption } from 'naive-ui';
 import { NTag } from 'naive-ui';
 import type { FilterItem, OperateColumnConfig, OperateOption } from '@lee/ui';
 import type { User } from '@/api/users';
+import type { Organization } from '@/api/organizations';
 import { useUserManagement } from './composables/useUserManagement';
 
 defineOptions({
   name: 'UserManagementPage',
 });
-
-const departmentTree = ref<TreeOption[]>([
-  {
-    key: 'all',
-    label: '全部部门',
-    children: [
-      { key: 'tech', label: '技术部' },
-      { key: 'product', label: '产品部' },
-      { key: 'market', label: '市场部' },
-      { key: 'hr', label: '人力资源部' },
-      { key: 'finance', label: '财务部' },
-    ],
-  },
-]);
 
 const defaultExpandedKeys = ref<string[]>(['all']);
 const selectedKeys = ref<string[]>(['all']);
@@ -38,6 +25,7 @@ const {
   pagination,
   submitting,
   tableData,
+  organizationTree,
   closeDialog,
   confirmDelete,
   confirmResetPassword,
@@ -45,11 +33,48 @@ const {
   handlePageSizeChange,
   handleReset,
   handleSearch,
+  loadOrganizationTree,
   loadUserList,
   openCreateDialog,
   openEditDialog,
   submitUserForm,
 } = useUserManagement();
+
+function toTreeOption(organization: Organization): TreeOption {
+  return {
+    key: organization.id,
+    label: organization.name,
+    children: organization.children?.map(toTreeOption),
+  };
+}
+
+const departmentTree = computed<TreeOption[]>(() => [
+  {
+    key: 'all',
+    label: '全部组织',
+    children: organizationTree.value.map(toTreeOption),
+  },
+]);
+
+const organizationOptions = computed(() => {
+  const options: { label: string; value: number }[] = [];
+
+  function walk(items: Organization[], level = 0) {
+    items.forEach(item => {
+      options.push({
+        label: `${'　'.repeat(level)}${item.name}`,
+        value: item.id,
+      });
+
+      if (item.children?.length) {
+        walk(item.children, level + 1);
+      }
+    });
+  }
+
+  walk(organizationTree.value);
+  return options;
+});
 
 const statusEnabled = computed({
   get: () => formModel.status === 1,
@@ -139,6 +164,12 @@ const columns: DataTableColumn<User>[] = [
     width: 90,
   },
   {
+    title: '组织',
+    key: 'organizationName',
+    width: 140,
+    render: row => row.organizationName || '-',
+  },
+  {
     title: '状态',
     key: 'status',
     width: 90,
@@ -193,133 +224,178 @@ const operateColumn: OperateColumnConfig = {
 
 function handleDepartmentSelect(keys: string[]) {
   selectedKeys.value = keys.length ? keys : ['all'];
+  const selectedKey = selectedKeys.value[0];
+  handleSearch({
+    ...filterValues.value,
+    organizationId: selectedKey === 'all' ? undefined : Number(selectedKey),
+  });
 }
 
 onMounted(() => {
+  loadOrganizationTree();
   loadUserList();
 });
 </script>
 
 <template>
-  <LeLeftRightLayout :left-width="280" :gap="16" right-transparent>
-    <template #left>
-      <LeCard title="部门列表" class="h-full">
-        <NTree
-          :data="departmentTree"
-          :default-expanded-keys="defaultExpandedKeys"
-          :selected-keys="selectedKeys"
-          block-line
-          selectable
-          @update:selected-keys="handleDepartmentSelect"
-        />
-      </LeCard>
-    </template>
-
-    <template #right>
-      <div class="user-management-page">
-        <LeCard title="查询" collapsible>
-          <LeFilter
-            v-model="filterValues"
-            :items="filterItems"
-            @search="handleSearch"
-            @reset="handleReset"
+  <div class="user-management-route">
+    <LeLeftRightLayout :left-width="280" :gap="16" right-transparent>
+      <template #left>
+        <LeCard title="部门列表" class="h-full">
+          <NTree
+            :data="departmentTree"
+            :default-expanded-keys="defaultExpandedKeys"
+            :selected-keys="selectedKeys"
+            block-line
+            selectable
+            @update:selected-keys="handleDepartmentSelect"
           />
         </LeCard>
+      </template>
 
-        <LeCard class="user-management-page__table">
-          <div class="user-management-page__toolbar">
-            <LeOperateGroup type="button" :options="headerOperateOptions" />
-          </div>
+      <template #right>
+        <div class="user-management-page">
+          <LeCard title="查询" collapsible class="user-management-page__filter">
+            <LeFilter
+              v-model="filterValues"
+              :items="filterItems"
+              @search="handleSearch"
+              @reset="handleReset"
+            />
+          </LeCard>
 
-          <LeTable
-            :columns="columns"
-            :data="tableData"
-            :loading="loading"
-            :pagination="pagination"
-            :operate-column="operateColumn"
-            show-index
-            @update:page="handlePageChange"
-            @update:page-size="handlePageSizeChange"
-          />
-        </LeCard>
-      </div>
-    </template>
-  </LeLeftRightLayout>
+          <LeCard class="user-management-page__table">
+            <LeTable
+              :columns="columns"
+              :data="tableData"
+              :loading="loading"
+              :pagination="pagination"
+              :operate-column="operateColumn"
+              :scroll-x="1610"
+              flex-height
+              show-index
+              @update:page="handlePageChange"
+              @update:page-size="handlePageSizeChange"
+            >
+              <template #headerRight>
+                <LeOperateGroup type="button" :options="headerOperateOptions" />
+              </template>
+            </LeTable>
+          </LeCard>
+        </div>
+      </template>
+    </LeLeftRightLayout>
 
-  <LeDialog
-    v-model:visible="dialogVisible"
-    :title="dialogTitle"
-    :width="620"
-    :mask-closable="false"
-    destroy-on-close
-  >
-    <NForm
-      ref="formRef"
-      :model="formModel"
-      :rules="formRules"
-      label-placement="left"
-      label-width="90"
+    <LeDialog
+      v-model:visible="dialogVisible"
+      :title="dialogTitle"
+      :width="620"
+      :mask-closable="false"
+      destroy-on-close
     >
-      <NFormItem label="租户 ID" path="tenantId">
-        <NInputNumber
-          v-model:value="formModel.tenantId"
-          :min="1"
-          :show-button="false"
-          class="user-management-page__form-control"
-        />
-      </NFormItem>
+      <NForm
+        ref="formRef"
+        :model="formModel"
+        :rules="formRules"
+        label-placement="left"
+        label-width="90"
+      >
+        <NFormItem label="租户 ID" path="tenantId">
+          <NInputNumber
+            v-model:value="formModel.tenantId"
+            :min="1"
+            :show-button="false"
+            class="user-management-page__form-control"
+          />
+        </NFormItem>
 
-      <NFormItem label="账号" path="username">
-        <NInput
-          v-model:value="formModel.username"
-          :disabled="formMode === 'edit'"
-          placeholder="请输入账号"
-        />
-      </NFormItem>
+        <NFormItem label="账号" path="username">
+          <NInput
+            v-model:value="formModel.username"
+            :disabled="formMode === 'edit'"
+            placeholder="请输入账号"
+          />
+        </NFormItem>
 
-      <NFormItem label="显示名称" path="displayName">
-        <NInput v-model:value="formModel.displayName" placeholder="请输入显示名称" />
-      </NFormItem>
+        <NFormItem label="所属组织" path="organizationId">
+          <NSelect
+            v-model:value="formModel.organizationId"
+            :options="organizationOptions"
+            clearable
+            placeholder="请选择所属组织"
+          />
+        </NFormItem>
 
-      <NFormItem label="邮箱" path="email">
-        <NInput v-model:value="formModel.email" placeholder="请输入邮箱" />
-      </NFormItem>
+        <NFormItem label="显示名称" path="displayName">
+          <NInput v-model:value="formModel.displayName" placeholder="请输入显示名称" />
+        </NFormItem>
 
-      <NFormItem label="手机号" path="phone">
-        <NInput v-model:value="formModel.phone" placeholder="请输入手机号" />
-      </NFormItem>
+        <NFormItem label="邮箱" path="email">
+          <NInput v-model:value="formModel.email" placeholder="请输入邮箱" />
+        </NFormItem>
 
-      <NFormItem label="头像地址" path="avatarUrl">
-        <NInput v-model:value="formModel.avatarUrl" placeholder="请输入头像 URL" />
-      </NFormItem>
+        <NFormItem label="手机号" path="phone">
+          <NInput v-model:value="formModel.phone" placeholder="请输入手机号" />
+        </NFormItem>
 
-      <NFormItem label="状态" path="status">
-        <NSwitch v-model:value="statusEnabled">
-          <template #checked>启用</template>
-          <template #unchecked>禁用</template>
-        </NSwitch>
-      </NFormItem>
-    </NForm>
+        <NFormItem label="头像地址" path="avatarUrl">
+          <NInput v-model:value="formModel.avatarUrl" placeholder="请输入头像 URL" />
+        </NFormItem>
 
-    <template #footer>
-      <NSpace justify="end">
-        <NButton @click="closeDialog">取消</NButton>
-        <NButton type="primary" :loading="submitting" @click="submitUserForm">保存</NButton>
-      </NSpace>
-    </template>
-  </LeDialog>
+        <NFormItem label="状态" path="status">
+          <NSwitch v-model:value="statusEnabled">
+            <template #checked>启用</template>
+            <template #unchecked>禁用</template>
+          </NSwitch>
+        </NFormItem>
+      </NForm>
+
+      <template #footer>
+        <NSpace justify="end">
+          <NButton @click="closeDialog">取消</NButton>
+          <NButton type="primary" :loading="submitting" @click="submitUserForm">保存</NButton>
+        </NSpace>
+      </template>
+    </LeDialog>
+  </div>
 </template>
 
 <style lang="scss" scoped>
+.user-management-route {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+
+  :deep(.le-left-right-layout__right-content) {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+}
+
 .user-management-page {
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 0;
   gap: 16px;
+
+  &__filter {
+    flex-shrink: 0;
+  }
 
   &__table {
     flex: 1;
     min-height: 0;
+    overflow: hidden;
+
+    :deep(.le-card__content) {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
   }
 
   &__toolbar {

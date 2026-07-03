@@ -4,7 +4,7 @@
  */
 
 import axios, { type AxiosInstance, type AxiosError, type InternalAxiosRequestConfig } from 'axios';
-import { useMessage } from 'naive-ui';
+import { createDiscreteApi } from 'naive-ui';
 import router from '../router';
 import { ls } from '../storage';
 import { TOKEN_KEY, API_BASE_URL, REQUEST_TIMEOUT } from '../constants';
@@ -13,6 +13,8 @@ import { requestCache } from './cache';
 import { requestManager } from './manager';
 import { toLogin } from '../composables/useRouterHelper';
 import type { ApiResponse, RequestConfig, DownloadConfig, SafeResponse } from './types';
+
+const { message } = createDiscreteApi(['message']);
 
 /**
  * 创建 axios 实例
@@ -106,7 +108,6 @@ instance.interceptors.response.use(
 
     // 触发结束回调
     config.onFinish?.();
-    const message = useMessage();
 
     // 文件下载处理
     if (config.isDownload) {
@@ -186,7 +187,6 @@ instance.interceptors.response.use(
   },
   (error: AxiosError) => {
     const config = error.config as RequestConfig | undefined;
-    const message = useMessage();
 
     // 清理请求记录
     const requestKey = (config as any)?.__requestKey;

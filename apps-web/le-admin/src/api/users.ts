@@ -3,6 +3,8 @@ import { del, get, post, put } from '@lee/base';
 export interface User {
   id: number;
   tenantId: number;
+  organizationId?: number | null;
+  organizationName?: string | null;
   username: string;
   email?: string | null;
   phone?: string | null;
@@ -24,6 +26,7 @@ export interface UserQuery {
   page: number;
   pageSize: number;
   tenantId?: number;
+  organizationId?: number;
   username?: string;
   email?: string;
   phone?: string;
@@ -35,6 +38,7 @@ export interface UserQuery {
 
 export interface UserCreatePayload {
   tenantId: number;
+  organizationId?: number | null;
   username: string;
   email?: string | null;
   phone?: string | null;
@@ -45,6 +49,7 @@ export interface UserCreatePayload {
 
 export interface UserUpdatePayload {
   tenantId?: number;
+  organizationId?: number | null;
   email?: string | null;
   phone?: string | null;
   displayName?: string | null;

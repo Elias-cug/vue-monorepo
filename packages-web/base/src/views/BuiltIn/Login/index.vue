@@ -20,7 +20,13 @@
       </div>
 
       <!-- 登录表单 -->
-      <n-form ref="formRef" :model="formData" :rules="rules" class="login-form">
+      <n-form
+        ref="formRef"
+        :model="formData"
+        :rules="rules"
+        class="login-form"
+        @submit.prevent="handleLogin"
+      >
         <n-form-item path="username">
           <n-input
             v-model:value="formData.username"
@@ -55,11 +61,11 @@
 
         <n-button
           type="primary"
+          attr-type="submit"
           block
           size="large"
           :loading="loading"
           class="login-btn"
-          @click="handleLogin"
         >
           登 录
         </n-button>
@@ -77,17 +83,30 @@
  * 包含登录表单的 UI 展示和基础交互逻辑
  */
 import { ref, reactive } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import type { FormInst, FormRules } from 'naive-ui';
+import { useMessage } from 'naive-ui';
 import { PersonOutline, LockClosedOutline } from '@vicons/ionicons5';
+import { login } from '@base/api/auth';
+import { REFRESH_TOKEN_KEY, TOKEN_KEY } from '@base/constants';
+import { ls } from '@base/storage';
+import { useAppStore } from '@base/store/app';
+import { useAuthStore } from '@base/store/auth';
+
+const BLANK_REDIRECT_PATHS = new Set(['/login', '/403', '/404']);
 
 const router = useRouter();
+const route = useRoute();
+const message = useMessage();
+const appStore = useAppStore();
+const authStore = useAuthStore();
 
 // 表单引用
 const formRef = ref<FormInst | null>(null);
 
 // 表单数据
 const formData = reactive({
+  tenantId: 1,
   username: '',
   password: '',
 });
@@ -104,28 +123,43 @@ const rules: FormRules = {
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
 };
 
-// 登录处理（携带临时 token 跳转到 homeMenu）
-function handleLogin() {
-  formRef.value?.validate(errors => {
-    if (!errors) {
-      loading.value = true;
+function getLoginTargetPath() {
+  const fallbackPath = authStore.homeMenu?.path || authStore.flatMenus[0]?.path || '/';
+  const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '';
+  const redirectPath = redirect.split('?')[0] || '';
 
-      // 模拟登录成功，生成临时 token
-      setTimeout(() => {
-        loading.value = false;
+  if (!redirect || BLANK_REDIRECT_PATHS.has(redirectPath)) {
+    return fallbackPath;
+  }
 
-        // 这里应该从登录接口获取真实的 token
-        // 现在使用临时 token 进行演示
-        const tempToken = 'temp_token_' + Date.now();
+  return redirect;
+}
 
-        // 携带 token 跳转，guard.ts 会处理并跳转到 homeMenu
-        router.push({
-          path: '/',
-          query: { token: tempToken },
-        });
-      }, 600);
-    }
-  });
+async function handleLogin() {
+  if (loading.value) return;
+
+  loading.value = true;
+
+  try {
+    await formRef.value?.validate();
+
+    const token = await login({
+      tenantId: formData.tenantId,
+      username: formData.username,
+      password: formData.password,
+    });
+
+    ls.set(TOKEN_KEY, token.accessToken, { ignorePrefix: true });
+    ls.set(REFRESH_TOKEN_KEY, token.refreshToken, { ignorePrefix: true });
+
+    appStore.getAppInfo();
+    await authStore.getAllAuthInfo();
+
+    message.success('登录成功');
+    await router.replace(getLoginTargetPath());
+  } finally {
+    loading.value = false;
+  }
 }
 </script>
 

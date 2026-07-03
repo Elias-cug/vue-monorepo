@@ -35,25 +35,25 @@ function createLayoutRoute(routeConfig: {
 
   // 构建子路由（实际的页面路由）
   const childRoute: RouteRecordRaw = {
-    path: routeConfig.path,
+    path: '',
     name: routeConfig.name,
     component: routeConfig.component,
     meta: routeConfig.meta,
   };
 
-  // 如果有 redirect，添加到子路由
-  if (routeConfig.redirect) {
-    childRoute.redirect = routeConfig.redirect;
-  }
-
   // 构建父路由（包含 layout 的容器路由）
   const parentRoute: RouteRecordRaw = {
-    path: `${routeConfig.path}-parent`,
+    path: routeConfig.path,
     name: `${routeConfig.name}-parent`,
     component: layoutComponent,
-    redirect: routeConfig.path,
+    meta: routeConfig.meta,
     children: [childRoute],
   };
+
+  // 如果有 redirect，添加到父路由
+  if (routeConfig.redirect) {
+    parentRoute.redirect = routeConfig.redirect;
+  }
 
   return parentRoute;
 }
@@ -64,6 +64,10 @@ function createLayoutRoute(routeConfig: {
  * @param routeConfig 路由配置
  */
 function registerRoute(router: Router, routeConfig: any) {
+  if (router.hasRoute(routeConfig.name) || router.hasRoute(`${routeConfig.name}-parent`)) {
+    return;
+  }
+
   const parentRoute = createLayoutRoute(routeConfig);
   router.addRoute(parentRoute);
 }

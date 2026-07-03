@@ -11,6 +11,7 @@ USERNAME_PATTERN = r"^[A-Za-z0-9_.-]+$"
 
 class UserCreateIn(BaseSchema):
     tenant_id: int = Field(..., ge=1)
+    organization_id: int | None = Field(default=None, ge=1)
     username: str = Field(..., min_length=1, max_length=64, pattern=USERNAME_PATTERN)
     email: str | None = Field(default=None, max_length=128)
     phone: str | None = Field(default=None, max_length=32)
@@ -18,10 +19,17 @@ class UserCreateIn(BaseSchema):
     avatar_url: str | None = Field(default=None, max_length=255)
     status: int = Field(default=1, ge=0, le=1)
 
-    @field_validator("email", mode="before")
+    @field_validator("organization_id", "email", mode="before")
     @classmethod
-    def validate_email(cls, value: Any) -> Any:
+    def empty_to_none(cls, value: Any) -> Any:
         if value is None or value == "":
+            return None
+        return value
+
+    @field_validator("email")
+    @classmethod
+    def validate_email(cls, value: str | None) -> str | None:
+        if value is None:
             return None
         if isinstance(value, str) and "@" not in value:
             raise ValueError("邮箱格式不正确")
@@ -30,16 +38,24 @@ class UserCreateIn(BaseSchema):
 
 class UserUpdateIn(BaseSchema):
     tenant_id: int | None = Field(default=None, ge=1)
+    organization_id: int | None = Field(default=None, ge=1)
     email: str | None = Field(default=None, max_length=128)
     phone: str | None = Field(default=None, max_length=32)
     display_name: str | None = Field(default=None, max_length=128)
     avatar_url: str | None = Field(default=None, max_length=255)
     status: int | None = Field(default=None, ge=0, le=1)
 
-    @field_validator("email", mode="before")
+    @field_validator("organization_id", "email", mode="before")
     @classmethod
-    def validate_email(cls, value: Any) -> Any:
+    def empty_to_none(cls, value: Any) -> Any:
         if value is None or value == "":
+            return None
+        return value
+
+    @field_validator("email")
+    @classmethod
+    def validate_email(cls, value: str | None) -> str | None:
+        if value is None:
             return None
         if isinstance(value, str) and "@" not in value:
             raise ValueError("邮箱格式不正确")
@@ -62,8 +78,10 @@ class UserResetPasswordOut(BaseSchema):
     id: int
     initial_password: str
 
+
 class UserQueryIn(ListQuerySchema):
     tenant_id: int | None = None
+    organization_id: int | None = None
     username: str | None = None
     email: str | None = None
     phone: str | None = None
@@ -100,6 +118,8 @@ class UserQueryIn(ListQuerySchema):
 class UserOut(BaseSchema):
     id: int
     tenant_id: int
+    organization_id: int | None = None
+    organization_name: str | None = None
     username: str
     email: str | None = None
     phone: str | None = None

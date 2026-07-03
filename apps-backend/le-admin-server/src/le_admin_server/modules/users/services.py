@@ -4,6 +4,8 @@ from lee_api_core import BusinessError, NotFoundError
 from lee_auth import hash_password, verify_password
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from le_admin_server.modules.organizations.repositories import get_organization
+
 from .repositories import (
     create_user,
     get_user,
@@ -34,7 +36,15 @@ async def list_users_service(
     query: UserQueryIn,
 ) -> tuple[list[UserOut], int]:
     users, total = await list_users(db, query)
-    return [UserOut.model_validate(user) for user in users], total
+    return [
+        UserOut.model_validate(
+            {
+                **user.__dict__,
+                "organization_name": organization_name,
+            }
+        )
+        for user, organization_name in users
+    ], total
 
 
 async def get_user_service(db: AsyncSession, user_id: int) -> UserOut:
@@ -58,6 +68,11 @@ async def create_user_service(
     if existing:
         raise BusinessError("用户名已存在")
 
+    if user_in.organization_id is not None:
+        organization = await get_organization(db, user_in.organization_id)
+        if not organization:
+            raise BusinessError("组织不存在")
+
     user = await create_user(
         db,
         user_in,
@@ -78,6 +93,11 @@ async def update_user_service(
     user = await get_user(db, user_id)
     if not user:
         raise NotFoundError("用户不存在")
+
+    if user_in.organization_id is not None:
+        organization = await get_organization(db, user_in.organization_id)
+        if not organization:
+            raise BusinessError("组织不存在")
 
     updated = await update_user(
         db,

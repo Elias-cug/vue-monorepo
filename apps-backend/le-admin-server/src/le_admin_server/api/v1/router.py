@@ -1,9 +1,17 @@
 from fastapi import APIRouter
 from lee_api_core import SuccessResponse, success
 
+from le_admin_server.modules.auth.routes import router as auth_router
+from le_admin_server.modules.organizations.routes import router as organizations_router
 from le_admin_server.modules.users.routes import router as users_router
 
 router = APIRouter()
+router.include_router(auth_router, prefix="/auth", tags=["auth"])
+router.include_router(
+    organizations_router,
+    prefix="/organizations",
+    tags=["organizations"],
+)
 router.include_router(users_router, prefix="/users", tags=["users"])
 
 

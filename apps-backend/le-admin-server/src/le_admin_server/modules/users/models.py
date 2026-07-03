@@ -29,6 +29,7 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     tenant_id: Mapped[int] = mapped_column(BigInteger, nullable=False)
+    organization_id: Mapped[int | None] = mapped_column(BigInteger)
 
     username: Mapped[str] = mapped_column(String(64), nullable=False)
     email: Mapped[str | None] = mapped_column(String(128))

@@ -4,6 +4,7 @@
 
 // Token 存储键
 export const TOKEN_KEY = 'token';
+export const REFRESH_TOKEN_KEY = 'refreshToken';
 
 // API 基础路径
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';

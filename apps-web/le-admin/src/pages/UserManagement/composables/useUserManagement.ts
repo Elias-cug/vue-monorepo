@@ -2,6 +2,7 @@ import { computed, reactive, shallowRef } from 'vue';
 import { useDialog, useMessage } from 'naive-ui';
 import type { FormInst } from 'naive-ui';
 import type { FilterValues, TablePagination } from '@lee/ui';
+import { fetchOrganizationTree, type Organization } from '@/api/organizations';
 import {
   createUser,
   deleteUser,
@@ -18,6 +19,7 @@ export type UserFormMode = 'create' | 'edit';
 export interface UserFormModel {
   id?: number;
   tenantId: number;
+  organizationId: number | null;
   username: string;
   email: string | null;
   phone: string | null;
@@ -28,6 +30,7 @@ export interface UserFormModel {
 
 const initialFormModel = (): UserFormModel => ({
   tenantId: 1,
+  organizationId: null,
   username: '',
   email: null,
   phone: null,
@@ -41,6 +44,7 @@ export function useUserManagement() {
   const dialog = useDialog();
 
   const tableData = shallowRef<User[]>([]);
+  const organizationTree = shallowRef<Organization[]>([]);
   const loading = shallowRef(false);
   const submitting = shallowRef(false);
   const dialogVisible = shallowRef(false);
@@ -66,6 +70,7 @@ export function useUserManagement() {
     Object.assign(formModel, {
       id: user.id,
       tenantId: user.tenantId,
+      organizationId: user.organizationId ?? null,
       username: user.username,
       email: user.email ?? null,
       phone: user.phone ?? null,
@@ -81,6 +86,7 @@ export function useUserManagement() {
       const result = await fetchUsers({
         page: pagination.page,
         pageSize: pagination.pageSize,
+        organizationId: filterValues.value.organizationId,
         username: filterValues.value.username,
         email: filterValues.value.email,
         phone: filterValues.value.phone,
@@ -94,6 +100,13 @@ export function useUserManagement() {
     } finally {
       loading.value = false;
     }
+  }
+
+  async function loadOrganizationTree() {
+    organizationTree.value = await fetchOrganizationTree({
+      sortBy: 'sort_order',
+      order: 'asc',
+    });
   }
 
   function handleSearch(values: FilterValues) {
@@ -139,6 +152,7 @@ export function useUserManagement() {
   function buildCreatePayload(): UserCreatePayload {
     return {
       tenantId: formModel.tenantId,
+      organizationId: formModel.organizationId,
       username: formModel.username,
       email: formModel.email,
       phone: formModel.phone,
@@ -151,6 +165,7 @@ export function useUserManagement() {
   function buildUpdatePayload(): UserUpdatePayload {
     return {
       tenantId: formModel.tenantId,
+      organizationId: formModel.organizationId,
       email: formModel.email,
       phone: formModel.phone,
       displayName: formModel.displayName,
@@ -213,6 +228,7 @@ export function useUserManagement() {
     pagination,
     submitting,
     tableData,
+    organizationTree,
     closeDialog,
     confirmDelete,
     confirmResetPassword,
@@ -221,6 +237,7 @@ export function useUserManagement() {
     handleReset,
     handleSearch,
     loadUserList,
+    loadOrganizationTree,
     openCreateDialog,
     openEditDialog,
     submitUserForm,

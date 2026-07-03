@@ -4,12 +4,15 @@ from typing import Any
 from sqlalchemy import Select, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from le_admin_server.modules.organizations.models import Organization
+
 from .models import User
 from .schemas import UserCreateIn, UserQueryIn, UserUpdateIn
 
 SORT_COLUMNS = {
     "id": User.id,
     "tenant_id": User.tenant_id,
+    "organization_id": User.organization_id,
     "username": User.username,
     "status": User.status,
     "created_at": User.created_at,
@@ -23,6 +26,8 @@ def apply_user_filters(statement: Select[Any], query: UserQueryIn) -> Select[Any
 
     if query.tenant_id is not None:
         filters.append(User.tenant_id == query.tenant_id)
+    if query.organization_id is not None:
+        filters.append(User.organization_id == query.organization_id)
     if query.username is not None:
         filters.append(User.username == query.username)
     if query.email is not None:
@@ -44,7 +49,7 @@ def apply_user_filters(statement: Select[Any], query: UserQueryIn) -> Select[Any
 async def list_users(
     db: AsyncSession,
     query: UserQueryIn,
-) -> tuple[list[User], int]:
+) -> tuple[list[tuple[User, str | None]], int]:
     count_statement = apply_user_filters(
         select(func.count()).select_from(User),
         query,
@@ -55,11 +60,17 @@ async def list_users(
     order_by = sort_column.desc() if query.order == "desc" else sort_column.asc()
     offset = (query.page - 1) * query.page_size
 
-    statement = apply_user_filters(select(User), query).order_by(order_by)
+    statement = apply_user_filters(
+        select(User, Organization.name.label("organization_name")).outerjoin(
+            Organization,
+            User.organization_id == Organization.id,
+        ),
+        query,
+    ).order_by(order_by)
     statement = statement.limit(query.page_size).offset(offset)
 
     result = await db.execute(statement)
-    return list(result.scalars().all()), int(total or 0)
+    return [(row[0], row[1]) for row in result.all()], int(total or 0)
 
 
 async def get_user(db: AsyncSession, user_id: int) -> User | None:

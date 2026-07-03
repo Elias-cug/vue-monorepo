@@ -9,6 +9,10 @@ export const menuList = [
     title: '用户管理',
   },
   {
+    key: 'organization-management',
+    title: '组织管理',
+  },
+  {
     key: 'role-management',
     title: '角色管理',
   },

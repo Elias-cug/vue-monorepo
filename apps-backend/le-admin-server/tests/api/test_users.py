@@ -1,12 +1,21 @@
 from fastapi.testclient import TestClient
+from le_admin_server.api.deps import get_current_user
 from le_admin_server.app import create_app
 from le_admin_server.modules.users.schemas import UserOut, UserResetPasswordOut
+
+
+def create_test_client() -> TestClient:
+    app = create_app()
+    app.dependency_overrides[get_current_user] = lambda: object()
+    return TestClient(app)
 
 
 def make_user(**overrides) -> UserOut:
     data = {
         "id": 1,
         "tenant_id": 1,
+        "organization_id": 1,
+        "organization_name": "技术部",
         "username": "admin",
         "email": "admin@example.com",
         "phone": "13800000000",
@@ -33,12 +42,13 @@ def test_list_users_api(monkeypatch) -> None:
         fake_list_users_service,
     )
 
-    client = TestClient(create_app())
+    client = create_test_client()
     response = client.get("/api/v1/users?page=1&pageSize=20")
 
     assert response.status_code == 200
     assert response.json()["data"]["total"] == 1
     assert response.json()["data"]["data"][0]["username"] == "admin"
+    assert response.json()["data"]["data"][0]["organizationName"] == "技术部"
 
 
 def test_create_user_api(monkeypatch) -> None:
@@ -51,11 +61,12 @@ def test_create_user_api(monkeypatch) -> None:
         fake_create_user_service,
     )
 
-    client = TestClient(create_app())
+    client = create_test_client()
     response = client.post(
         "/api/v1/users",
         json={
             "tenantId": 1,
+            "organizationId": 1,
             "username": "new_user",
             "email": "new@example.com",
             "phone": "13800000001",
@@ -79,10 +90,10 @@ def test_update_user_api(monkeypatch) -> None:
         fake_update_user_service,
     )
 
-    client = TestClient(create_app())
+    client = create_test_client()
     response = client.put(
         "/api/v1/users/1",
-        json={"displayName": "更新用户", "status": 1},
+        json={"organizationId": 1, "displayName": "更新用户", "status": 1},
     )
 
     assert response.status_code == 200
@@ -99,7 +110,7 @@ def test_delete_user_api(monkeypatch) -> None:
         fake_delete_user_service,
     )
 
-    client = TestClient(create_app())
+    client = create_test_client()
     response = client.delete("/api/v1/users/1")
 
     assert response.status_code == 200
@@ -116,7 +127,7 @@ def test_reset_password_api(monkeypatch) -> None:
         fake_reset_password_service,
     )
 
-    client = TestClient(create_app())
+    client = create_test_client()
     response = client.post("/api/v1/users/1/reset-password")
 
     assert response.status_code == 200

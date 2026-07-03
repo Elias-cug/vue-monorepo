@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 from lee_api_core import PageData, SuccessResponse, page, success
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from le_admin_server.api.deps import get_db_session
+from le_admin_server.api.deps import CurrentUser, get_db_session
 
 from .schemas import (
     UserChangePasswordIn,
@@ -35,6 +35,7 @@ router = APIRouter()
 async def list_users_api(
     query: Annotated[UserQueryIn, Depends()],
     db: Annotated[AsyncSession, Depends(get_db_session)],
+    _current_user: CurrentUser,
 ) -> SuccessResponse[PageData[UserOut]]:
     users, total = await list_users_service(db, query)
     return success(page(users, total))
@@ -48,6 +49,7 @@ async def list_users_api(
 async def list_users_legacy_api(
     user_in: UserQueryIn,
     db: Annotated[AsyncSession, Depends(get_db_session)],
+    _current_user: CurrentUser,
 ) -> SuccessResponse[PageData[UserOut]]:
     users, total = await list_users_service(db, user_in)
     return success(page(users, total))
@@ -57,6 +59,7 @@ async def list_users_legacy_api(
 async def create_user_api(
     user_in: UserCreateIn,
     db: Annotated[AsyncSession, Depends(get_db_session)],
+    _current_user: CurrentUser,
 ) -> SuccessResponse[UserOut]:
     user = await create_user_service(db, user_in)
     return success(user)
@@ -66,6 +69,7 @@ async def create_user_api(
 async def create_user_legacy_api(
     user_in: UserCreateIn,
     db: Annotated[AsyncSession, Depends(get_db_session)],
+    _current_user: CurrentUser,
 ) -> SuccessResponse[UserOut]:
     user = await create_user_service(db, user_in)
     return success(user)
@@ -79,6 +83,7 @@ async def create_user_legacy_api(
 async def get_user_api(
     user_id: int,
     db: Annotated[AsyncSession, Depends(get_db_session)],
+    _current_user: CurrentUser,
 ) -> SuccessResponse[UserOut]:
     user = await get_user_service(db, user_id)
     return success(user)
@@ -89,6 +94,7 @@ async def update_user_api(
     user_id: int,
     user_in: UserUpdateIn,
     db: Annotated[AsyncSession, Depends(get_db_session)],
+    _current_user: CurrentUser,
 ) -> SuccessResponse[UserOut]:
     user = await update_user_service(db, user_id, user_in)
     return success(user)
@@ -103,6 +109,7 @@ async def update_user_legacy_api(
     user_id: int,
     user_in: UserUpdateIn,
     db: Annotated[AsyncSession, Depends(get_db_session)],
+    _current_user: CurrentUser,
 ) -> SuccessResponse[UserOut]:
     user = await update_user_service(db, user_id, user_in)
     return success(user)
@@ -116,6 +123,7 @@ async def update_user_legacy_api(
 async def delete_user_api(
     user_id: int,
     db: Annotated[AsyncSession, Depends(get_db_session)],
+    _current_user: CurrentUser,
 ) -> SuccessResponse[UserOut]:
     user = await delete_user_service(db, user_id)
     return success(user)
@@ -129,6 +137,7 @@ async def delete_user_api(
 async def delete_user_legacy_api(
     user_id: int,
     db: Annotated[AsyncSession, Depends(get_db_session)],
+    _current_user: CurrentUser,
 ) -> SuccessResponse[UserOut]:
     user = await delete_user_service(db, user_id)
     return success(user)
@@ -142,6 +151,7 @@ async def delete_user_legacy_api(
 async def reset_password_api(
     user_id: int,
     db: Annotated[AsyncSession, Depends(get_db_session)],
+    _current_user: CurrentUser,
 ) -> SuccessResponse[UserResetPasswordOut]:
     result = await reset_password_service(db, user_id)
     return success(result, message="密码重置成功")
@@ -156,6 +166,7 @@ async def change_password_api(
     user_id: int,
     change_in: UserChangePasswordIn,
     db: Annotated[AsyncSession, Depends(get_db_session)],
+    _current_user: CurrentUser,
 ) -> SuccessResponse[dict]:
     await change_password_service(db, user_id, change_in)
     return success({}, message="密码修改成功")
