@@ -13,7 +13,9 @@
     "build:le-start": "pnpm --filter le-start build",
     "start:le-admin": "pnpm --filter le-admin dev",
     "build:le-admin": "pnpm --filter le-admin build",
-    "start:le-guide": "pnpm --filter le-guide docs:dev"
+    "start:le-guide": "pnpm --filter le-guide docs:dev",
+    "start:backend": "pnpm start:le-admin-server",
+    "start:le-admin-server": "uv run --package le-admin-server uvicorn le_admin_server.main:app --reload"
   },
   "keywords": [],
   "author": "",
