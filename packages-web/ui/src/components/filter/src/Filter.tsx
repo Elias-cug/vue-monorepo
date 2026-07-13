@@ -22,7 +22,7 @@ export interface FilterItem {
   placeholder?: string;
   /** select 选项 */
   options?: FilterOption[];
-  /** 宽度 */
+  /** @deprecated 使用 LeFilter 的 itemWidth 统一设置过滤项宽度 */
   width?: number | string;
 }
 
@@ -45,6 +45,8 @@ export interface FilterProps {
   resetText?: string;
   /** 是否显示重置按钮 */
   showReset?: boolean;
+  /** 过滤项统一宽度 */
+  itemWidth?: number | string;
 }
 
 const filterProps = {
@@ -76,7 +78,15 @@ const filterProps = {
     type: Boolean,
     default: true,
   },
+  itemWidth: {
+    type: [Number, String] as PropType<number | string>,
+    default: 240,
+  },
 } as const;
+
+function formatWidth(width: number | string) {
+  return typeof width === 'number' ? `${width}px` : width;
+}
 
 export const Filter = defineComponent({
   name: 'LeFilter',
@@ -156,8 +166,7 @@ export const Filter = defineComponent({
 
     // 渲染过滤项
     const renderFilterItem = (item: FilterItem) => {
-      const width = item.width || 240;
-      const style = { width: typeof width === 'number' ? `${width}px` : width };
+      const style = { width: '100%' };
 
       switch (item.type) {
         case 'input':
@@ -221,7 +230,11 @@ export const Filter = defineComponent({
       <div class="le-filter">
         <div class="le-filter__items" key={resetKey.value}>
           {props.items.map(item => (
-            <div class="le-filter__item" key={item.field}>
+            <div
+              class="le-filter__item"
+              key={item.field}
+              style={{ width: formatWidth(props.itemWidth) }}
+            >
               {renderFilterItem(item)}
             </div>
           ))}

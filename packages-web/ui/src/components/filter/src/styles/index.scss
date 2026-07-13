@@ -13,7 +13,7 @@
   }
 
   &__item {
-    max-width: 240px;
+    flex-shrink: 0;
   }
 
   &__actions {

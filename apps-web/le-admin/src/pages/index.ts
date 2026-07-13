@@ -52,17 +52,6 @@ const app1Map: Record<string, Route> = {
       icon: 'menu-role-management',
     },
   },
-  'menu-management': {
-    path: `${appOnePrefix}/menu-management`,
-    name: 'MenuManagement',
-    component: () => import('@/pages/MenuManagement/index.vue'),
-    meta: {
-      layout: 'basic',
-      title: '菜单管理',
-      keepAlive: true,
-      icon: 'menu-menu-management',
-    },
-  },
   'permission-management': {
     path: `${appOnePrefix}/permission-management`,
     name: 'PermissionManagement',

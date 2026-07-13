@@ -20,14 +20,15 @@
       </div>
     </LeCard>
 
-    <!-- 自定义宽度 -->
-    <LeCard title="自定义宽度" class="demo-card">
+    <!-- 统一宽度 -->
+    <LeCard title="统一宽度" class="demo-card">
       <template #header-extra>
         <n-tag type="success" size="small">灵活布局</n-tag>
       </template>
       <LeFilter
         v-model="filterResult2"
-        :items="customWidthItems"
+        :items="uniformWidthItems"
+        :item-width="280"
         @search="handleSearch2"
         @reset="handleReset2"
       />
@@ -113,19 +114,17 @@ const handleReset = (values: FilterValues) => {
   message.info('已重置');
 };
 
-// 自定义宽度
-const customWidthItems: FilterItem[] = [
+// 统一宽度
+const uniformWidthItems: FilterItem[] = [
   {
     field: 'name',
     label: '姓名',
     type: 'input',
-    width: 150,
   },
   {
     field: 'department',
     label: '部门',
     type: 'select',
-    width: 180,
     options: [
       { label: '技术部', value: 'tech' },
       { label: '产品部', value: 'product' },
@@ -136,7 +135,6 @@ const customWidthItems: FilterItem[] = [
     field: 'joinDate',
     label: '入职日期',
     type: 'daterange',
-    width: 280,
   },
 ];
 

@@ -17,10 +17,6 @@ export const menuList = [
     title: '角色管理',
   },
   {
-    key: 'menu-management',
-    title: '菜单管理',
-  },
-  {
     key: 'permission-management',
     title: '权限管理',
   },

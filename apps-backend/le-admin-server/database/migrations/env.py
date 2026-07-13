@@ -6,6 +6,13 @@ from logging.config import fileConfig
 from alembic import context
 from le_admin_server.core.settings import get_settings
 from le_admin_server.database import Base
+from le_admin_server.modules.applications import (
+    models as application_models,  # noqa: F401
+)
+from le_admin_server.modules.permissions import (
+    models as permission_models,  # noqa: F401
+)
+from le_admin_server.modules.roles import models as role_models  # noqa: F401
 from le_admin_server.modules.users import models as user_models  # noqa: F401
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
