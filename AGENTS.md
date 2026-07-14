@@ -107,10 +107,15 @@ Each backend service uses the Python `src/<package_name>/` layout. Service roots
 ### 项目开发 (`apps-web/`)
 
 - UI 组件使用优先级：1. `@lee/ui` 2. `naive-ui`
-- 路由页面默认使用 `LeContainer` 包裹
+- 路由页面默认使用 `LeContainer` 或 `LeLeftRightLayout` 包裹
 - 使用 `LeCard` 而不是 `NCard`
 - 页面组件尽可能使用 UnoCSS 的 `@apply`
 - 注意支持暗黑模式
+- 所有弹窗提取组件到当前页面 `./components/` 下，其他可拆分的组件也放在 `./components/` 下
+- 类型定义在 `./const/types.ts` 下
+- 固定的数据如：列头，枚举等定义在 `./const/const.ts` 下
+- 样式不要用&\_，这样方便搜索。尽量使用 UnoCSS 的 `@apply`，避免使用 SCSS 嵌套
+- 将模板部分放到文件最上面，其次是 script，最后是 style
 
 ### 主题包 (`packages-web/theme/`)
 
@@ -119,8 +124,8 @@ Each backend service uses the Python `src/<package_name>/` layout. Service roots
 ```typescript
 import { useTheme } from '@lee/theme';
 const { theme, mode, setTheme, setMode } = useTheme();
-setTheme('blue');  // blue, red, orange, green, purple, etc.
-setMode('dark');   // light, dark
+setTheme('blue'); // blue, red, orange, green, purple, etc.
+setMode('dark'); // light, dark
 ```
 
 ### 基础包 (`packages-web/base/`)

@@ -1,3 +1,100 @@
+<template>
+  <LeContainer class="role-management-route" content-class="role-management-route__content">
+    <div class="role-management-page">
+      <LeCard title="查询" collapsible class="role-management-page__filter">
+        <LeFilter
+          v-model="filterValues"
+          :items="filterItems"
+          @search="handleSearch"
+          @reset="handleReset"
+        />
+      </LeCard>
+
+      <LeCard class="role-management-page__table">
+        <LeTable
+          :columns="columns"
+          :data="tableData"
+          :loading="loading"
+          :pagination="pagination"
+          :operate-column="operateColumn"
+          :scroll-x="1320"
+          flex-height
+          show-index
+          @update:page="handlePageChange"
+          @update:page-size="handlePageSizeChange"
+        >
+          <template #headerRight>
+            <LeOperateGroup type="button" :options="headerOperateOptions" />
+          </template>
+        </LeTable>
+      </LeCard>
+    </div>
+
+    <LeDialog
+      v-model:visible="dialogVisible"
+      :title="dialogTitle"
+      :width="620"
+      :mask-closable="false"
+      destroy-on-close
+    >
+      <NForm
+        ref="formRef"
+        :model="formModel"
+        :rules="formRules"
+        label-placement="left"
+        label-width="90"
+      >
+        <NFormItem label="租户 ID" path="tenantId">
+          <NInputNumber
+            v-model:value="formModel.tenantId"
+            :min="1"
+            :show-button="false"
+            class="role-management-page__form-control"
+          />
+        </NFormItem>
+
+        <NFormItem label="角色编码" path="code">
+          <NInput v-model:value="formModel.code" placeholder="请输入角色编码" />
+        </NFormItem>
+
+        <NFormItem label="角色名称" path="name">
+          <NInput v-model:value="formModel.name" placeholder="请输入角色名称" />
+        </NFormItem>
+
+        <NFormItem label="显示名称" path="displayName">
+          <NInput v-model:value="formModel.displayName" placeholder="请输入显示名称" />
+        </NFormItem>
+
+        <NFormItem label="描述" path="description">
+          <NInput v-model:value="formModel.description" type="textarea" placeholder="请输入描述" />
+        </NFormItem>
+
+        <NFormItem label="排序" path="sort">
+          <NInputNumber
+            v-model:value="formModel.sort"
+            :min="0"
+            class="role-management-page__form-control"
+          />
+        </NFormItem>
+
+        <NFormItem label="状态" path="status">
+          <NSwitch v-model:value="statusEnabled">
+            <template #checked>启用</template>
+            <template #unchecked>禁用</template>
+          </NSwitch>
+        </NFormItem>
+      </NForm>
+
+      <template #footer>
+        <NSpace justify="end">
+          <NButton @click="closeDialog">取消</NButton>
+          <NButton type="primary" :loading="submitting" @click="submitRoleForm">保存</NButton>
+        </NSpace>
+      </template>
+    </LeDialog>
+  </LeContainer>
+</template>
+
 <script setup lang="ts">
 import { computed, h, onMounted } from 'vue';
 import type { DataTableColumn, FormRules } from 'naive-ui';
@@ -177,107 +274,6 @@ onMounted(() => {
   loadRoleList();
 });
 </script>
-
-<template>
-  <LeContainer class="role-management-route" content-class="role-management-route__content">
-    <div class="role-management-page">
-      <LeCard title="查询" collapsible class="role-management-page__filter">
-        <LeFilter
-          v-model="filterValues"
-          :items="filterItems"
-          @search="handleSearch"
-          @reset="handleReset"
-        />
-      </LeCard>
-
-      <LeCard class="role-management-page__table">
-        <LeTable
-          :columns="columns"
-          :data="tableData"
-          :loading="loading"
-          :pagination="pagination"
-          :operate-column="operateColumn"
-          :scroll-x="1320"
-          flex-height
-          show-index
-          @update:page="handlePageChange"
-          @update:page-size="handlePageSizeChange"
-        >
-          <template #headerRight>
-            <LeOperateGroup type="button" :options="headerOperateOptions" />
-          </template>
-        </LeTable>
-      </LeCard>
-    </div>
-
-    <LeDialog
-      v-model:visible="dialogVisible"
-      :title="dialogTitle"
-      :width="620"
-      :mask-closable="false"
-      destroy-on-close
-    >
-      <NForm
-        ref="formRef"
-        :model="formModel"
-        :rules="formRules"
-        label-placement="left"
-        label-width="90"
-      >
-        <NFormItem label="租户 ID" path="tenantId">
-          <NInputNumber
-            v-model:value="formModel.tenantId"
-            :min="1"
-            :show-button="false"
-            class="role-management-page__form-control"
-          />
-        </NFormItem>
-
-        <NFormItem label="角色编码" path="code">
-          <NInput v-model:value="formModel.code" placeholder="请输入角色编码" />
-        </NFormItem>
-
-        <NFormItem label="角色名称" path="name">
-          <NInput v-model:value="formModel.name" placeholder="请输入角色名称" />
-        </NFormItem>
-
-        <NFormItem label="显示名称" path="displayName">
-          <NInput v-model:value="formModel.displayName" placeholder="请输入显示名称" />
-        </NFormItem>
-
-        <NFormItem label="描述" path="description">
-          <NInput
-            v-model:value="formModel.description"
-            type="textarea"
-            placeholder="请输入描述"
-          />
-        </NFormItem>
-
-        <NFormItem label="排序" path="sort">
-          <NInputNumber
-            v-model:value="formModel.sort"
-            :min="0"
-            class="role-management-page__form-control"
-          />
-        </NFormItem>
-
-        <NFormItem label="状态" path="status">
-          <NSwitch v-model:value="statusEnabled">
-            <template #checked>启用</template>
-            <template #unchecked>禁用</template>
-          </NSwitch>
-        </NFormItem>
-      </NForm>
-
-      <template #footer>
-        <NSpace justify="end">
-          <NButton @click="closeDialog">取消</NButton>
-          <NButton type="primary" :loading="submitting" @click="submitRoleForm">保存</NButton>
-        </NSpace>
-      </template>
-    </LeDialog>
-  </LeContainer>
-</template>
 
 <style lang="scss" scoped>
 .role-management-route {

@@ -52,15 +52,15 @@ const app1Map: Record<string, Route> = {
       icon: 'menu-role-management',
     },
   },
-  'permission-management': {
-    path: `${appOnePrefix}/permission-management`,
-    name: 'PermissionManagement',
-    component: () => import('@/pages/PermissionManagement/index.vue'),
+  'resource-management': {
+    path: `${appOnePrefix}/resource-management`,
+    name: 'ResourceManagement',
+    component: () => import('@/pages/ResourceManagement/index.vue'),
     meta: {
       layout: 'basic',
-      title: '权限管理',
+      title: '资源管理',
       keepAlive: true,
-      icon: 'menu-permission-management',
+      icon: 'menu-resource-management',
     },
   },
   'app-management': {

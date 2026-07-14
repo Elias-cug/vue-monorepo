@@ -1,3 +1,126 @@
+<template>
+  <div class="user-management-route">
+    <LeLeftRightLayout :left-width="280" :gap="16" right-transparent>
+      <template #left>
+        <LeCard title="部门列表" class="h-full">
+          <NTree
+            :data="departmentTree"
+            :default-expanded-keys="defaultExpandedKeys"
+            :selected-keys="selectedKeys"
+            block-line
+            selectable
+            @update:selected-keys="handleDepartmentSelect"
+          />
+        </LeCard>
+      </template>
+
+      <template #right>
+        <div class="user-management-page">
+          <LeCard title="查询" collapsible class="user-management-page__filter">
+            <LeFilter
+              v-model="filterValues"
+              :items="filterItems"
+              @search="handleSearch"
+              @reset="handleReset"
+            />
+          </LeCard>
+
+          <LeCard class="user-management-page__table">
+            <LeTable
+              :columns="columns"
+              :data="tableData"
+              :loading="loading"
+              :pagination="pagination"
+              :operate-column="operateColumn"
+              :scroll-x="1610"
+              flex-height
+              show-index
+              @update:page="handlePageChange"
+              @update:page-size="handlePageSizeChange"
+            >
+              <template #headerRight>
+                <LeOperateGroup type="button" :options="headerOperateOptions" />
+              </template>
+            </LeTable>
+          </LeCard>
+        </div>
+      </template>
+    </LeLeftRightLayout>
+
+    <LeDialog
+      v-model:visible="dialogVisible"
+      :title="dialogTitle"
+      :width="620"
+      :mask-closable="false"
+      destroy-on-close
+    >
+      <NForm
+        ref="formRef"
+        :model="formModel"
+        :rules="formRules"
+        label-placement="left"
+        label-width="90"
+      >
+        <NFormItem label="租户 ID" path="tenantId">
+          <NInputNumber
+            v-model:value="formModel.tenantId"
+            :min="1"
+            :show-button="false"
+            class="user-management-page__form-control"
+          />
+        </NFormItem>
+
+        <NFormItem label="账号" path="username">
+          <NInput
+            v-model:value="formModel.username"
+            :disabled="formMode === 'edit'"
+            placeholder="请输入账号"
+          />
+        </NFormItem>
+
+        <NFormItem label="所属组织" path="organizationId">
+          <NSelect
+            v-model:value="formModel.organizationId"
+            :options="organizationOptions"
+            clearable
+            placeholder="请选择所属组织"
+          />
+        </NFormItem>
+
+        <NFormItem label="显示名称" path="displayName">
+          <NInput v-model:value="formModel.displayName" placeholder="请输入显示名称" />
+        </NFormItem>
+
+        <NFormItem label="邮箱" path="email">
+          <NInput v-model:value="formModel.email" placeholder="请输入邮箱" />
+        </NFormItem>
+
+        <NFormItem label="手机号" path="phone">
+          <NInput v-model:value="formModel.phone" placeholder="请输入手机号" />
+        </NFormItem>
+
+        <NFormItem label="头像地址" path="avatarUrl">
+          <NInput v-model:value="formModel.avatarUrl" placeholder="请输入头像 URL" />
+        </NFormItem>
+
+        <NFormItem label="状态" path="status">
+          <NSwitch v-model:value="statusEnabled">
+            <template #checked>启用</template>
+            <template #unchecked>禁用</template>
+          </NSwitch>
+        </NFormItem>
+      </NForm>
+
+      <template #footer>
+        <NSpace justify="end">
+          <NButton @click="closeDialog">取消</NButton>
+          <NButton type="primary" :loading="submitting" @click="submitUserForm">保存</NButton>
+        </NSpace>
+      </template>
+    </LeDialog>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { computed, h, onMounted, ref } from 'vue';
 import type { DataTableColumn, FormRules, TreeOption } from 'naive-ui';
@@ -236,129 +359,6 @@ onMounted(() => {
   loadUserList();
 });
 </script>
-
-<template>
-  <div class="user-management-route">
-    <LeLeftRightLayout :left-width="280" :gap="16" right-transparent>
-      <template #left>
-        <LeCard title="部门列表" class="h-full">
-          <NTree
-            :data="departmentTree"
-            :default-expanded-keys="defaultExpandedKeys"
-            :selected-keys="selectedKeys"
-            block-line
-            selectable
-            @update:selected-keys="handleDepartmentSelect"
-          />
-        </LeCard>
-      </template>
-
-      <template #right>
-        <div class="user-management-page">
-          <LeCard title="查询" collapsible class="user-management-page__filter">
-            <LeFilter
-              v-model="filterValues"
-              :items="filterItems"
-              @search="handleSearch"
-              @reset="handleReset"
-            />
-          </LeCard>
-
-          <LeCard class="user-management-page__table">
-            <LeTable
-              :columns="columns"
-              :data="tableData"
-              :loading="loading"
-              :pagination="pagination"
-              :operate-column="operateColumn"
-              :scroll-x="1610"
-              flex-height
-              show-index
-              @update:page="handlePageChange"
-              @update:page-size="handlePageSizeChange"
-            >
-              <template #headerRight>
-                <LeOperateGroup type="button" :options="headerOperateOptions" />
-              </template>
-            </LeTable>
-          </LeCard>
-        </div>
-      </template>
-    </LeLeftRightLayout>
-
-    <LeDialog
-      v-model:visible="dialogVisible"
-      :title="dialogTitle"
-      :width="620"
-      :mask-closable="false"
-      destroy-on-close
-    >
-      <NForm
-        ref="formRef"
-        :model="formModel"
-        :rules="formRules"
-        label-placement="left"
-        label-width="90"
-      >
-        <NFormItem label="租户 ID" path="tenantId">
-          <NInputNumber
-            v-model:value="formModel.tenantId"
-            :min="1"
-            :show-button="false"
-            class="user-management-page__form-control"
-          />
-        </NFormItem>
-
-        <NFormItem label="账号" path="username">
-          <NInput
-            v-model:value="formModel.username"
-            :disabled="formMode === 'edit'"
-            placeholder="请输入账号"
-          />
-        </NFormItem>
-
-        <NFormItem label="所属组织" path="organizationId">
-          <NSelect
-            v-model:value="formModel.organizationId"
-            :options="organizationOptions"
-            clearable
-            placeholder="请选择所属组织"
-          />
-        </NFormItem>
-
-        <NFormItem label="显示名称" path="displayName">
-          <NInput v-model:value="formModel.displayName" placeholder="请输入显示名称" />
-        </NFormItem>
-
-        <NFormItem label="邮箱" path="email">
-          <NInput v-model:value="formModel.email" placeholder="请输入邮箱" />
-        </NFormItem>
-
-        <NFormItem label="手机号" path="phone">
-          <NInput v-model:value="formModel.phone" placeholder="请输入手机号" />
-        </NFormItem>
-
-        <NFormItem label="头像地址" path="avatarUrl">
-          <NInput v-model:value="formModel.avatarUrl" placeholder="请输入头像 URL" />
-        </NFormItem>
-
-        <NFormItem label="状态" path="status">
-          <NSwitch v-model:value="statusEnabled">
-            <template #checked>启用</template>
-            <template #unchecked>禁用</template>
-          </NSwitch>
-        </NFormItem>
-      </NForm>
-
-      <template #footer>
-        <NSpace justify="end">
-          <NButton @click="closeDialog">取消</NButton>
-          <NButton type="primary" :loading="submitting" @click="submitUserForm">保存</NButton>
-        </NSpace>
-      </template>
-    </LeDialog>
-  </div>
-</template>
 
 <style lang="scss" scoped>
 .user-management-route {

@@ -1,3 +1,115 @@
+<template>
+  <LeContainer class="app-management-route" content-class="app-management-route__content">
+    <div class="app-management-page">
+      <LeCard title="查询" collapsible class="app-management-page__filter">
+        <LeFilter
+          v-model="filterValues"
+          :items="filterItems"
+          @search="handleSearch"
+          @reset="handleReset"
+        />
+      </LeCard>
+
+      <LeCard class="app-management-page__table">
+        <LeTable
+          :columns="columns"
+          :data="tableData"
+          :loading="loading"
+          :pagination="pagination"
+          :operate-column="operateColumn"
+          :scroll-x="1510"
+          flex-height
+          show-index
+          @update:page="handlePageChange"
+          @update:page-size="handlePageSizeChange"
+        >
+          <template #headerRight>
+            <LeOperateGroup type="button" :options="headerOperateOptions" />
+          </template>
+        </LeTable>
+      </LeCard>
+    </div>
+
+    <LeDialog
+      v-model:visible="dialogVisible"
+      :title="dialogTitle"
+      :width="640"
+      :mask-closable="false"
+      destroy-on-close
+    >
+      <NForm
+        ref="formRef"
+        :model="formModel"
+        :rules="formRules"
+        label-placement="left"
+        label-width="90"
+      >
+        <NFormItem label="租户 ID" path="tenantId">
+          <NInputNumber
+            v-model:value="formModel.tenantId"
+            :min="1"
+            :show-button="false"
+            class="app-management-page__form-control"
+          />
+        </NFormItem>
+
+        <NFormItem label="应用编码" path="code">
+          <NInput v-model:value="formModel.code" placeholder="请输入应用编码" />
+        </NFormItem>
+
+        <NFormItem label="应用名称" path="name">
+          <NInput v-model:value="formModel.name" placeholder="请输入应用名称" />
+        </NFormItem>
+
+        <NFormItem label="显示名称" path="displayName">
+          <NInput v-model:value="formModel.displayName" placeholder="请输入显示名称" />
+        </NFormItem>
+
+        <NFormItem label="入口地址" path="entryUrl">
+          <NInput v-model:value="formModel.entryUrl" placeholder="请输入入口地址" />
+        </NFormItem>
+
+        <NFormItem label="图标" path="icon">
+          <NInput v-model:value="formModel.icon" placeholder="请输入图标名称" />
+        </NFormItem>
+
+        <NFormItem label="描述" path="description">
+          <NInput
+            v-model:value="formModel.description"
+            type="textarea"
+            placeholder="请输入描述"
+            :autosize="{ minRows: 3, maxRows: 5 }"
+          />
+        </NFormItem>
+
+        <NFormItem label="排序" path="sort">
+          <NInputNumber
+            v-model:value="formModel.sort"
+            :min="0"
+            class="app-management-page__form-control"
+          />
+        </NFormItem>
+
+        <NFormItem label="状态" path="status">
+          <NSwitch v-model:value="statusEnabled">
+            <template #checked>启用</template>
+            <template #unchecked>禁用</template>
+          </NSwitch>
+        </NFormItem>
+      </NForm>
+
+      <template #footer>
+        <NSpace justify="end">
+          <NButton @click="closeDialog">取消</NButton>
+          <NButton type="primary" :loading="submitting" @click="submitApplicationForm">
+            保存
+          </NButton>
+        </NSpace>
+      </template>
+    </LeDialog>
+  </LeContainer>
+</template>
+
 <script setup lang="ts">
 import { computed, h, onMounted } from 'vue';
 import type { DataTableColumn, FormRules } from 'naive-ui';
@@ -175,118 +287,6 @@ onMounted(() => {
   loadApplicationList();
 });
 </script>
-
-<template>
-  <LeContainer class="app-management-route" content-class="app-management-route__content">
-    <div class="app-management-page">
-      <LeCard title="查询" collapsible class="app-management-page__filter">
-        <LeFilter
-          v-model="filterValues"
-          :items="filterItems"
-          @search="handleSearch"
-          @reset="handleReset"
-        />
-      </LeCard>
-
-      <LeCard class="app-management-page__table">
-        <LeTable
-          :columns="columns"
-          :data="tableData"
-          :loading="loading"
-          :pagination="pagination"
-          :operate-column="operateColumn"
-          :scroll-x="1510"
-          flex-height
-          show-index
-          @update:page="handlePageChange"
-          @update:page-size="handlePageSizeChange"
-        >
-          <template #headerRight>
-            <LeOperateGroup type="button" :options="headerOperateOptions" />
-          </template>
-        </LeTable>
-      </LeCard>
-    </div>
-
-    <LeDialog
-      v-model:visible="dialogVisible"
-      :title="dialogTitle"
-      :width="640"
-      :mask-closable="false"
-      destroy-on-close
-    >
-      <NForm
-        ref="formRef"
-        :model="formModel"
-        :rules="formRules"
-        label-placement="left"
-        label-width="90"
-      >
-        <NFormItem label="租户 ID" path="tenantId">
-          <NInputNumber
-            v-model:value="formModel.tenantId"
-            :min="1"
-            :show-button="false"
-            class="app-management-page__form-control"
-          />
-        </NFormItem>
-
-        <NFormItem label="应用编码" path="code">
-          <NInput v-model:value="formModel.code" placeholder="请输入应用编码" />
-        </NFormItem>
-
-        <NFormItem label="应用名称" path="name">
-          <NInput v-model:value="formModel.name" placeholder="请输入应用名称" />
-        </NFormItem>
-
-        <NFormItem label="显示名称" path="displayName">
-          <NInput v-model:value="formModel.displayName" placeholder="请输入显示名称" />
-        </NFormItem>
-
-        <NFormItem label="入口地址" path="entryUrl">
-          <NInput v-model:value="formModel.entryUrl" placeholder="请输入入口地址" />
-        </NFormItem>
-
-        <NFormItem label="图标" path="icon">
-          <NInput v-model:value="formModel.icon" placeholder="请输入图标名称" />
-        </NFormItem>
-
-        <NFormItem label="描述" path="description">
-          <NInput
-            v-model:value="formModel.description"
-            type="textarea"
-            placeholder="请输入描述"
-            :autosize="{ minRows: 3, maxRows: 5 }"
-          />
-        </NFormItem>
-
-        <NFormItem label="排序" path="sort">
-          <NInputNumber
-            v-model:value="formModel.sort"
-            :min="0"
-            class="app-management-page__form-control"
-          />
-        </NFormItem>
-
-        <NFormItem label="状态" path="status">
-          <NSwitch v-model:value="statusEnabled">
-            <template #checked>启用</template>
-            <template #unchecked>禁用</template>
-          </NSwitch>
-        </NFormItem>
-      </NForm>
-
-      <template #footer>
-        <NSpace justify="end">
-          <NButton @click="closeDialog">取消</NButton>
-          <NButton type="primary" :loading="submitting" @click="submitApplicationForm">
-            保存
-          </NButton>
-        </NSpace>
-      </template>
-    </LeDialog>
-  </LeContainer>
-</template>
 
 <style lang="scss" scoped>
 .app-management-route {

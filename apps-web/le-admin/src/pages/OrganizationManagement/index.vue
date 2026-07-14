@@ -1,3 +1,120 @@
+<template>
+  <LeContainer
+    class="organization-management-route"
+    content-class="organization-management-route__content"
+  >
+    <div class="organization-management-page">
+      <LeCard title="查询" collapsible>
+        <LeFilter
+          v-model="filterValues"
+          :items="filterItems"
+          @search="handleSearch"
+          @reset="handleReset"
+        />
+      </LeCard>
+
+      <LeCard class="organization-management-page__table">
+        <div class="organization-management-page__toolbar">
+          <LeOperateGroup type="button" :options="headerOperateOptions" />
+        </div>
+
+        <LeTable
+          :columns="columns"
+          :data="treeData"
+          :loading="loading"
+          :operate-column="operateColumn"
+          :row-key="getRowKey"
+          :pagination="false"
+          default-expand-all
+        />
+      </LeCard>
+    </div>
+
+    <LeDialog
+      v-model:visible="dialogVisible"
+      :title="dialogTitle"
+      :width="620"
+      :mask-closable="false"
+      destroy-on-close
+    >
+      <NForm
+        ref="formRef"
+        :model="formModel"
+        :rules="formRules"
+        label-placement="left"
+        label-width="90"
+      >
+        <NFormItem label="租户 ID" path="tenantId">
+          <NInputNumber
+            v-model:value="formModel.tenantId"
+            :min="1"
+            :show-button="false"
+            class="organization-management-page__form-control"
+          />
+        </NFormItem>
+
+        <NFormItem label="上级组织" path="parentId">
+          <NSelect
+            v-model:value="formModel.parentId"
+            :options="parentOptions"
+            placeholder="请选择上级组织"
+          />
+        </NFormItem>
+
+        <NFormItem label="组织名称" path="name">
+          <NInput v-model:value="formModel.name" placeholder="请输入组织名称" />
+        </NFormItem>
+
+        <NFormItem label="组织编码" path="code">
+          <NInput v-model:value="formModel.code" placeholder="请输入组织编码" />
+        </NFormItem>
+
+        <NFormItem label="组织类型" path="orgType">
+          <NSelect
+            v-model:value="formModel.orgType"
+            :options="organizationTypeOptions"
+            placeholder="请选择组织类型"
+          />
+        </NFormItem>
+
+        <NFormItem label="排序" path="sortOrder">
+          <NInputNumber
+            v-model:value="formModel.sortOrder"
+            :min="0"
+            :show-button="false"
+            class="organization-management-page__form-control"
+          />
+        </NFormItem>
+
+        <NFormItem label="状态" path="status">
+          <NSwitch v-model:value="statusEnabled">
+            <template #checked>启用</template>
+            <template #unchecked>禁用</template>
+          </NSwitch>
+        </NFormItem>
+
+        <NFormItem label="备注" path="remark">
+          <NInput
+            v-model:value="formModel.remark"
+            type="textarea"
+            placeholder="请输入备注"
+            :autosize="{ minRows: 3, maxRows: 5 }"
+          />
+        </NFormItem>
+      </NForm>
+
+      <template #footer>
+        <NSpace justify="end">
+          <NButton @click="closeDialog">取消</NButton>
+          <NButton type="primary" :loading="submitting" @click="submitOrganizationForm">
+            保存
+          </NButton>
+        </NSpace>
+      </template>
+    </LeDialog>
+  </LeContainer>
+</template>
+
 <script setup lang="ts">
 import { computed, h, onMounted } from 'vue';
 import type { DataTableColumn, FormRules, SelectOption } from 'naive-ui';
@@ -128,7 +245,8 @@ const columns: DataTableColumn<Organization>[] = [
     title: '类型',
     key: 'orgType',
     width: 100,
-    render: row => organizationTypeOptions.find(option => option.value === row.orgType)?.label || row.orgType,
+    render: row =>
+      organizationTypeOptions.find(option => option.value === row.orgType)?.label || row.orgType,
   },
   {
     title: '排序',
@@ -194,123 +312,6 @@ onMounted(() => {
   loadOrganizationTree();
 });
 </script>
-
-<template>
-  <LeContainer
-    class="organization-management-route"
-    content-class="organization-management-route__content"
-  >
-    <div class="organization-management-page">
-      <LeCard title="查询" collapsible>
-        <LeFilter
-          v-model="filterValues"
-          :items="filterItems"
-          @search="handleSearch"
-          @reset="handleReset"
-        />
-      </LeCard>
-
-      <LeCard class="organization-management-page__table">
-        <div class="organization-management-page__toolbar">
-          <LeOperateGroup type="button" :options="headerOperateOptions" />
-        </div>
-
-        <LeTable
-          :columns="columns"
-          :data="treeData"
-          :loading="loading"
-          :operate-column="operateColumn"
-          :row-key="getRowKey"
-          :pagination="false"
-          default-expand-all
-        />
-      </LeCard>
-    </div>
-
-    <LeDialog
-      v-model:visible="dialogVisible"
-      :title="dialogTitle"
-      :width="620"
-      :mask-closable="false"
-      destroy-on-close
-    >
-      <NForm
-        ref="formRef"
-        :model="formModel"
-        :rules="formRules"
-        label-placement="left"
-        label-width="90"
-      >
-        <NFormItem label="租户 ID" path="tenantId">
-          <NInputNumber
-            v-model:value="formModel.tenantId"
-            :min="1"
-            :show-button="false"
-            class="organization-management-page__form-control"
-          />
-        </NFormItem>
-
-        <NFormItem label="上级组织" path="parentId">
-          <NSelect
-            v-model:value="formModel.parentId"
-            :options="parentOptions"
-            placeholder="请选择上级组织"
-          />
-        </NFormItem>
-
-        <NFormItem label="组织名称" path="name">
-          <NInput v-model:value="formModel.name" placeholder="请输入组织名称" />
-        </NFormItem>
-
-        <NFormItem label="组织编码" path="code">
-          <NInput v-model:value="formModel.code" placeholder="请输入组织编码" />
-        </NFormItem>
-
-        <NFormItem label="组织类型" path="orgType">
-          <NSelect
-            v-model:value="formModel.orgType"
-            :options="organizationTypeOptions"
-            placeholder="请选择组织类型"
-          />
-        </NFormItem>
-
-        <NFormItem label="排序" path="sortOrder">
-          <NInputNumber
-            v-model:value="formModel.sortOrder"
-            :min="0"
-            :show-button="false"
-            class="organization-management-page__form-control"
-          />
-        </NFormItem>
-
-        <NFormItem label="状态" path="status">
-          <NSwitch v-model:value="statusEnabled">
-            <template #checked>启用</template>
-            <template #unchecked>禁用</template>
-          </NSwitch>
-        </NFormItem>
-
-        <NFormItem label="备注" path="remark">
-          <NInput
-            v-model:value="formModel.remark"
-            type="textarea"
-            placeholder="请输入备注"
-            :autosize="{ minRows: 3, maxRows: 5 }"
-          />
-        </NFormItem>
-      </NForm>
-
-      <template #footer>
-        <NSpace justify="end">
-          <NButton @click="closeDialog">取消</NButton>
-          <NButton type="primary" :loading="submitting" @click="submitOrganizationForm">
-            保存
-          </NButton>
-        </NSpace>
-      </template>
-    </LeDialog>
-  </LeContainer>
-</template>
 
 <style lang="scss" scoped>
 .organization-management-route {
